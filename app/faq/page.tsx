@@ -38,7 +38,7 @@ export default function FAQPage() {
           </p>
           <a
             href="https://wa.me/+2348126575582"
-            className="mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-md bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_30px_rgba(212,175,55,0.28)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
+            className="mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_30px_rgba(212,175,55,0.28)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
           >
             Message Us on WhatsApp
           </a>

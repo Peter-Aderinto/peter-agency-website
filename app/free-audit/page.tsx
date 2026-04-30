@@ -77,7 +77,7 @@ export default function FreeAuditPage() {
           </Link>
           <Link
             href="/"
-            className="inline-flex min-h-11 items-center justify-center rounded-md border border-SteelGrey/15 bg-white px-4 text-sm font-black text-SteelGrey transition-colors hover:border-BrandGold hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border border-SteelGrey/15 bg-white px-4 text-sm font-black text-SteelGrey transition-colors hover:border-BrandGold hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
           >
             Back to Home
           </Link>

@@ -1,37 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
-import CountUp from "./components/CountUp";
+import {
+  Files,
+  Laptop,
+  Search,
+  ShoppingBag,
+  Smartphone,
+  Store,
+  TrendingUp,
+  Wrench,
+} from "lucide-react";
+import EngineeringProcessCarousel from "./components/EngineeringProcessCarousel";
 import EngineeringProcessStep from "./components/EngineeringProcessStep";
 import FAQAccordionList from "./components/FAQAccordionList";
+import MotionDiv from "./components/motion-div";
 import QuoteButton from "./components/QuoteButton";
+import SectorPillCloud from "./components/SectorPillCloud";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
 
 const locations = [
+  "Lagos",
+  "Abuja",
+  "Port Harcourt",
+  "Ibadan",
+  "Kano",
   "United States",
-  "United Kingdom",
-  "Canada",
-  "Nigeria",
-  "United Arab Emirates",
-  "Sweden",
-  "Worldwide",
+  "Europe",
 ];
 
-const globalStats = [
-  { value: 3.5, decimals: 1, suffix: "x", label: "Avg. Conversion Lift" },
-  { value: 99.9, decimals: 1, suffix: "%", label: "System Uptime" },
-  { value: 2, prefix: "$", suffix: "M+", label: "Revenue Optimized" },
-  { value: 24, suffix: "h", label: "Priority Support" },
-];
-
-const services = [
+const packages = [
   {
     title: "Web Design Nigeria",
-    description:
-      "Custom responsive websites optimized for Nigerian audiences. Mobile-first design with local payment integration (Paystack, Flutterwave).",
     price: "From ₦150,000",
-    icon: "phone",
-    popular: true,
+    popular: false,
     features: [
       "Mobile-Optimized",
       "Fast Loading",
@@ -43,10 +45,8 @@ const services = [
   },
   {
     title: "SEO Services Nigeria",
-    description:
-      "Rank #1 on Google Nigeria searches. Local SEO, keyword research, and Google Business Profile optimization for Nigerian businesses.",
     price: "From ₦250,000",
-    icon: "chart",
+    popular: true,
     features: [
       "Local SEO",
       "Keyword Research",
@@ -58,19 +58,51 @@ const services = [
   },
   {
     title: "Business Setup",
-    description:
-      "Complete business manager setup, process documentation, and operational support for Nigerian entrepreneurs.",
     price: "From ₦350,000",
-    icon: "check",
+    popular: false,
     features: [
-      "Google Business Optimization",
-      "CRM & Lead Management",
-      "Automated Email Setup",
-      "Sales Funnel Configuration",
-      "90-Day Digital Roadmap",
+      "Business Tools",
+      "Process Setup",
+      "Team Training",
+      "Ongoing Support",
+      "Documentation",
+      "Growth Strategy",
     ],
   },
-];
+] as const;
+
+const services = [
+  {
+    title: "Website & Web App Development",
+    description:
+      "We engineer responsive, mobile-first websites and complex web applications (PWA) tailored for speed and performance in the Nigerian market.",
+    icon: "devices",
+  },
+  {
+    title: "E-commerce Strategy & Growth",
+    description:
+      "We don't just launch stores; we design complete conversion architectures. Including revenue gap analysis, customer journey mapping, and sales funnel engineering.",
+    icon: "growth",
+  },
+  {
+    title: "Search Engine Optimization (SEO)",
+    description:
+      "Our Technical SEO Audit and Semantic Content Strategy ensure your brand is discovered by both human searchers and AI Generative engines (AEO/GEO).",
+    icon: "search",
+  },
+  {
+    title: "Content Management",
+    description:
+      "Setup and configuration of modern, easy-to-use content systems. Empowering your team to update the digital space seamlessly without a developer.",
+    icon: "content",
+  },
+  {
+    title: "Shopify Development & Engineering",
+    description:
+      "We are the Premier Shopify Architect in Nigeria. From custom theme builds to app configuration and local payment gateway (Paystack/Flutterwave) integration.",
+    icon: "shopify",
+  },
+] as const;
 
 const advantagePillars = [
   {
@@ -184,32 +216,64 @@ const commitmentPills = [
 ] as const;
 
 const sectorIndustries = [
-  {
-    title: "Fashion",
-    description:
-      "Premium storefronts and campaign-ready funnels for apparel brands built around visual trust and repeat purchase.",
-  },
-  {
-    title: "Solar",
-    description:
-      "Clear lead-generation systems that translate technical value into confident consultations and qualified enquiries.",
-  },
-  {
-    title: "Hotels",
-    description:
-      "Hospitality experiences designed to elevate bookings, communicate quality, and reduce friction for guests.",
-  },
-  {
-    title: "Restaurants",
-    description:
-      "Digital menus, local SEO, and conversion paths that turn attention into reservations, orders, and loyalty.",
-  },
-  {
-    title: "Real Estate",
-    description:
-      "Property-focused platforms that present inventory, build buyer confidence, and support high-value enquiries.",
-  },
+  "Real Estate & Property Brands",
+  "Fashion & Lifestyle Startups",
+  "Tech & SaaS Companies",
+  "NGOs & Educational Platforms",
+  "Modern Restaurants & Lounges",
+  "Personal Brands & Creatives",
+  "Healthcare & Medical Clinics",
+  "Legal & Professional Services",
 ] as const;
+
+function ServiceIcon({ icon }: { icon: (typeof services)[number]["icon"] }) {
+  const iconClassName = "size-6";
+
+  if (icon === "devices") {
+    return (
+      <>
+        <Laptop className="size-7" strokeWidth={2.1} aria-hidden="true" />
+        <Smartphone
+          className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-white"
+          strokeWidth={2.4}
+          aria-hidden="true"
+        />
+      </>
+    );
+  }
+
+  if (icon === "growth") {
+    return (
+      <>
+        <ShoppingBag className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
+        <TrendingUp
+          className="absolute -right-1 -top-1 size-4 rounded-sm bg-white"
+          strokeWidth={2.6}
+          aria-hidden="true"
+        />
+      </>
+    );
+  }
+
+  if (icon === "search") {
+    return <Search className={iconClassName} strokeWidth={2.3} aria-hidden="true" />;
+  }
+
+  if (icon === "content") {
+    return <Files className={iconClassName} strokeWidth={2.2} aria-hidden="true" />;
+  }
+
+  return (
+    <>
+      <Store className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
+      <Wrench
+        className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-white"
+        strokeWidth={2.5}
+        aria-hidden="true"
+      />
+    </>
+  );
+}
 
 function FooterIcon({ icon }: { icon: string }) {
   const className = "size-6";
@@ -310,7 +374,7 @@ function FooterIcon({ icon }: { icon: string }) {
 export default function Home() {
   return (
     <main className="min-h-screen bg-white font-sans text-SteelGrey">
-      <nav className="sticky top-0 z-50 border-b border-SteelGrey/10 bg-white/85 backdrop-blur-md">
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#444444] backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-12">
           <a href="#" className="relative block h-16 w-48">
             <Image
@@ -323,7 +387,7 @@ export default function Home() {
             />
           </a>
 
-          <div className="hidden items-center gap-10 text-base font-semibold text-SteelGrey/85 md:flex">
+          <div className="hidden items-center gap-10 text-base font-semibold text-white md:flex">
             <a href="#services" className="transition-colors hover:text-BrandGold">
               Services
             </a>
@@ -337,13 +401,13 @@ export default function Home() {
 
           <QuoteButton
             label="Get Free Quote"
-            className="inline-flex h-12 items-center justify-center rounded-md bg-BrandGold px-5 text-sm font-bold text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:px-7 sm:text-base"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-BrandGold px-5 text-sm font-bold text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:px-7 sm:text-base"
           />
         </div>
       </nav>
 
       <section className="relative overflow-hidden bg-SoftCream">
-        <div className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-16 md:grid-cols-2 lg:px-12 lg:pb-32 lg:pt-24">
+        <MotionDiv className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-16 md:grid-cols-2 lg:px-12 lg:pb-32 lg:pt-24">
           <div className="text-left">
             <p className="mb-4 text-xs font-bold uppercase tracking-widest text-BrandGold/80 md:text-sm">
               THE ARCHITECT OF NIGERIAN E-COMMERCE
@@ -385,7 +449,7 @@ export default function Home() {
                 href="/free-audit"
                 className="inline-flex items-center justify-center rounded-full bg-BrandGold px-8 py-4 text-base font-bold text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
               >
-                Claim Your Growth Strategy →
+                Get a Free Business Audit →
               </Link>
 
               <a
@@ -419,7 +483,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </MotionDiv>
 
         <div className="absolute inset-x-0 bottom-0 text-white" aria-hidden="true">
           <svg
@@ -434,21 +498,61 @@ export default function Home() {
       </section>
 
       <section
-        id="global"
-        className="border-b border-SteelGrey/10 bg-white px-6 pb-28 pt-24 sm:px-10 sm:pb-32 sm:pt-36 lg:px-12 lg:pb-36 lg:pt-40"
+        id="services"
+        className="relative isolate overflow-hidden bg-white px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12 lg:py-28"
       >
-        <div className="mx-auto max-w-7xl text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-SteelGrey/75 sm:text-sm">
+        <div
+          className="absolute inset-0 -z-10 bg-[url('/images/nigerian-tech-background.jpg')] bg-cover bg-center opacity-5"
+          aria-hidden="true"
+        />
+        <MotionDiv className="relative z-10 mx-auto max-w-7xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
+              Our Services.
+            </h2>
+            <p className="mt-4 text-base font-semibold leading-8 text-SteelGrey/72 sm:text-lg">
+              Architecting the Digital Space for Nigerian Brands.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service) => (
+              <article
+                key={service.title}
+                className="group flex min-h-[300px] flex-col rounded-lg border border-SteelGrey/15 bg-SoftCream p-7 shadow-sm transition-all duration-300 ease-out hover:scale-[1.025] hover:border-BrandGold hover:shadow-[0_22px_55px_rgba(74,74,74,0.12)] sm:p-8"
+              >
+                <div className="relative flex size-12 items-center justify-center rounded-lg border border-BrandGold/20 bg-SoftCream text-BrandGold transition-colors group-hover:border-BrandGold/40 group-hover:bg-BrandGold group-hover:text-white">
+                  <ServiceIcon icon={service.icon} />
+                </div>
+
+                <h3 className="mt-7 text-xl font-black leading-tight text-SteelGrey">
+                  {service.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-SteelGrey/75">
+                  {service.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </MotionDiv>
+      </section>
+
+      <section
+        id="global"
+        className="border-b border-SteelGrey/10 bg-white px-6 pb-20 pt-4 sm:px-10 sm:pb-24 sm:pt-6 lg:px-12 lg:pb-28 lg:pt-8"
+      >
+        <MotionDiv className="mx-auto max-w-7xl text-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-SteelGrey/75 sm:text-xs">
             SERVING AMBITIOUS BUSINESSES GLOBALLY
           </p>
 
-          <ul className="mx-auto mt-4 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-5 sm:gap-x-4 sm:gap-y-4">
+          <ul className="mx-auto mt-4 flex max-w-4xl flex-wrap items-center justify-center gap-2 sm:gap-x-3 sm:gap-y-3">
             {locations.map((location) => (
               <li key={location}>
-                <span className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-zinc-100 px-4 text-sm font-medium text-SteelGrey sm:h-12 sm:px-5 sm:text-xl">
+                <span className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-zinc-100 px-3 text-xs font-medium text-SteelGrey sm:h-9 sm:px-4 sm:text-sm">
                   {location === "Worldwide" ? (
                     <svg
-                      className="size-4 shrink-0 text-red-600 sm:size-5"
+                      className="size-3.5 shrink-0 text-red-600 sm:size-4"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -460,7 +564,7 @@ export default function Home() {
                     </svg>
                   ) : (
                     <svg
-                      className="size-4 shrink-0 text-red-600 sm:size-5"
+                      className="size-3.5 shrink-0 text-red-600 sm:size-4"
                       viewBox="0 0 24 24"
                       fill="currentColor"
                       aria-hidden="true"
@@ -473,156 +577,18 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden bg-SteelGrey px-6 pb-20 pt-32 text-SoftCream sm:px-10 sm:pb-24 sm:pt-36 lg:px-12 lg:pt-40">
-        <svg
-          className="absolute inset-x-0 top-0 h-24 w-full text-white sm:h-28 lg:h-32"
-          viewBox="0 0 1440 140"
-          preserveAspectRatio="none"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M0 0H1440V54C1235 78 1030 92 820 78C610 64 424 28 216 42C128 48 55 61 0 72V0Z" />
-        </svg>
-
-        <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-10 text-center sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
-          {globalStats.map((stat) => (
-            <div
-              key={stat.label}
-              className="px-4 lg:border-r lg:border-SoftCream/15 lg:last:border-r-0"
-            >
-              <p className="text-5xl font-black tracking-wide text-BrandGold sm:text-6xl">
-                <CountUp
-                  value={stat.value}
-                  decimals={stat.decimals}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                />
-              </p>
-              <p className="mt-4 text-sm font-semibold uppercase tracking-[0.22em] text-SoftCream/85">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section
-        id="services"
-        className="bg-zinc-50 px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-BrandGold">
-              OUR SERVICES
-            </p>
-            <h2 className="mt-3 text-3xl font-black leading-tight text-slate-950 sm:text-4xl">
-              Complete Digital Solutions for Nigerian Businesses
-            </h2>
-            <p className="mt-5 text-base leading-7 text-slate-700">
-              Tailored services to help your business grow online and attract
-              more local customers
-            </p>
-          </div>
-
-          <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-3">
-            {services.map((service) => (
-              <article
-                key={service.title}
-                className={`relative flex h-full min-h-[520px] flex-col rounded-xl border bg-white px-7 py-9 text-SteelGrey transition-all duration-300 ease-out hover:-translate-y-3 hover:border-BrandGold hover:shadow-[0_24px_60px_rgba(74,74,74,0.16)] sm:px-8 ${
-                  service.popular
-                    ? "border-BrandGold shadow-[0_18px_44px_rgba(212,175,55,0.12)]"
-                    : "border-slate-200 shadow-sm"
-                }`}
-              >
-                {service.popular ? (
-                  <span className="absolute left-1/2 top-0 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-full bg-BrandGold px-5 py-1.5 text-xs font-black uppercase tracking-[0.08em] text-white shadow-[0_10px_24px_rgba(212,175,55,0.22)]">
-                    Most Popular
-                  </span>
-                ) : null}
-
-                <div className="mb-5 text-BrandGold">
-                  {service.icon === "phone" ? (
-                    <svg
-                      className="size-8"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.25"
-                      aria-hidden="true"
-                    >
-                      <rect x="8" y="3" width="8" height="18" rx="1.5" />
-                      <path d="M11 18h2" />
-                    </svg>
-                  ) : null}
-
-                  {service.icon === "chart" ? (
-                    <svg
-                      className="size-8"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.25"
-                      aria-hidden="true"
-                    >
-                      <path d="M4 19V5" />
-                      <path d="M4 19h16" />
-                      <path d="m7 15 4-4 3 3 5-6" />
-                      <path d="M15 8h4v4" />
-                    </svg>
-                  ) : null}
-
-                  {service.icon === "check" ? (
-                    <svg
-                      className="size-8"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 2.5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19Zm4.64 7.34-5.2 5.2a.9.9 0 0 1-1.28 0l-2.8-2.8a.9.9 0 1 1 1.28-1.28l2.16 2.16 4.56-4.56a.9.9 0 1 1 1.28 1.28Z" />
-                    </svg>
-                  ) : null}
-                </div>
-
-                <h3 className="text-2xl font-black text-SteelGrey">
-                  {service.title}
-                </h3>
-                <p className="mt-4 min-h-20 text-sm leading-7 text-SteelGrey/75">
-                  {service.description}
-                </p>
-                <p className="mt-4 text-2xl font-black text-BrandGold">
-                  {service.price}
-                </p>
-
-                <ul className="mt-6 space-y-3 text-sm text-SteelGrey/78">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-BrandGold text-[10px] font-black text-white">
-                        ✓
-                      </span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <QuoteButton
-                  label="Get Quote →"
-                  initialService={service.title}
-                  className="mt-auto inline-flex h-12 w-full items-center justify-center rounded-md bg-BrandGold pt-0 text-sm font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
-                />
-              </article>
-            ))}
-          </div>
-        </div>
+        </MotionDiv>
       </section>
 
       <section
         id="process"
-        className="relative overflow-hidden bg-[linear-gradient(135deg,#3b3b3b_0%,#4A4A4A_48%,#2f2f2f_100%)] px-6 py-20 text-SoftCream sm:px-10 sm:py-24 lg:px-12 lg:py-28"
+        className="relative overflow-hidden bg-[url('/website-developer-nigeria.jpg')] bg-cover bg-center px-6 py-20 text-SoftCream sm:px-10 sm:py-24 lg:px-12 lg:py-28"
       >
-        <div className="mx-auto max-w-7xl">
+        <div
+          className="absolute inset-0 bg-SteelGrey/82"
+          aria-hidden="true"
+        />
+        <MotionDiv className="relative z-10 mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
               OUR ENGINEERING PROCESS
@@ -636,7 +602,9 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="relative mx-auto mt-16 max-w-6xl space-y-10 md:space-y-16">
+          <EngineeringProcessCarousel items={engineeringProcess} />
+
+          <div className="relative mx-auto mt-16 hidden max-w-6xl space-y-16 md:block">
             <div
               className="absolute bottom-8 left-1/2 top-8 hidden -translate-x-1/2 border-l border-dashed border-BrandGold/45 md:block"
               aria-hidden="true"
@@ -668,11 +636,11 @@ export default function Home() {
               />
             ))}
           </div>
-        </div>
+        </MotionDiv>
       </section>
 
       <section className="bg-white px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12">
-        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_0.92fr] lg:items-center">
+        <MotionDiv className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_0.92fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-BrandGold">
               THE EMPIRE ADVANTAGE
@@ -789,7 +757,7 @@ export default function Home() {
 
             <Link
               href="/free-audit"
-              className="mt-8 inline-flex h-16 w-full items-center justify-center rounded-lg bg-BrandGold text-lg font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
+              className="mt-8 inline-flex h-16 w-full items-center justify-center rounded-full bg-BrandGold text-lg font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
             >
               Book Your Strategy Session →
             </Link>
@@ -798,101 +766,117 @@ export default function Home() {
               Limited slots available per month. No commitment required.
             </p>
           </aside>
-        </div>
+        </MotionDiv>
       </section>
 
       <section className="bg-SoftCream px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12 lg:py-28">
-        <div className="mx-auto max-w-7xl text-center">
+        <MotionDiv className="mx-auto max-w-7xl text-center">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
             SECTOR EXPERTISE
           </p>
           <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
-            Proven Expertise Across Nigeria&apos;s Leading Industries
+            Industries We Work With
           </h2>
-        </div>
-
-        <div className="mx-auto mt-14 grid max-w-7xl grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {sectorIndustries.map((industry) => (
-            <article
-              key={industry.title}
-              className="group min-h-[250px] border border-SteelGrey/12 bg-white p-8 text-left transition-all duration-300 hover:-translate-y-1 hover:border-BrandGold/45 hover:shadow-[0_22px_54px_rgba(74,74,74,0.11)] sm:p-10"
-            >
-              <div className="flex size-11 items-center justify-center rounded-full border border-BrandGold/25 bg-BrandGold/10 text-BrandGold transition-colors group-hover:bg-BrandGold group-hover:text-white">
-                <svg
-                  className="size-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  aria-hidden="true"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m13 6 6 6-6 6" />
-                </svg>
-              </div>
-              <h3 className="mt-8 text-2xl font-black leading-tight text-SteelGrey">
-                {industry.title}
-              </h3>
-              <p className="mt-4 text-base leading-8 text-SteelGrey/72">
-                {industry.description}
-              </p>
-            </article>
-          ))}
-        </div>
-
-        <div className="mx-auto mt-16 max-w-3xl text-center">
-          <p className="text-base leading-8 text-SteelGrey/75 sm:text-lg">
-            Your industry isn&apos;t just a category; it&apos;s a unique journey. If
-            you don&apos;t see your sector above, let&apos;s discuss how we can
-            architect your specific digital success.
+          <p className="mx-auto mt-4 max-w-2xl text-sm font-semibold leading-7 text-SteelGrey/65 sm:text-base">
+            Tailored digital solutions for high-growth sectors.
           </p>
-          <a
-            href="https://wa.me/2348160908843"
-            className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-md bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.34)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-          >
-            Start the Discussion
-          </a>
-        </div>
+        </MotionDiv>
+
+        <SectorPillCloud industries={sectorIndustries} />
       </section>
 
-      <section className="bg-SoftCream px-6 pb-20 text-SteelGrey sm:px-10 sm:pb-24 lg:px-12 lg:pb-28">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center">
+      <section className="bg-SoftCream px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12 lg:py-28">
+        <MotionDiv className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
+              Our Packages
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base font-semibold leading-8 text-SteelGrey/70 sm:text-lg">
+              Transparent pricing for high-performance digital infrastructure.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-8 lg:grid-cols-3">
+            {packages.map((packageItem) => (
+              <article
+                key={packageItem.title}
+                className={`relative flex h-full min-h-[520px] flex-col rounded-xl border bg-white p-8 text-SteelGrey transition-all duration-300 ease-out hover:-translate-y-2 hover:border-BrandGold hover:shadow-[0_24px_60px_rgba(74,74,74,0.14)] sm:p-9 ${
+                  packageItem.popular
+                    ? "border-BrandGold shadow-[0_18px_44px_rgba(212,175,55,0.12)]"
+                    : "border-SteelGrey/10 shadow-sm"
+                }`}
+              >
+                {packageItem.popular ? (
+                  <span className="absolute left-1/2 top-0 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-full bg-BrandGold px-5 py-1.5 text-xs font-black uppercase tracking-[0.08em] text-white shadow-[0_10px_24px_rgba(212,175,55,0.22)]">
+                    Most Popular
+                  </span>
+                ) : null}
+
+                <h3 className="text-2xl font-black text-SteelGrey">
+                  {packageItem.title}
+                </h3>
+                <p className="mt-5 text-3xl font-black text-BrandGold">
+                  {packageItem.price}
+                </p>
+
+                <ul className="mt-8 space-y-3 text-sm font-medium text-SteelGrey/78">
+                  {packageItem.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-BrandGold text-[10px] font-black text-white">
+                        ✓
+                      </span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-8">
+                  <QuoteButton
+                    label="Get Quote →"
+                    initialService={packageItem.title}
+                    className="inline-flex h-12 w-full items-center justify-center rounded-full bg-BrandGold px-6 text-sm font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_30px_rgba(212,175,55,0.24)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
+        </MotionDiv>
+      </section>
+
+      <section className="bg-white px-6 py-16 text-SteelGrey sm:px-10 sm:py-20 lg:px-12 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <MotionDiv className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
               QUICK FAQ
             </p>
             <h2 className="mt-4 text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
               Answers Before We Build
             </h2>
-          </div>
+          </MotionDiv>
 
-          <div className="mt-10">
-            <FAQAccordionList items={homepageFaqItems} />
-          </div>
+          <div className="mt-10 grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 md:gap-12">
+            <MotionDiv className="relative min-h-72 overflow-hidden rounded-3xl shadow-[0_24px_70px_rgba(74,74,74,0.14)] sm:min-h-96 md:min-h-full">
+              <Image
+                src="/faq.jpeg"
+                alt="Website strategy discussion"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </MotionDiv>
 
-          <div className="mt-8 text-center">
-            <a
-              href="/faq"
-              className="inline-flex min-h-14 w-full items-center justify-center rounded-md bg-SteelGrey px-7 text-base font-black text-white transition-all hover:bg-BrandGold hover:shadow-[0_0_34px_rgba(212,175,55,0.28)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-            >
-              View All 15+ FAQs by Category →
-            </a>
-          </div>
+            <MotionDiv className="flex flex-col justify-center">
+              <FAQAccordionList items={homepageFaqItems} />
 
-          <div className="mt-10 border border-BrandGold/20 bg-white px-6 py-8 text-center sm:px-10">
-            <h3 className="text-2xl font-black text-SteelGrey">
-              Still have questions?
-            </h3>
-            <p className="mx-auto mt-3 max-w-2xl text-base font-medium leading-8 text-SteelGrey/80">
-              Talk directly with Empire Design &amp; Dev and get clarity on your
-              project, pricing, timeline, or support needs.
-            </p>
-            <a
-              href="https://wa.me/+2348126575582"
-              className="mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-md bg-BrandGold px-7 text-sm font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_30px_rgba(212,175,55,0.28)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-            >
-              Message Us on WhatsApp
-            </a>
+              <div className="mt-8 text-center">
+                <a
+                  href="/faq"
+                  className="inline-flex items-center justify-center text-base font-black text-black transition-colors hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
+                >
+                  View all FAQ →
+                </a>
+              </div>
+            </MotionDiv>
           </div>
         </div>
       </section>
@@ -955,7 +939,7 @@ export default function Home() {
                   />
                   <button
                     type="submit"
-                    className="inline-flex h-12 min-h-12 items-center justify-center rounded-md bg-BrandGold px-6 text-sm font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_28px_rgba(212,175,55,0.34)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
+                    className="inline-flex h-12 min-h-12 items-center justify-center rounded-full bg-BrandGold px-6 text-sm font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_28px_rgba(212,175,55,0.34)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
                   >
                     Join
                   </button>
@@ -1070,9 +1054,9 @@ export default function Home() {
 
             <a
               href="https://wa.me/2348160908843"
-              className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-md bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
+              className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
             >
-              Start Your Business Journey
+              Contact Us
             </a>
           </div>
         </div>
