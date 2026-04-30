@@ -16,8 +16,10 @@ import FAQAccordionList from "./components/FAQAccordionList";
 import MotionDiv from "./components/motion-div";
 import QuoteButton from "./components/QuoteButton";
 import SectorPillCloud from "./components/SectorPillCloud";
+import SiteHeader from "./components/SiteHeader";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
+import { packages } from "./data/packages";
 
 const locations = [
   "Lagos",
@@ -28,48 +30,6 @@ const locations = [
   "United States",
   "Europe",
 ];
-
-const packages = [
-  {
-    title: "Web Design Nigeria",
-    price: "From ₦150,000",
-    popular: false,
-    features: [
-      "Mobile-Optimized",
-      "Fast Loading",
-      "SEO Ready",
-      "Content Management",
-      "Local Payment Gateway",
-      "SSL Security",
-    ],
-  },
-  {
-    title: "SEO Services Nigeria",
-    price: "From ₦250,000",
-    popular: true,
-    features: [
-      "Local SEO",
-      "Keyword Research",
-      "Google Maps",
-      "Monthly Reports",
-      "Competitor Analysis",
-      "Backlink Building",
-    ],
-  },
-  {
-    title: "Business Setup",
-    price: "From ₦350,000",
-    popular: false,
-    features: [
-      "Business Tools",
-      "Process Setup",
-      "Team Training",
-      "Ongoing Support",
-      "Documentation",
-      "Growth Strategy",
-    ],
-  },
-] as const;
 
 const services = [
   {
@@ -374,37 +334,7 @@ function FooterIcon({ icon }: { icon: string }) {
 export default function Home() {
   return (
     <main className="min-h-screen bg-white font-sans text-SteelGrey">
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#444444] backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-12">
-          <a href="#" className="relative block h-16 w-48">
-            <Image
-              src="/1-logo.png"
-              alt="Empire logo"
-              fill
-              priority
-              sizes="192px"
-              className="object-contain object-left"
-            />
-          </a>
-
-          <div className="hidden items-center gap-10 text-base font-semibold text-white md:flex">
-            <a href="#services" className="transition-colors hover:text-BrandGold">
-              Services
-            </a>
-            <a href="#process" className="transition-colors hover:text-BrandGold">
-              Process
-            </a>
-            <a href="#contact" className="transition-colors hover:text-BrandGold">
-              Contact
-            </a>
-          </div>
-
-          <QuoteButton
-            label="Get Free Quote"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-BrandGold px-5 text-sm font-bold text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:px-7 sm:text-base"
-          />
-        </div>
-      </nav>
+      <SiteHeader />
 
       <section className="relative overflow-hidden bg-SoftCream">
         <MotionDiv className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-16 md:grid-cols-2 lg:px-12 lg:pb-32 lg:pt-24">
@@ -414,8 +344,7 @@ export default function Home() {
             </p>
 
             <h1 className="text-4xl font-extrabold leading-tight text-SteelGrey md:text-6xl">
-              Build an E-commerce{" "}
-              <span className="text-BrandGold">Empire</span> That Converts.
+              Website Developement &amp; E-commerce Solution
             </h1>
 
             <p className="mt-6 max-w-lg text-base font-medium leading-relaxed text-SteelGrey/70 md:text-lg">
@@ -789,7 +718,7 @@ export default function Home() {
         <MotionDiv className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
-              Our Packages
+              Our Pricing
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base font-semibold leading-8 text-SteelGrey/70 sm:text-lg">
               Transparent pricing for high-performance digital infrastructure.
@@ -843,7 +772,10 @@ export default function Home() {
         </MotionDiv>
       </section>
 
-      <section className="bg-white px-6 py-16 text-SteelGrey sm:px-10 sm:py-20 lg:px-12 lg:py-24">
+      <section
+        id="faq"
+        className="bg-white px-6 py-16 text-SteelGrey sm:px-10 sm:py-20 lg:px-12 lg:py-24"
+      >
         <div className="mx-auto max-w-7xl">
           <MotionDiv className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">

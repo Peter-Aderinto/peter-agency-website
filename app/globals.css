@@ -25,3 +25,23 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+@keyframes about-stack-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.about-stack-marquee {
+  animation: about-stack-marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-stack-marquee {
+    animation: none;
+  }
+}
