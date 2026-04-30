@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownToLine, CheckCircle2 } from "lucide-react";
 import QuoteButton from "../components/QuoteButton";
@@ -20,12 +21,30 @@ const stackItems = [
   "JavaScript",
 ] as const;
 
-function ImagePlaceholder({ className = "" }: { className?: string }) {
+function FramedImage({
+  src,
+  alt,
+  className = "",
+  imageClassName = "",
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  imageClassName?: string;
+  priority?: boolean;
+}) {
   return (
-    <div
-      aria-hidden="true"
-      className={`min-h-56 rounded-lg border border-BrandGold/35 bg-white/5 shadow-[0_22px_60px_rgba(0,0,0,0.16)] ${className}`}
-    />
+    <div className={`relative overflow-hidden rounded-lg border border-BrandGold/35 bg-white/5 shadow-[0_22px_60px_rgba(0,0,0,0.16)] ${className}`}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        sizes="(min-width: 1024px) 520px, (min-width: 640px) 70vw, 92vw"
+        className={`object-cover ${imageClassName}`}
+      />
+    </div>
   );
 }
 
@@ -34,8 +53,8 @@ export default function AboutPage() {
     <main className="min-h-screen overflow-x-hidden bg-SoftCream font-sans text-SteelGrey">
       <SiteHeader />
 
-      <section className="bg-[#101010] px-4 py-12 text-white sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 sm:gap-12 lg:grid-cols-[1.08fr_0.92fr]">
+      <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Lead Website Developer in Nigeria
@@ -55,12 +74,18 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <ImagePlaceholder className="aspect-[4/3] min-h-52 rounded-xl border-2 bg-SoftCream/5 sm:min-h-72" />
+          <FramedImage
+            src="/my-picture.jpeg"
+            alt="Empire, lead website developer in Nigeria"
+            priority
+            className="aspect-[4/3] min-h-52 rounded-xl border-2 bg-SoftCream/5 sm:min-h-72"
+            imageClassName="object-top"
+          />
         </div>
       </section>
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 bg-[#101010] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Who We Are
@@ -79,12 +104,16 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <ImagePlaceholder className="aspect-[16/10] min-h-48 sm:min-h-64" />
+          <FramedImage
+            src="/who-are-we.jpg"
+            alt="Team workspace representing who we are"
+            className="aspect-[16/10] min-h-48 sm:min-h-64"
+          />
         </div>
       </section>
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <div className="mx-auto max-w-6xl bg-[#101010] px-5 py-9 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-16">
+        <div className="mx-auto max-w-6xl bg-[rgb(68,68,68)] px-5 py-9 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-16">
           <div className="text-center">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Mission & Vision
@@ -121,15 +150,18 @@ export default function AboutPage() {
             <h2 className="text-center text-2xl font-black text-BrandGold sm:text-3xl">
               Our Stack
             </h2>
-            <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-              {stackItems.map((item) => (
-                <div
-                  key={item}
-                  className="flex min-h-16 items-center justify-center rounded-lg bg-white/[0.06] px-4 text-center text-sm font-black text-white sm:min-h-20 sm:text-base"
-                >
-                  {item}
-                </div>
-              ))}
+            <div className="mt-7 overflow-hidden">
+              <div className="about-stack-marquee flex w-max gap-3">
+                {[...stackItems, ...stackItems].map((item, index) => (
+                  <div
+                    key={`${item}-${index}`}
+                    className="flex min-h-14 min-w-36 items-center justify-center rounded-full bg-BrandGold px-6 text-center text-sm font-black text-white shadow-[0_14px_35px_rgba(0,0,0,0.18)] sm:min-h-16 sm:min-w-44 sm:text-base"
+                    aria-hidden={index >= stackItems.length ? "true" : undefined}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -137,7 +169,7 @@ export default function AboutPage() {
 
       <section className="px-4 pb-12 text-center sm:px-10 sm:pb-20 lg:px-12">
         <Link
-          href="/Aderinto_Peter_Resume.pdf"
+          href="/Empire%20Resume.pdf"
           className="inline-flex min-h-12 w-full max-w-xs items-center justify-center gap-2 rounded-full bg-BrandGold px-7 text-sm font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
         >
           <ArrowDownToLine className="size-4" aria-hidden="true" />

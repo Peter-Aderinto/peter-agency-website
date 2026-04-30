@@ -1,21 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Files,
-  Laptop,
-  Search,
-  ShoppingBag,
-  Smartphone,
-  Store,
-  TrendingUp,
-  Wrench,
-} from "lucide-react";
 import EngineeringProcessCarousel from "./components/EngineeringProcessCarousel";
 import EngineeringProcessStep from "./components/EngineeringProcessStep";
 import FAQAccordionList from "./components/FAQAccordionList";
 import MotionDiv from "./components/motion-div";
 import QuoteButton from "./components/QuoteButton";
 import SectorPillCloud from "./components/SectorPillCloud";
+import ServicesShowcase from "./components/ServicesShowcase";
 import SiteHeader from "./components/SiteHeader";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
@@ -153,22 +144,6 @@ const footerContacts = [
   },
 ] as const;
 
-const footerServices = [
-  "Website Design and Development",
-  "E-commerce Systems",
-  "SEO Engineering",
-  "Conversion Optimization",
-];
-
-const footerCompany = [
-  { label: "Our Process", href: "#process" },
-  { label: "Portfolio", href: "#" },
-  { label: "Success Stories", href: "#" },
-  { label: "Partner with Us", href: "#contact" },
-];
-
-const footerLegal = ["Privacy Policy", "Terms of Service"];
-
 const commitmentPills = [
   "24/7 Priority Support",
   "Conversion Focused Approach",
@@ -185,55 +160,6 @@ const sectorIndustries = [
   "Healthcare & Medical Clinics",
   "Legal & Professional Services",
 ] as const;
-
-function ServiceIcon({ icon }: { icon: (typeof services)[number]["icon"] }) {
-  const iconClassName = "size-6";
-
-  if (icon === "devices") {
-    return (
-      <>
-        <Laptop className="size-7" strokeWidth={2.1} aria-hidden="true" />
-        <Smartphone
-          className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-white"
-          strokeWidth={2.4}
-          aria-hidden="true"
-        />
-      </>
-    );
-  }
-
-  if (icon === "growth") {
-    return (
-      <>
-        <ShoppingBag className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
-        <TrendingUp
-          className="absolute -right-1 -top-1 size-4 rounded-sm bg-white"
-          strokeWidth={2.6}
-          aria-hidden="true"
-        />
-      </>
-    );
-  }
-
-  if (icon === "search") {
-    return <Search className={iconClassName} strokeWidth={2.3} aria-hidden="true" />;
-  }
-
-  if (icon === "content") {
-    return <Files className={iconClassName} strokeWidth={2.2} aria-hidden="true" />;
-  }
-
-  return (
-    <>
-      <Store className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
-      <Wrench
-        className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-white"
-        strokeWidth={2.5}
-        aria-hidden="true"
-      />
-    </>
-  );
-}
 
 function FooterIcon({ icon }: { icon: string }) {
   const className = "size-6";
@@ -444,25 +370,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <article
-                key={service.title}
-                className="group flex min-h-[300px] flex-col rounded-lg border border-SteelGrey/15 bg-SoftCream p-7 shadow-sm transition-all duration-300 ease-out hover:scale-[1.025] hover:border-BrandGold hover:shadow-[0_22px_55px_rgba(74,74,74,0.12)] sm:p-8"
-              >
-                <div className="relative flex size-12 items-center justify-center rounded-lg border border-BrandGold/20 bg-SoftCream text-BrandGold transition-colors group-hover:border-BrandGold/40 group-hover:bg-BrandGold group-hover:text-white">
-                  <ServiceIcon icon={service.icon} />
-                </div>
-
-                <h3 className="mt-7 text-xl font-black leading-tight text-SteelGrey">
-                  {service.title}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-SteelGrey/75">
-                  {service.description}
-                </p>
-              </article>
-            ))}
-          </div>
+          <ServicesShowcase services={services} />
         </MotionDiv>
       </section>
 
@@ -838,100 +746,6 @@ export default function Home() {
                 </span>
               </a>
             ))}
-          </div>
-
-          <div className="grid grid-cols-1 gap-10 border-b border-SoftCream/10 py-12 lg:grid-cols-[1.45fr_0.8fr_0.8fr_0.6fr] lg:gap-12">
-            <div>
-              <a
-                href="#"
-                className="inline-flex text-3xl font-black tracking-[0.18em] text-white transition-colors hover:text-BrandGold"
-              >
-                EMPIRE
-              </a>
-              <p className="mt-5 max-w-md text-base leading-8 text-SoftCream/72">
-                Empire Design &amp; Dev builds e-commerce systems engineered for
-                speed, trust, and measurable conversion. We help ambitious
-                brands turn digital storefronts into scalable revenue
-                infrastructure.
-              </p>
-
-              <form className="mt-7 max-w-md">
-                <label
-                  htmlFor="footer-newsletter"
-                  className="text-xs font-black uppercase tracking-[0.2em] text-BrandGold"
-                >
-                  Newsletter
-                </label>
-                <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-                  <input
-                    id="footer-newsletter"
-                    type="email"
-                    placeholder="Email address"
-                    className="h-12 min-h-12 flex-1 rounded-md border border-SoftCream/12 bg-SteelGrey/60 px-4 text-sm font-medium text-white outline-none transition-colors placeholder:text-SoftCream/45 focus:border-BrandGold"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-flex h-12 min-h-12 items-center justify-center rounded-full bg-BrandGold px-6 text-sm font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_28px_rgba(212,175,55,0.34)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
-                  >
-                    Join
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">
-                Services
-              </h3>
-              <ul className="mt-5 space-y-3">
-                {footerServices.map((service) => (
-                  <li key={service}>
-                    <a
-                      href="#services"
-                      className="text-sm font-medium text-SoftCream/70 transition-colors hover:text-BrandGold"
-                    >
-                      {service}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">
-                Company
-              </h3>
-              <ul className="mt-5 space-y-3">
-                {footerCompany.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      className="text-sm font-medium text-SoftCream/70 transition-colors hover:text-BrandGold"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">
-                Legal
-              </h3>
-              <ul className="mt-5 space-y-3">
-                {footerLegal.map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-SoftCream/70 transition-colors hover:text-BrandGold"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
 
           <div className="flex flex-col items-center justify-between gap-6 border-b border-SoftCream/10 py-8 text-center lg:flex-row">
