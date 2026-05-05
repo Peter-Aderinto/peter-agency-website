@@ -7,6 +7,8 @@ import { useState } from "react";
 
 const navItems = [
   { label: "About", href: "/about" },
+  { label: "Services", href: "/#services" },
+  { label: "Portfolio", href: "/portfolio" },
   { label: "Pricing", href: "/pricing" },
   { label: "Free Audit", href: "/free-audit" },
   { label: "FAQ", href: "/faq" },
@@ -22,7 +24,7 @@ export default function SiteHeader() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#444444] backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b-[0.5px] border-ChampagneGold/25 bg-Obsidian/92 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-12">
         <Link
           href="/"
@@ -76,7 +78,7 @@ export default function SiteHeader() {
       <div
         className={`md:hidden ${
           isOpen ? "block" : "hidden"
-        } border-t border-white/10 bg-[#444444] px-6 pb-6 pt-3`}
+        } border-t-[0.5px] border-ChampagneGold/25 bg-Obsidian/96 px-6 pb-6 pt-3`}
       >
         <div className="mx-auto flex max-w-7xl flex-col gap-2">
           {navItems.map((item) => (

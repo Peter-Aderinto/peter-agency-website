@@ -41,7 +41,7 @@ export default function SectorPillCloud({ industries }: SectorPillCloudProps) {
         <motion.span
           key={industry}
           variants={pillVariants}
-          className="inline-flex min-h-14 items-center justify-center rounded-full border border-SteelGrey/10 bg-white px-6 text-center text-sm font-bold leading-6 text-SteelGrey shadow-sm transition-all duration-300 hover:scale-[1.035] hover:border-BrandGold hover:text-BrandGold hover:shadow-[0_0_28px_rgba(212,175,55,0.18)] sm:px-7 sm:text-base"
+          className="inline-flex min-h-14 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/30 bg-transparent px-6 text-center text-sm font-bold leading-6 text-Alabaster shadow-sm transition-all duration-300 hover:scale-[1.035] hover:border-BrandGold hover:bg-slate-950/80 hover:text-BrandGold hover:shadow-[0_0_28px_rgba(212,175,55,0.18)] sm:px-7 sm:text-base"
         >
           {industry}
         </motion.span>

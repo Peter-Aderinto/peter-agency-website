@@ -97,7 +97,7 @@ export default function EngineeringProcessStep({
   return (
     <div className="relative grid items-center gap-6 md:grid-cols-[1fr_88px_1fr]">
       <div
-        className={`pointer-events-none absolute left-1/2 top-0 z-0 hidden -translate-x-1/2 text-[96px] font-black uppercase leading-none tracking-[0.02em] text-SoftCream/10 lg:block ${
+        className={`pointer-events-none absolute left-1/2 top-0 z-0 hidden -translate-x-1/2 text-[96px] font-black uppercase leading-none tracking-[0.02em] text-Alabaster/10 lg:block ${
           isLeft ? "lg:-translate-x-[88%]" : "lg:translate-x-[-12%]"
         }`}
         aria-hidden="true"
@@ -106,7 +106,7 @@ export default function EngineeringProcessStep({
       </div>
 
       <motion.article
-        className={`relative z-10 rounded-lg bg-white p-6 text-center text-SteelGrey shadow-[0_24px_70px_rgba(0,0,0,0.18)] transition-shadow duration-300 hover:shadow-[0_30px_82px_rgba(0,0,0,0.24)] sm:p-8 md:text-left ${
+        className={`relative z-10 rounded-lg border-[0.5px] border-ChampagneGold/30 bg-slate-950/75 p-6 text-center text-Alabaster shadow-[0_24px_70px_rgba(0,0,0,0.3)] transition-shadow duration-300 hover:border-ChampagneGold/55 hover:shadow-[0_30px_82px_rgba(0,0,0,0.42)] sm:p-8 md:text-left ${
           isLeft ? "md:col-start-1" : "md:col-start-3"
         }`}
         initial={{ opacity: 0, x: isLeft ? -72 : 72 }}
@@ -115,17 +115,17 @@ export default function EngineeringProcessStep({
         viewport={{ once: true, amount: 0.28 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="mx-auto flex size-16 items-center justify-center rounded-lg bg-SoftCream text-BrandGold md:mx-0">
+        <div className="mx-auto flex size-16 items-center justify-center rounded-lg border-[0.5px] border-ChampagneGold/35 bg-black/35 text-BrandGold md:mx-0">
           <ProcessIcon icon={icon} />
         </div>
         <p className="mt-7 inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-[0.24em] text-BrandGold md:justify-start">
           {isActive ? <StatusDot tone="gold" /> : null}
           <span>{step}</span>
         </p>
-        <h3 className="mt-3 text-2xl font-black leading-tight text-slate-950 sm:text-3xl">
+        <h3 className="mt-3 text-2xl font-medium leading-tight tracking-tight text-Alabaster sm:text-3xl">
           {title}
         </h3>
-        <p className="mt-4 text-base leading-8 text-SteelGrey/75">
+        <p className="mt-4 text-base leading-8 text-MutedSlate">
           {description}
         </p>
       </motion.article>

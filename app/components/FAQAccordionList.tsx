@@ -21,12 +21,12 @@ export default function FAQAccordionList({ items }: FAQAccordionListProps) {
         return (
           <article
             key={item.question}
-            className="overflow-hidden border border-SteelGrey/10 bg-white"
+            className="overflow-hidden border-[0.5px] border-ChampagneGold/30 bg-transparent transition-colors hover:bg-slate-950/80"
           >
             <button
               type="button"
               onClick={() => setActiveQuestion(isOpen ? null : item.question)}
-              className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left text-base font-bold text-SteelGrey transition-colors hover:text-BrandGold sm:px-7 sm:py-6 sm:text-lg"
+              className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left text-base font-bold text-Alabaster transition-colors hover:text-BrandGold sm:px-7 sm:py-6 sm:text-lg"
               aria-expanded={isOpen}
             >
               <span>{item.question}</span>
@@ -43,7 +43,7 @@ export default function FAQAccordionList({ items }: FAQAccordionListProps) {
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.28, ease: "easeOut" }}
                 >
-                  <p className="border-t border-SteelGrey/10 px-5 py-5 text-sm font-medium leading-7 text-SteelGrey/80 sm:px-7 sm:text-base sm:leading-8">
+                  <p className="border-t-[0.5px] border-ChampagneGold/25 px-5 py-5 text-sm font-medium leading-7 text-MutedSlate sm:px-7 sm:text-base sm:leading-8">
                     {item.answer}
                   </p>
                 </motion.div>

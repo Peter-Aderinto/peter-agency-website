@@ -1,57 +1,49 @@
 import Image from "next/image";
 import Link from "next/link";
+import DualTickerMarquee from "./components/DualTickerMarquee";
 import EngineeringProcessCarousel from "./components/EngineeringProcessCarousel";
 import EngineeringProcessStep from "./components/EngineeringProcessStep";
 import FAQAccordionList from "./components/FAQAccordionList";
 import MotionDiv from "./components/motion-div";
+import PortfolioCard from "./components/PortfolioCard";
 import QuoteButton from "./components/QuoteButton";
 import SectorPillCloud from "./components/SectorPillCloud";
 import ServicesShowcase from "./components/ServicesShowcase";
 import SiteHeader from "./components/SiteHeader";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
-import { packages } from "./data/packages";
-
-const locations = [
-  "Lagos",
-  "Abuja",
-  "Port Harcourt",
-  "Ibadan",
-  "Kano",
-  "United States",
-  "Europe",
-];
+import { homepagePortfolioItems, pricingPlans } from "./data/homepage-sections";
 
 const services = [
   {
-    title: "Website & Web App Development",
+    title: "Website Development in Nigeria",
     description:
-      "We engineer responsive, mobile-first websites and complex web applications (PWA) tailored for speed and performance in the Nigerian market.",
+      "Custom website development for Nigerian businesses looking to generate leads, build trust, and grow online with fast, SEO-optimized systems.",
     icon: "devices",
   },
   {
-    title: "E-commerce Strategy & Growth",
+    title: "Shopify Store Development in Nigeria",
     description:
-      "We don't just launch stores; we design complete conversion architectures. Including revenue gap analysis, customer journey mapping, and sales funnel engineering.",
+      "We design and develop high-converting Shopify stores with seamless checkout, optimized product pages, and scalable systems for long-term growth.",
+    icon: "shopify",
+  },
+  {
+    title: "E-commerce Website Development",
+    description:
+      "End-to-end e-commerce development focused on conversions, user experience, and sales optimization for Nigerian and global businesses.",
     icon: "growth",
   },
   {
-    title: "Search Engine Optimization (SEO)",
+    title: "Website Management & CMS Setup",
     description:
-      "Our Technical SEO Audit and Semantic Content Strategy ensure your brand is discovered by both human searchers and AI Generative engines (AEO/GEO).",
-    icon: "search",
-  },
-  {
-    title: "Content Management",
-    description:
-      "Setup and configuration of modern, easy-to-use content systems. Empowering your team to update the digital space seamlessly without a developer.",
+      "We build easy-to-manage websites using modern CMS systems, allowing you to update content, products, and pages without technical skills.",
     icon: "content",
   },
   {
-    title: "Shopify Development & Engineering",
+    title: "SEO Optimization for Nigerian Websites",
     description:
-      "We are the Premier Shopify Architect in Nigeria. From custom theme builds to app configuration and local payment gateway (Paystack/Flutterwave) integration.",
-    icon: "shopify",
+      "Technical SEO, keyword optimization, and on-page strategies to help your website rank on Google and attract more customers in Nigeria.",
+    icon: "search",
   },
 ] as const;
 
@@ -120,27 +112,6 @@ const engineeringProcess = [
       "Rigorous testing for performance and security. Once launched, we monitor the systems to ensure stability and provide the technical support needed for global scale.",
     icon: "scale",
     side: "right",
-  },
-] as const;
-
-const footerContacts = [
-  {
-    title: "Phone",
-    value: "WhatsApp: +234 816 090 8843",
-    href: "https://wa.me/2348160908843",
-    icon: "phone",
-  },
-  {
-    title: "Email",
-    value: "petay081@gmail.com",
-    href: "mailto:petay081@gmail.com",
-    icon: "email",
-  },
-  {
-    title: "Location",
-    value: "Ibadan, Nigeria",
-    href: "#global",
-    icon: "location",
   },
 ] as const;
 
@@ -241,6 +212,19 @@ function FooterIcon({ icon }: { icon: string }) {
     );
   }
 
+  if (icon === "behance") {
+    return (
+      <svg
+        className={className}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M3 5.5h6.68c1.3 0 2.31.3 3.03.92.72.61 1.08 1.45 1.08 2.53 0 .65-.15 1.21-.46 1.68-.31.47-.76.83-1.35 1.09.8.23 1.41.65 1.81 1.26.4.61.6 1.35.6 2.22 0 1.16-.4 2.08-1.21 2.76-.8.69-1.9 1.04-3.29 1.04H3V5.5Zm3.03 5.46h3.16c.5 0 .9-.12 1.18-.36.28-.24.42-.59.42-1.05 0-.48-.14-.83-.43-1.05-.29-.23-.7-.34-1.24-.34H6.03v2.8Zm0 5.38h3.43c.57 0 1.02-.14 1.34-.42.32-.29.48-.7.48-1.24 0-.52-.16-.93-.48-1.2-.32-.28-.77-.42-1.35-.42H6.03v3.28ZM16.1 8.2h5.9v1.75h-5.9V8.2Zm2.93 2.46c1.36 0 2.45.43 3.28 1.28.82.85 1.22 2.05 1.19 3.58v.54h-6.25c.04.69.22 1.22.54 1.58.33.37.8.55 1.42.55.43 0 .8-.1 1.09-.3.3-.21.51-.47.65-.8h2.38a4.07 4.07 0 0 1-1.49 2.2c-.72.51-1.58.76-2.59.76-1.45 0-2.58-.44-3.38-1.33-.81-.89-1.22-2.03-1.22-3.43 0-1.36.42-2.47 1.26-3.33.84-.87 1.88-1.3 3.12-1.3Zm1.82 3.7c-.08-.6-.28-1.05-.59-1.34-.31-.3-.73-.45-1.24-.45-.53 0-.94.16-1.23.49-.3.32-.47.76-.52 1.3h3.58Z" />
+      </svg>
+    );
+  }
+
   return (
     <svg
       className={className}
@@ -259,45 +243,29 @@ function FooterIcon({ icon }: { icon: string }) {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white font-sans text-SteelGrey">
+    <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
       <SiteHeader />
 
-      <section className="relative overflow-hidden bg-SoftCream">
-        <MotionDiv className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-16 md:grid-cols-2 lg:px-12 lg:pb-32 lg:pt-24">
+      <section className="relative isolate overflow-hidden bg-Obsidian pb-20 text-Alabaster">
+        <div
+          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(212,175,55,0.24),transparent_30%),radial-gradient(circle_at_84%_20%,rgba(212,175,55,0.12),transparent_26%),linear-gradient(135deg,#080808_0%,#0f0b05_46%,#080808_100%)]"
+          aria-hidden="true"
+        />
+
+        <MotionDiv className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-20 pt-20 md:grid-cols-2 lg:px-12 lg:pt-24">
           <div className="text-left">
-            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-BrandGold/80 md:text-sm">
-              THE ARCHITECT OF NIGERIAN E-COMMERCE
+            <p className="mb-6 inline-flex max-w-full items-center rounded-full border-[0.5px] border-ChampagneGold/55 bg-black/45 px-4 py-2 text-[10px] font-black uppercase leading-5 tracking-[0.2em] text-BrandGold shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-md sm:text-xs">
+              WEBSITE DEVELOPER &amp; SHOPIFY EXPERT IN NIGERIA
             </p>
 
-            <h1 className="text-4xl font-extrabold leading-tight text-SteelGrey md:text-6xl">
-              Website Developement &amp; E-commerce Solution
+            <h1 className="max-w-3xl text-[2.1rem] font-black leading-[1.12] tracking-normal text-Alabaster md:text-[3.5rem] md:leading-[1.08]">
+              Website Design &amp; E-commerce Development for Nigerian Businesses.
             </h1>
 
-            <p className="mt-6 max-w-lg text-base font-medium leading-relaxed text-SteelGrey/70 md:text-lg">
-              We engineer high-speed Website systems designed to capture sales,
-              outrank competitors, and scale your brand across borders.
+            <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-MutedSlate">
+              We build SEO-ready websites and high-converting Shopify stores
+              that help businesses generate leads, sales, and long-term growth.
             </p>
-
-            <ul className="mt-8 flex flex-col gap-3 text-xs font-semibold uppercase tracking-[0.08em] text-SteelGrey/60 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
-              <li className="flex items-center gap-2">
-                <span className="text-sm font-black leading-none text-BrandGold">
-                  ✓
-                </span>
-                50+ Businesses
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-sm font-black leading-none text-BrandGold">
-                  ✓
-                </span>
-                24/7 Support
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-sm font-black leading-none text-BrandGold">
-                  ✓
-                </span>
-                Built for Growth
-              </li>
-            </ul>
 
             <div className="mt-10 flex w-full flex-col gap-4 sm:flex-row sm:items-center">
               <Link
@@ -309,16 +277,25 @@ export default function Home() {
 
               <a
                 href="#services"
-                className="inline-flex items-center justify-center rounded-full border-2 border-SteelGrey/20 bg-transparent px-8 py-4 text-base font-bold text-SteelGrey transition-colors hover:border-BrandGold hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/15"
+                className="inline-flex items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/45 bg-transparent px-8 py-4 text-base font-bold text-Alabaster transition-colors hover:border-ChampagneGold hover:text-ChampagneGold focus:outline-none focus:ring-4 focus:ring-ChampagneGold/15"
               >
                 View Services
               </a>
             </div>
+
           </div>
 
           <div className="relative w-full">
+            <div
+              className="empire-grid-mesh pointer-events-none absolute -inset-8 bg-[linear-gradient(rgba(212,175,55,0.16)_0.5px,transparent_0.5px),linear-gradient(90deg,rgba(212,175,55,0.16)_0.5px,transparent_0.5px)] bg-[size:42px_42px] opacity-45 [mask-image:radial-gradient(circle_at_center,black_0%,transparent_72%)]"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute -inset-10 bg-[radial-gradient(circle_at_50%_42%,rgba(212,175,55,0.2),transparent_34%)]"
+              aria-hidden="true"
+            />
             <div className="relative aspect-[4/5] w-full overflow-visible">
-              <div className="absolute left-0 top-0 z-10 flex min-h-12 items-center gap-3 rounded-xl border border-white/20 bg-SteelGrey/70 px-4 text-sm font-black text-white backdrop-blur-md sm:min-h-14 sm:px-5 sm:text-base lg:left-0 lg:top-0 lg:min-h-14 lg:px-5 lg:text-base">
+              <div className="absolute left-0 top-0 z-10 flex min-h-12 items-center gap-3 rounded-xl border-[0.5px] border-ChampagneGold/45 bg-black/45 px-4 text-sm font-black text-Alabaster backdrop-blur-md sm:min-h-14 sm:px-5 sm:text-base lg:left-0 lg:top-0 lg:min-h-14 lg:px-5 lg:text-base">
                 <span className="size-3 rounded-full bg-green-500" />
                 100+ Clients Worldwide
               </div>
@@ -329,44 +306,36 @@ export default function Home() {
                 width={760}
                 height={800}
                 priority
-                className="h-full w-full rounded-2xl object-cover object-center shadow-[0_28px_70px_rgba(74,74,74,0.18)]"
+                className="h-full w-full rounded-2xl border-[0.5px] border-ChampagneGold/45 object-cover object-center shadow-[0_34px_90px_rgba(0,0,0,0.62)]"
               />
 
-              <div className="absolute bottom-0 right-0 z-10 flex min-h-12 items-center gap-3 rounded-xl border border-white/20 bg-SteelGrey/70 px-4 text-sm font-black text-white backdrop-blur-md sm:min-h-14 sm:px-5 sm:text-base lg:bottom-0 lg:right-0 lg:min-h-14 lg:px-5 lg:text-base">
+              <div className="absolute bottom-0 right-0 z-10 flex min-h-12 items-center gap-3 rounded-xl border-[0.5px] border-ChampagneGold/45 bg-black/45 px-4 text-sm font-black text-Alabaster backdrop-blur-md sm:min-h-14 sm:px-5 sm:text-base lg:bottom-0 lg:right-0 lg:min-h-14 lg:px-5 lg:text-base">
                 <span className="tracking-[0.08em] text-yellow-400">★★★★★</span>
                 <span>4.9/5 Rating</span>
               </div>
             </div>
           </div>
         </MotionDiv>
-
-        <div className="absolute inset-x-0 bottom-0 text-white" aria-hidden="true">
-          <svg
-            className="h-16 w-full sm:h-24"
-            viewBox="0 0 1440 120"
-            preserveAspectRatio="none"
-            fill="currentColor"
-          >
-            <path d="M0 96L80 90C160 84 320 72 480 78C640 84 800 108 960 112C1120 116 1280 100 1360 92L1440 84V120H0V96Z" />
-          </svg>
-        </div>
       </section>
+
+      <DualTickerMarquee />
 
       <section
         id="services"
-        className="relative isolate overflow-hidden bg-white px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12 lg:py-28"
+        className="relative isolate overflow-hidden bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
       >
         <div
-          className="absolute inset-0 -z-10 bg-[url('/images/nigerian-tech-background.jpg')] bg-cover bg-center opacity-5"
+          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_22%_0%,rgba(212,175,55,0.08),transparent_28%)]"
           aria-hidden="true"
         />
         <MotionDiv className="relative z-10 mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
-              Our Services.
+            <h2 className="text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
+              Website Development &amp; Shopify Services in Nigeria.
             </h2>
-            <p className="mt-4 text-base font-semibold leading-8 text-SteelGrey/72 sm:text-lg">
-              Architecting the Digital Space for Nigerian Brands.
+            <p className="mt-4 text-base font-medium leading-8 text-MutedSlate">
+              Helping businesses in Nigeria build websites that rank, convert,
+              and scale.
             </p>
           </div>
 
@@ -375,54 +344,62 @@ export default function Home() {
       </section>
 
       <section
+        id="portfolio"
+        className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
+      >
+        <MotionDiv className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-xs font-medium uppercase tracking-[0.24em] text-ChampagneGold">
+              SELECTED WORKS
+            </p>
+            <h2 className="mt-4 text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
+              Website Design Portfolio for Brands that Want Proof.
+            </h2>
+          </div>
+
+          <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-4">
+            {homepagePortfolioItems.map((item) => (
+              <PortfolioCard key={item.title} {...item} />
+            ))}
+          </div>
+        </MotionDiv>
+
+        <div className="mx-auto mt-16 max-w-7xl overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/30 bg-[#111111] px-6 py-10 text-center shadow-[0_30px_90px_rgba(0,0,0,0.38)] sm:px-10">
+          <p className="mx-auto max-w-3xl text-base font-medium leading-8 text-MutedSlate sm:text-lg">
+            View the full portfolio for ecommerce, Shopify, corporate, and
+            service-business website examples.
+          </p>
+          <Link
+            href="/portfolio"
+            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-[#2563eb] px-7 text-base font-black text-white transition-all hover:bg-blue-500 hover:shadow-[0_0_34px_rgba(37,99,235,0.38)] focus:outline-none focus:ring-4 focus:ring-blue-500/30"
+          >
+            View Full Portfolio →
+          </Link>
+        </div>
+      </section>
+
+      <section
         id="global"
-        className="border-b border-SteelGrey/10 bg-white px-6 pb-20 pt-4 sm:px-10 sm:pb-24 sm:pt-6 lg:px-12 lg:pb-28 lg:pt-8"
+        className="border-y-[0.5px] border-ChampagneGold/20 bg-Obsidian px-6 py-16 sm:px-10 lg:px-12"
       >
         <MotionDiv className="mx-auto max-w-7xl text-center">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-SteelGrey/75 sm:text-xs">
-            SERVING AMBITIOUS BUSINESSES GLOBALLY
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-ChampagneGold/75 sm:text-xs">
+            SERVING AMBITIOUS BUSINESSES ACROSS NIGERIA AND GLOBAL MARKETS
           </p>
-
-          <ul className="mx-auto mt-4 flex max-w-4xl flex-wrap items-center justify-center gap-2 sm:gap-x-3 sm:gap-y-3">
-            {locations.map((location) => (
-              <li key={location}>
-                <span className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-zinc-100 px-3 text-xs font-medium text-SteelGrey sm:h-9 sm:px-4 sm:text-sm">
-                  {location === "Worldwide" ? (
-                    <svg
-                      className="size-3.5 shrink-0 text-red-600 sm:size-4"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
-                      <path d="M3.6 9h16.8M3.6 15h16.8M12 3c2.1 2.25 3.25 5.15 3.25 9S14.1 18.75 12 21M12 3C9.9 5.25 8.75 8.15 8.75 12S9.9 18.75 12 21" />
-                    </svg>
-                  ) : (
-                    <svg
-                      className="size-3.5 shrink-0 text-red-600 sm:size-4"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 2.25A7.25 7.25 0 0 0 4.75 9.5c0 5.44 6.42 11.64 6.7 11.9a.8.8 0 0 0 1.1 0c.28-.26 6.7-6.46 6.7-11.9A7.25 7.25 0 0 0 12 2.25Zm0 10.25a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                    </svg>
-                  )}
-                  {location}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-MutedSlate">
+            Strategy, interface architecture, and technical systems built with
+            the discipline of a global studio and the market intelligence of a
+            Nigerian operator.
+          </p>
         </MotionDiv>
       </section>
 
       <section
         id="process"
-        className="relative overflow-hidden bg-[url('/website-developer-nigeria.jpg')] bg-cover bg-center px-6 py-20 text-SoftCream sm:px-10 sm:py-24 lg:px-12 lg:py-28"
+        className="relative overflow-hidden bg-[url('/website-developer-nigeria.jpg')] bg-cover bg-center px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
       >
         <div
-          className="absolute inset-0 bg-SteelGrey/82"
+          className="absolute inset-0 bg-Obsidian/90"
           aria-hidden="true"
         />
         <MotionDiv className="relative z-10 mx-auto max-w-7xl">
@@ -430,10 +407,10 @@ export default function Home() {
             <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
               OUR ENGINEERING PROCESS
             </p>
-            <h2 className="mt-4 text-3xl font-black leading-tight text-white sm:text-5xl">
+            <h2 className="mt-4 text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
               Your Website as your Brand&apos;s Digital Space
             </h2>
-            <p className="mt-5 text-base leading-8 text-SoftCream/75 sm:text-lg">
+            <p className="mt-5 text-base leading-8 text-MutedSlate">
               A disciplined build system for brands that need strategy,
               technical precision, and launch confidence in one clear path.
             </p>
@@ -476,20 +453,25 @@ export default function Home() {
         </MotionDiv>
       </section>
 
-      <section className="bg-white px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12">
+      <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
         <MotionDiv className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_0.92fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-BrandGold">
               THE EMPIRE ADVANTAGE
             </p>
-            <h2 className="mt-4 max-w-3xl text-4xl font-black leading-tight text-slate-950 sm:text-5xl">
+            <h2 className="mt-4 max-w-3xl text-4xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
               Why High-Growth Nigerian Brands Partner With Us
             </h2>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-MutedSlate">
+              As a Website Developer and Shopify Expert based in Nigeria, I
+              bridge the gap between human behavior (Sociology) and digital
+              performance.
+            </p>
 
             <div className="mt-10 space-y-8">
               {advantagePillars.map((pillar) => (
                 <article key={pillar.title} className="flex gap-5">
-                  <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-SoftCream text-BrandGold">
+                  <div className="flex size-14 shrink-0 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/35 bg-white/[0.03] text-BrandGold">
                     {pillar.icon === "chart" ? (
                       <svg
                         className="size-7"
@@ -546,10 +528,10 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-black text-SteelGrey">
+                    <h3 className="text-xl font-medium text-Alabaster">
                       {pillar.title}
                     </h3>
-                    <p className="mt-2 max-w-2xl text-base leading-8 text-SteelGrey/80">
+                    <p className="mt-2 max-w-2xl text-base leading-8 text-MutedSlate">
                       {pillar.description}
                     </p>
                   </div>
@@ -558,8 +540,8 @@ export default function Home() {
             </div>
           </div>
 
-          <aside className="rounded-3xl border border-BrandGold/20 bg-SoftCream p-7 text-center shadow-[0_24px_70px_rgba(74,74,74,0.14)] sm:p-10">
-            <div className="mx-auto flex size-20 items-center justify-center rounded-full bg-white text-BrandGold">
+          <aside className="rounded-3xl border-[0.5px] border-ChampagneGold/35 bg-white/[0.03] p-7 text-center shadow-[0_30px_90px_rgba(0,0,0,0.34)] sm:p-10">
+            <div className="mx-auto flex size-20 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/35 bg-black/35 text-BrandGold">
               <svg
                 className="size-10"
                 viewBox="0 0 24 24"
@@ -570,10 +552,10 @@ export default function Home() {
               </svg>
             </div>
 
-            <h3 className="mt-8 text-3xl font-black leading-tight text-slate-950">
+            <h3 className="mt-8 text-3xl font-medium leading-tight tracking-tight text-Alabaster">
               Ready to Scale Your Empire?
             </h3>
-            <p className="mt-4 text-lg leading-8 text-SteelGrey/80">
+            <p className="mt-4 text-base leading-8 text-MutedSlate">
               Lock in a specialized 15-minute diagnostic call. We&apos;ll audit your
               current digital presence and map out a 90-day growth plan.
             </p>
@@ -582,7 +564,7 @@ export default function Home() {
               {conversionItems.map((item) => (
                 <li
                   key={item}
-                  className="flex min-h-14 items-center justify-between gap-4 rounded-lg border border-SteelGrey/10 bg-white px-4 text-base font-medium text-SteelGrey"
+                  className="flex min-h-14 items-center justify-between gap-4 rounded-lg border-[0.5px] border-ChampagneGold/25 bg-black/35 px-4 text-base font-medium text-Alabaster"
                 >
                   <span>{item}</span>
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-BrandGold text-xs font-black text-white">
@@ -599,22 +581,22 @@ export default function Home() {
               Book Your Strategy Session →
             </Link>
 
-            <p className="mt-5 text-sm text-SteelGrey/65">
+            <p className="mt-5 text-sm text-MutedSlate">
               Limited slots available per month. No commitment required.
             </p>
           </aside>
         </MotionDiv>
       </section>
 
-      <section className="bg-SoftCream px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12 lg:py-28">
+      <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
         <MotionDiv className="mx-auto max-w-7xl text-center">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
             SECTOR EXPERTISE
           </p>
-          <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
+          <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
             Industries We Work With
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm font-semibold leading-7 text-SteelGrey/65 sm:text-base">
+          <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-7 text-MutedSlate">
             Tailored digital solutions for high-growth sectors.
           </p>
         </MotionDiv>
@@ -622,59 +604,78 @@ export default function Home() {
         <SectorPillCloud industries={sectorIndustries} />
       </section>
 
-      <section className="bg-SoftCream px-6 py-20 text-SteelGrey sm:px-10 sm:py-24 lg:px-12 lg:py-28">
+      <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
         <MotionDiv className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
-              Our Pricing
+            <h2 className="text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
+              Transparent Pricing for Scaling Brands.
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base font-semibold leading-8 text-SteelGrey/70 sm:text-lg">
-              Transparent pricing for high-performance digital infrastructure.
+            <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-8 text-MutedSlate">
+              Choose the package that fits your current empire-building stage.
             </p>
           </div>
 
           <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-8 lg:grid-cols-3">
-            {packages.map((packageItem) => (
-              <article
-                key={packageItem.title}
-                className={`relative flex h-full min-h-[520px] flex-col rounded-xl border bg-white p-8 text-SteelGrey transition-all duration-300 ease-out hover:-translate-y-2 hover:border-BrandGold hover:shadow-[0_24px_60px_rgba(74,74,74,0.14)] sm:p-9 ${
-                  packageItem.popular
-                    ? "border-BrandGold shadow-[0_18px_44px_rgba(212,175,55,0.12)]"
-                    : "border-SteelGrey/10 shadow-sm"
-                }`}
+            {pricingPlans.map((plan, index) => (
+              <MotionDiv
+                key={plan.title}
+                delay={index * 0.08}
+                className={`relative mb-8 flex h-full min-h-[560px] flex-col rounded-3xl border p-8 transition-all duration-300 ease-out hover:-translate-y-2 sm:p-9 lg:mb-0 ${plan.cardClassName}`}
               >
-                {packageItem.popular ? (
-                  <span className="absolute left-1/2 top-0 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-full bg-BrandGold px-5 py-1.5 text-xs font-black uppercase tracking-[0.08em] text-white shadow-[0_10px_24px_rgba(212,175,55,0.22)]">
-                    Most Popular
+                {plan.recommended ? (
+                  <span className="absolute left-1/2 top-0 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-full bg-Obsidian px-5 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-BrandGold shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
+                    Recommended
                   </span>
                 ) : null}
 
-                <h3 className="text-2xl font-black text-SteelGrey">
-                  {packageItem.title}
+                <h3 className="text-2xl font-black leading-tight">
+                  {plan.title}
                 </h3>
-                <p className="mt-5 text-3xl font-black text-BrandGold">
-                  {packageItem.price}
+                <p className={`mt-4 text-base leading-7 ${plan.mutedClassName}`}>
+                  {plan.description}
                 </p>
 
-                <ul className="mt-8 space-y-3 text-sm font-medium text-SteelGrey/78">
-                  {packageItem.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-BrandGold text-[10px] font-black text-white">
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <p className={`text-3xl font-black ${plan.priceClassName}`}>
+                    {plan.price}
+                  </p>
+                  <span className="inline-flex rounded-full bg-red-600 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">
+                    {plan.badge}
+                  </span>
+                </div>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {plan.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={`inline-flex rounded-full border px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.08em] ${plan.tagClassName}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <ul className={`mt-8 space-y-4 text-sm font-medium ${plan.mutedClassName}`}>
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <span
+                        className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full text-[11px] font-black ${plan.checkClassName}`}
+                      >
                         ✓
                       </span>
-                      {feature}
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="mt-auto pt-8">
                   <QuoteButton
-                    label="Get Quote →"
-                    initialService={packageItem.title}
-                    className="inline-flex h-12 w-full items-center justify-center rounded-full bg-BrandGold px-6 text-sm font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_30px_rgba(212,175,55,0.24)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
+                    label="Get Started"
+                    initialService={plan.initialService}
+                    className={`inline-flex h-14 w-full items-center justify-center rounded-full px-6 text-sm font-black transition-all focus:outline-none focus:ring-4 ${plan.buttonClassName}`}
                   />
                 </div>
-              </article>
+              </MotionDiv>
             ))}
           </div>
         </MotionDiv>
@@ -682,14 +683,14 @@ export default function Home() {
 
       <section
         id="faq"
-        className="bg-white px-6 py-16 text-SteelGrey sm:px-10 sm:py-20 lg:px-12 lg:py-24"
+        className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
           <MotionDiv className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
               QUICK FAQ
             </p>
-            <h2 className="mt-4 text-3xl font-black leading-tight text-SteelGrey sm:text-5xl">
+            <h2 className="mt-4 text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
               Answers Before We Build
             </h2>
           </MotionDiv>
@@ -711,7 +712,7 @@ export default function Home() {
               <div className="mt-8 text-center">
                 <a
                   href="/faq"
-                  className="inline-flex items-center justify-center text-base font-black text-black transition-colors hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
+                  className="inline-flex items-center justify-center text-base font-black text-Alabaster transition-colors hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
                 >
                   View all FAQ →
                 </a>
@@ -723,47 +724,41 @@ export default function Home() {
 
       <footer
         id="contact"
-        className="bg-[linear-gradient(180deg,#4A4A4A_0%,#383838_58%,#2d2d2d_100%)] px-6 py-16 text-SoftCream sm:px-10 sm:py-20 lg:px-12"
+        className="bg-[linear-gradient(180deg,#080808_0%,#050505_100%)] px-6 py-16 text-Alabaster sm:px-10 sm:py-20 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 gap-4 border-b border-SoftCream/10 pb-12 md:grid-cols-3">
-            {footerContacts.map((contact) => (
-              <a
-                key={contact.title}
-                href={contact.href}
-                className="group flex min-h-32 items-center gap-5 rounded-lg border border-SoftCream/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-BrandGold/50 hover:bg-white/[0.07]"
-              >
-                <span className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-BrandGold/10 text-BrandGold transition-colors group-hover:bg-BrandGold group-hover:text-white">
-                  <FooterIcon icon={contact.icon} />
-                </span>
-                <span>
-                  <span className="block text-xs font-black uppercase tracking-[0.22em] text-BrandGold">
-                    {contact.title}
-                  </span>
-                  <span className="mt-2 block text-base font-semibold leading-7 text-SoftCream">
-                    {contact.value}
-                  </span>
-                </span>
-              </a>
-            ))}
-          </div>
-
-          <div className="flex flex-col items-center justify-between gap-6 border-b border-SoftCream/10 py-8 text-center lg:flex-row">
-            <p className="text-sm text-SoftCream/65">
+          <div className="flex flex-col items-center justify-between gap-6 border-b-[0.5px] border-ChampagneGold/20 py-8 text-center lg:flex-row">
+            <p className="text-sm text-MutedSlate">
               © 2026 Empire Design &amp; Dev. All rights reserved.
             </p>
 
             <div className="flex items-center justify-center gap-3">
               {[
-                { label: "X", icon: "x" },
-                { label: "LinkedIn", icon: "linkedin" },
-                { label: "Instagram", icon: "instagram" },
+                { label: "Email", href: "mailto:petay081@gmail.com", icon: "email" },
+                { label: "X", href: "https://x.com/Empire_WebDev", icon: "x" },
+                {
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/in/peteraderinto01/",
+                  icon: "linkedin",
+                },
+                {
+                  label: "Instagram",
+                  href: "https://www.instagram.com/digital_empire_dev?igsh=MWgxYnFpemh4Mm9sMg%3D%3D&utm_source=qr",
+                  icon: "instagram",
+                },
+                {
+                  label: "Behance",
+                  href: "https://www.behance.net/peteraderinto01",
+                  icon: "behance",
+                },
               ].map((social) => (
                 <a
                   key={social.label}
-                  href="#"
+                  href={social.href}
                   aria-label={social.label}
-                  className="flex size-11 items-center justify-center rounded-full border border-SoftCream/12 text-SoftCream/75 transition-all hover:border-BrandGold hover:bg-BrandGold hover:text-white"
+                  target={social.href.startsWith("http") ? "_blank" : undefined}
+                  rel={social.href.startsWith("http") ? "noreferrer" : undefined}
+                  className="flex size-11 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/25 text-Alabaster/75 transition-all hover:border-BrandGold hover:bg-BrandGold hover:text-black"
                 >
                   <FooterIcon icon={social.icon} />
                 </a>
@@ -771,13 +766,13 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm font-bold">
-              <a href="#contact" className="text-SoftCream/70 transition-colors hover:text-BrandGold">
+              <a href="#contact" className="text-MutedSlate transition-colors hover:text-BrandGold">
                 Get Quote
               </a>
-              <a href="#" className="text-SoftCream/70 transition-colors hover:text-BrandGold">
+              <a href="#" className="text-MutedSlate transition-colors hover:text-BrandGold">
                 Privacy
               </a>
-              <a href="#" className="text-SoftCream/70 transition-colors hover:text-BrandGold">
+              <a href="#" className="text-MutedSlate transition-colors hover:text-BrandGold">
                 Terms
               </a>
             </div>
@@ -788,7 +783,7 @@ export default function Home() {
               {commitmentPills.map((pill) => (
                 <span
                   key={pill}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-BrandGold/25 bg-BrandGold/10 px-5 text-xs font-black uppercase tracking-[0.14em] text-SoftCream/85 sm:w-auto"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-[0.5px] border-BrandGold/30 bg-BrandGold/10 px-5 text-xs font-black uppercase tracking-[0.14em] text-Alabaster/85 sm:w-auto"
                 >
                   <StatusDot
                     tone={pill === "24/7 Priority Support" ? "emerald" : "gold"}

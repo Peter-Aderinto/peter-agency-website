@@ -26,7 +26,13 @@ export default function FAQPageClient({ items }: FAQPageClientProps) {
 
   return (
     <div>
-      <div className="-mx-6 mt-10 overflow-x-auto px-6 sm:mx-0 sm:px-0">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.22 }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        className="-mx-6 mt-10 overflow-x-auto px-6 sm:mx-0 sm:px-0"
+      >
         <div className="flex min-w-max gap-3">
           {filters.map((filter) => {
             const isActive = activeFilter === filter;
@@ -47,7 +53,7 @@ export default function FAQPageClient({ items }: FAQPageClientProps) {
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       <AnimatePresence mode="wait">
         <motion.div

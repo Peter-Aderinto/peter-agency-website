@@ -11,6 +11,7 @@ import {
   Target,
   TrendingUp,
 } from "lucide-react";
+import MotionDiv from "../components/motion-div";
 import AuditForm from "./AuditForm";
 
 export const metadata: Metadata = {
@@ -66,18 +67,18 @@ const auditPillars = [
 
 export default function FreeAuditPage() {
   return (
-    <main className="min-h-screen bg-SoftCream font-sans text-SteelGrey">
-      <header className="border-b border-SteelGrey/10 bg-SoftCream/95">
+    <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
+      <header className="border-b-[0.5px] border-ChampagneGold/25 bg-Obsidian/95">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-10 lg:px-12">
           <Link
             href="/"
-            className="text-lg font-black uppercase tracking-[0.2em] text-SteelGrey transition-colors hover:text-BrandGold"
+            className="text-lg font-black uppercase tracking-[0.2em] text-Alabaster transition-colors hover:text-BrandGold"
           >
             Empire
           </Link>
           <Link
             href="/"
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-SteelGrey/15 bg-white px-4 text-sm font-black text-SteelGrey transition-colors hover:border-BrandGold hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/30 bg-transparent px-4 text-sm font-black text-Alabaster transition-colors hover:border-BrandGold hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
           >
             Back to Home
           </Link>
@@ -85,14 +86,14 @@ export default function FreeAuditPage() {
       </header>
 
       <section className="px-6 pb-16 pt-16 sm:px-10 sm:pb-20 sm:pt-20 lg:px-12">
-        <div className="mx-auto max-w-5xl text-center">
+        <MotionDiv className="mx-auto max-w-5xl text-center">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
             Free Strategic Diagnostic
           </p>
-          <h1 className="mx-auto mt-5 max-w-4xl text-4xl font-black leading-tight text-SteelGrey sm:text-5xl lg:text-6xl">
+          <h1 className="mx-auto mt-5 max-w-4xl text-4xl font-black leading-tight text-Alabaster sm:text-5xl lg:text-6xl">
             Get Your Free Performance Architecture Audit
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-8 text-SteelGrey/75 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-8 text-MutedSlate sm:text-lg">
             Find the conversion infrastructure gaps, revenue leak detection
             opportunities, SEO blockers, AEO readiness issues, and semantic
             search optimization wins holding back your next stage of growth.
@@ -109,15 +110,16 @@ export default function FreeAuditPage() {
               </div>
             ))}
           </div>
-        </div>
+        </MotionDiv>
       </section>
 
       <section className="px-6 pb-16 sm:px-10 sm:pb-20 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {auditPillars.map(({ title, description, icon: Icon }) => (
-              <article
+            {auditPillars.map(({ title, description, icon: Icon }, index) => (
+              <MotionDiv
                 key={title}
+                delay={index * 0.06}
                 className="min-h-64 rounded-lg border border-SteelGrey/20 bg-white p-7 shadow-[0_14px_38px_rgba(74,74,74,0.06)]"
               >
                 <div className="flex size-12 items-center justify-center rounded-md border border-BrandGold/25 bg-BrandGold/10 text-BrandGold">
@@ -129,22 +131,24 @@ export default function FreeAuditPage() {
                 <p className="mt-4 text-base leading-8 text-SteelGrey/74">
                   {description}
                 </p>
-              </article>
+              </MotionDiv>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-SoftCream px-6 pb-20 pt-4 sm:px-10 sm:pb-24 lg:px-12 lg:pb-28">
-        <AuditForm />
+      <section className="bg-Obsidian px-6 pb-20 pt-4 sm:px-10 sm:pb-24 lg:px-12 lg:pb-28">
+        <MotionDiv>
+          <AuditForm />
+        </MotionDiv>
       </section>
 
-      <footer className="border-t border-SteelGrey/10 bg-white px-6 py-8 text-center sm:px-10 lg:px-12">
-        <p className="mx-auto max-w-3xl text-sm font-medium leading-7 text-SteelGrey/70">
+      <footer className="border-t-[0.5px] border-ChampagneGold/25 bg-Obsidian px-6 py-8 text-center sm:px-10 lg:px-12">
+        <MotionDiv className="mx-auto max-w-3xl text-sm font-medium leading-7 text-MutedSlate">
           How this works: submit the form today, and Empire Design &amp; Dev
           will review your website, competitors, conversion path, and search
           posture. Your free audit is prepared for delivery within 24 hours.
-        </p>
+        </MotionDiv>
       </footer>
     </main>
   );

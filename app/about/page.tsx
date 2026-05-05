@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownToLine, CheckCircle2 } from "lucide-react";
+import MotionDiv from "../components/motion-div";
 import QuoteButton from "../components/QuoteButton";
 import SiteHeader from "../components/SiteHeader";
 
@@ -50,11 +51,11 @@ function FramedImage({
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-SoftCream font-sans text-SteelGrey">
+    <main className="min-h-screen overflow-x-hidden bg-Obsidian font-sans text-Alabaster">
       <SiteHeader />
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-16">
+        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Lead Website Developer in Nigeria
@@ -81,11 +82,11 @@ export default function AboutPage() {
             className="aspect-[4/3] min-h-52 rounded-xl border-2 bg-SoftCream/5 sm:min-h-72"
             imageClassName="object-top"
           />
-        </div>
+        </MotionDiv>
       </section>
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
+        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Who We Are
@@ -109,11 +110,11 @@ export default function AboutPage() {
             alt="Team workspace representing who we are"
             className="aspect-[16/10] min-h-48 sm:min-h-64"
           />
-        </div>
+        </MotionDiv>
       </section>
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <div className="mx-auto max-w-6xl bg-[rgb(68,68,68)] px-5 py-9 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-16">
+        <MotionDiv className="mx-auto max-w-6xl bg-[rgb(68,68,68)] px-5 py-9 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-16">
           <div className="text-center">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Mission & Vision
@@ -164,25 +165,27 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </div>
+        </MotionDiv>
       </section>
 
       <section className="px-4 pb-12 text-center sm:px-10 sm:pb-20 lg:px-12">
-        <Link
-          href="/Empire%20Resume.pdf"
-          className="inline-flex min-h-12 w-full max-w-xs items-center justify-center gap-2 rounded-full bg-BrandGold px-7 text-sm font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-        >
-          <ArrowDownToLine className="size-4" aria-hidden="true" />
-          Download CV
-        </Link>
+        <MotionDiv>
+          <Link
+            href="/Empire%20Resume.pdf"
+            className="inline-flex min-h-12 w-full max-w-xs items-center justify-center gap-2 rounded-full bg-BrandGold px-7 text-sm font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
+          >
+            <ArrowDownToLine className="size-4" aria-hidden="true" />
+            Download CV
+          </Link>
+        </MotionDiv>
       </section>
 
-      <section className="bg-white px-4 py-14 text-center sm:px-10 sm:py-20 lg:px-12">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-2xl font-black leading-tight text-SteelGrey sm:text-5xl">
+      <section className="bg-Obsidian px-4 py-14 text-center sm:px-10 sm:py-20 lg:px-12">
+        <MotionDiv className="mx-auto max-w-3xl">
+          <h2 className="text-2xl font-black leading-tight text-Alabaster sm:text-5xl">
             Let&apos;s Build Something Great For You
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-sm font-medium leading-7 text-SteelGrey/75 sm:text-base sm:leading-8">
+          <p className="mx-auto mt-5 max-w-2xl text-sm font-medium leading-7 text-MutedSlate sm:text-base sm:leading-8">
             Whether you need a website, brand, tech strategy, or personal
             launch, we&apos;re here to build a digital experience that works for
             you.
@@ -192,7 +195,7 @@ export default function AboutPage() {
             className="mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center rounded-full bg-BrandGold px-5 text-center text-sm font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto sm:px-8 sm:text-base"
             initialService="Web Design Nigeria"
           />
-        </div>
+        </MotionDiv>
       </section>
     </main>
   );

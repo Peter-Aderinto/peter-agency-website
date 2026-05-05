@@ -5,10 +5,9 @@ import {
   Laptop,
   Search,
   ShoppingBag,
+  ShoppingCart,
   Smartphone,
-  Store,
   TrendingUp,
-  Wrench,
 } from "lucide-react";
 import {
   motion,
@@ -63,7 +62,7 @@ function ServiceIcon({ icon }: { icon: Service["icon"] }) {
       <>
         <Laptop className="size-7" strokeWidth={2.1} aria-hidden="true" />
         <Smartphone
-          className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-white"
+          className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-Obsidian"
           strokeWidth={2.4}
           aria-hidden="true"
         />
@@ -76,7 +75,7 @@ function ServiceIcon({ icon }: { icon: Service["icon"] }) {
       <>
         <ShoppingBag className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
         <TrendingUp
-          className="absolute -right-1 -top-1 size-4 rounded-sm bg-white"
+          className="absolute -right-1 -top-1 size-4 rounded-sm bg-Obsidian"
           strokeWidth={2.6}
           aria-hidden="true"
         />
@@ -94,9 +93,9 @@ function ServiceIcon({ icon }: { icon: Service["icon"] }) {
 
   return (
     <>
-      <Store className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
-      <Wrench
-        className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-white"
+      <ShoppingCart className={iconClassName} strokeWidth={2.2} aria-hidden="true" />
+      <TrendingUp
+        className="absolute -bottom-1 -right-1 size-4 rounded-sm bg-Obsidian"
         strokeWidth={2.5}
         aria-hidden="true"
       />
@@ -137,7 +136,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         rotateY,
         transformPerspective: 900,
       }}
-      className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-lg border border-SteelGrey/15 bg-SoftCream p-7 shadow-sm transition-colors duration-300 ease-out hover:border-BrandGold sm:p-8"
+      className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/35 bg-white/[0.04] p-7 shadow-[0_20px_70px_rgba(0,0,0,0.24)] backdrop-blur-md transition-colors duration-300 ease-out hover:border-BrandGold hover:bg-slate-950/80 sm:p-8"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -163,17 +162,17 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <div className="relative z-10 flex flex-1 flex-col">
         <motion.div
-          className="relative flex size-12 items-center justify-center rounded-lg border border-BrandGold/20 bg-white text-BrandGold shadow-[0_12px_30px_rgba(212,175,55,0.12)] transition-colors group-hover:border-BrandGold/40 group-hover:bg-BrandGold group-hover:text-white"
+          className="relative flex size-12 items-center justify-center rounded-lg border-[0.5px] border-BrandGold/35 bg-black/35 text-BrandGold shadow-[0_12px_30px_rgba(212,175,55,0.12)] backdrop-blur-sm transition-colors group-hover:border-BrandGold/55 group-hover:bg-BrandGold group-hover:text-black"
           whileHover={{ rotate: -6, scale: 1.08 }}
           transition={{ type: "spring", stiffness: 340, damping: 18 }}
         >
           <ServiceIcon icon={service.icon} />
         </motion.div>
 
-        <h3 className="mt-7 text-xl font-black leading-tight text-SteelGrey">
+        <h3 className="mt-7 text-xl font-medium leading-tight text-Alabaster">
           {service.title}
         </h3>
-        <p className="mt-4 text-sm leading-7 text-SteelGrey/75">
+        <p className="mt-4 text-base leading-7 text-MutedSlate">
           {service.description}
         </p>
       </div>
@@ -188,7 +187,7 @@ export default function ServicesShowcase({ services }: { services: readonly Serv
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.22 }}
-      className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-6 [perspective:1200px] md:grid-cols-2 lg:grid-cols-3"
+      className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-8 [perspective:1200px] lg:grid-cols-3"
     >
       {services.map((service, index) => (
         <ServiceCard key={service.title} service={service} index={index} />

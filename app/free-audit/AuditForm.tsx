@@ -2,6 +2,7 @@
 
 import type { FormEvent, ReactNode } from "react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { BadgeCheck, BarChart3, ShieldCheck } from "lucide-react";
 
 type AuditFormState = {
@@ -173,8 +174,14 @@ export default function AuditForm() {
       ) : null}
 
       <form className="mt-8 space-y-8" onSubmit={handleAuditSubmit}>
-        {formSections.map((section) => (
-          <section key={section.title}>
+        {formSections.map((section, index) => (
+          <motion.section
+            key={section.title}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.22 }}
+            transition={{ duration: 0.55, delay: index * 0.05, ease: "easeOut" }}
+          >
             <div className="mb-4 flex items-center gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
                 {section.number}
@@ -204,10 +211,15 @@ export default function AuditForm() {
                 </div>
               ))}
             </div>
-          </section>
+          </motion.section>
         ))}
 
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.22 }}
+          transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
+        >
           <div className="mb-4 flex items-center gap-3">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
               3
@@ -227,9 +239,14 @@ export default function AuditForm() {
               className={inputClassName}
             />
           </div>
-        </section>
+        </motion.section>
 
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.22 }}
+          transition={{ duration: 0.55, delay: 0.12, ease: "easeOut" }}
+        >
           <div className="mb-4 flex items-center gap-3">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
               4
@@ -249,9 +266,14 @@ export default function AuditForm() {
               className={textareaClassName}
             />
           </div>
-        </section>
+        </motion.section>
 
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.22 }}
+          transition={{ duration: 0.55, delay: 0.14, ease: "easeOut" }}
+        >
           <div className="mb-4 flex items-center gap-3">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
               5
@@ -272,7 +294,7 @@ export default function AuditForm() {
               className={textareaClassName}
             />
           </div>
-        </section>
+        </motion.section>
 
         {status === "error" ? (
           <p role="alert" className="text-sm font-bold text-red-700">

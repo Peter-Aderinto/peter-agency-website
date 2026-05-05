@@ -9,15 +9,19 @@ type MotionDivProps = HTMLMotionProps<"div"> & {
 
 export default function MotionDiv({
   children,
-  delay = 0.2,
-  duration = 0.8,
+  delay = 0,
+  duration = 0.7,
+  initial = { opacity: 0, y: 28 },
+  whileInView = { opacity: 1, y: 0 },
+  viewport = { once: true, amount: 0.18 },
   transition,
   ...props
 }: MotionDivProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={initial}
+      whileInView={whileInView}
+      viewport={viewport}
       transition={{ delay, duration, ease: "easeOut", ...transition }}
       {...props}
     >
