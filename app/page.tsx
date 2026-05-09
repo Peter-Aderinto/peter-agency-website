@@ -6,46 +6,45 @@ import EngineeringProcessStep from "./components/EngineeringProcessStep";
 import FAQAccordionList from "./components/FAQAccordionList";
 import MotionDiv from "./components/motion-div";
 import PortfolioCard from "./components/PortfolioCard";
-import QuoteButton from "./components/QuoteButton";
+import PremiumPricing from "./components/PremiumPricing";
 import SectorPillCloud from "./components/SectorPillCloud";
 import ServicesShowcase from "./components/ServicesShowcase";
 import SiteHeader from "./components/SiteHeader";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
-import { homepagePortfolioItems, pricingPlans } from "./data/homepage-sections";
+import { homepagePortfolioItems } from "./data/homepage-sections";
+import { regionalRoutes, type PricingRegion } from "./data/regional-pricing";
 
-const services = [
-  {
-    title: "Website Development in Nigeria",
-    description:
-      "Custom website development for Nigerian businesses looking to generate leads, build trust, and grow online with fast, SEO-optimized systems.",
-    icon: "devices",
-  },
-  {
-    title: "Shopify Store Development in Nigeria",
-    description:
-      "We design and develop high-converting Shopify stores with seamless checkout, optimized product pages, and scalable systems for long-term growth.",
-    icon: "shopify",
-  },
-  {
-    title: "E-commerce Website Development",
-    description:
-      "End-to-end e-commerce development focused on conversions, user experience, and sales optimization for Nigerian and global businesses.",
-    icon: "growth",
-  },
-  {
-    title: "Website Management & CMS Setup",
-    description:
-      "We build easy-to-manage websites using modern CMS systems, allowing you to update content, products, and pages without technical skills.",
-    icon: "content",
-  },
-  {
-    title: "SEO Optimization for Nigerian Websites",
-    description:
-      "Technical SEO, keyword optimization, and on-page strategies to help your website rank on Google and attract more customers in Nigeria.",
-    icon: "search",
-  },
-] as const;
+function getServices(country: string) {
+  return [
+    {
+      title: `Website Development in ${country}`,
+      description: `Custom website development for businesses in ${country} looking to generate leads, build trust, and grow online with fast, SEO-optimized systems.`,
+      icon: "devices",
+    },
+    {
+      title: `Shopify Store Development in ${country}`,
+      description: `We design and develop high-converting Shopify stores for ${country} businesses with seamless checkout, optimized product pages, and scalable systems for long-term growth.`,
+      icon: "shopify",
+    },
+    {
+      title: "E-commerce Website Development",
+      description: `End-to-end e-commerce development focused on conversions, user experience, and sales optimization for ${country} and global businesses.`,
+      icon: "growth",
+    },
+    {
+      title: "Website Management & CMS Setup",
+      description:
+        "We build easy-to-manage websites using modern CMS systems, allowing you to update content, products, and pages without technical skills.",
+      icon: "content",
+    },
+    {
+      title: `SEO Optimization for ${country} Websites`,
+      description: `Technical SEO, keyword optimization, and on-page strategies to help your website rank on Google and attract more customers in ${country}.`,
+      icon: "search",
+    },
+  ] as const;
+}
 
 const advantagePillars = [
   {
@@ -119,6 +118,14 @@ const commitmentPills = [
   "24/7 Priority Support",
   "Conversion Focused Approach",
   "Data-Backed Scaling",
+] as const;
+
+const internationalPages = [
+  { label: "Canada", href: "/ca" },
+  { label: "UK", href: "/uk" },
+  { label: "USA", href: "/us" },
+  { label: "Australia", href: "/au" },
+  { label: "Europe", href: "/eu" },
 ] as const;
 
 const sectorIndustries = [
@@ -241,7 +248,23 @@ function FooterIcon({ icon }: { icon: string }) {
   );
 }
 
-export default function Home() {
+type HomeProps = {
+  region?: PricingRegion;
+};
+
+export default function Home({ region }: HomeProps = {}) {
+  const country = region ? regionalRoutes[region].country : "Nigeria";
+  const services = getServices(country);
+  const heroEyebrow = region
+    ? `BEST WEBSITE DEVELOPER IN ${country.toUpperCase()}`
+    : "WEBSITE DEVELOPER & SHOPIFY EXPERT IN NIGERIA";
+  const heroTitle = region
+    ? `Best Website Developer in ${country}`
+    : "Website Design & E-commerce Development for Nigerian Businesses.";
+  const heroDescription = region
+    ? `Shopify Expert serving ${country} businesses with SEO-ready websites, high-converting stores, and scalable digital systems.`
+    : "We build SEO-ready websites and high-converting Shopify stores that help businesses generate leads, sales, and long-term growth.";
+
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
       <SiteHeader />
@@ -255,16 +278,15 @@ export default function Home() {
         <MotionDiv className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-20 pt-20 md:grid-cols-2 lg:px-12 lg:pt-24">
           <div className="text-left">
             <p className="mb-6 inline-flex max-w-full items-center rounded-full border-[0.5px] border-ChampagneGold/55 bg-black/45 px-4 py-2 text-[10px] font-black uppercase leading-5 tracking-[0.2em] text-BrandGold shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-md sm:text-xs">
-              WEBSITE DEVELOPER &amp; SHOPIFY EXPERT IN NIGERIA
+              {heroEyebrow}
             </p>
 
             <h1 className="max-w-3xl text-[2.1rem] font-black leading-[1.12] tracking-normal text-Alabaster md:text-[3.5rem] md:leading-[1.08]">
-              Website Design &amp; E-commerce Development for Nigerian Businesses.
+              {heroTitle}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-MutedSlate">
-              We build SEO-ready websites and high-converting Shopify stores
-              that help businesses generate leads, sales, and long-term growth.
+              {heroDescription}
             </p>
 
             <div className="mt-10 flex w-full flex-col gap-4 sm:flex-row sm:items-center">
@@ -331,10 +353,10 @@ export default function Home() {
         <MotionDiv className="relative z-10 mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Website Development &amp; Shopify Services in Nigeria.
+              Website Development &amp; Shopify Services in {country}.
             </h2>
             <p className="mt-4 text-base font-medium leading-8 text-MutedSlate">
-              Helping businesses in Nigeria build websites that rank, convert,
+              Helping businesses in {country} build websites that rank, convert,
               and scale.
             </p>
           </div>
@@ -371,7 +393,7 @@ export default function Home() {
           </p>
           <Link
             href="/portfolio"
-            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-[#2563eb] px-7 text-base font-black text-white transition-all hover:bg-blue-500 hover:shadow-[0_0_34px_rgba(37,99,235,0.38)] focus:outline-none focus:ring-4 focus:ring-blue-500/30"
+            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
           >
             View Full Portfolio →
           </Link>
@@ -460,12 +482,11 @@ export default function Home() {
               THE EMPIRE ADVANTAGE
             </p>
             <h2 className="mt-4 max-w-3xl text-4xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Why High-Growth Nigerian Brands Partner With Us
+              Why High-Growth {country} Brands Partner With Us
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-8 text-MutedSlate">
-              As a Website Developer and Shopify Expert based in Nigeria, I
-              bridge the gap between human behavior (Sociology) and digital
-              performance.
+              As a Website Developer and Shopify Expert serving {country}, I
+              bridge the gap between human behavior and digital performance.
             </p>
 
             <div className="mt-10 space-y-8">
@@ -615,69 +636,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-stretch gap-8 lg:grid-cols-3">
-            {pricingPlans.map((plan, index) => (
-              <MotionDiv
-                key={plan.title}
-                delay={index * 0.08}
-                className={`relative mb-8 flex h-full min-h-[560px] flex-col rounded-3xl border p-8 transition-all duration-300 ease-out hover:-translate-y-2 sm:p-9 lg:mb-0 ${plan.cardClassName}`}
-              >
-                {plan.recommended ? (
-                  <span className="absolute left-1/2 top-0 inline-flex -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap rounded-full bg-Obsidian px-5 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-BrandGold shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
-                    Recommended
-                  </span>
-                ) : null}
-
-                <h3 className="text-2xl font-black leading-tight">
-                  {plan.title}
-                </h3>
-                <p className={`mt-4 text-base leading-7 ${plan.mutedClassName}`}>
-                  {plan.description}
-                </p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <p className={`text-3xl font-black ${plan.priceClassName}`}>
-                    {plan.price}
-                  </p>
-                  <span className="inline-flex rounded-full bg-red-600 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">
-                    {plan.badge}
-                  </span>
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {plan.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className={`inline-flex rounded-full border px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.08em] ${plan.tagClassName}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <ul className={`mt-8 space-y-4 text-sm font-medium ${plan.mutedClassName}`}>
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <span
-                        className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full text-[11px] font-black ${plan.checkClassName}`}
-                      >
-                        ✓
-                      </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto pt-8">
-                  <QuoteButton
-                    label="Get Started"
-                    initialService={plan.initialService}
-                    className={`inline-flex h-14 w-full items-center justify-center rounded-full px-6 text-sm font-black transition-all focus:outline-none focus:ring-4 ${plan.buttonClassName}`}
-                  />
-                </div>
-              </MotionDiv>
-            ))}
-          </div>
+          <PremiumPricing region={region} />
         </MotionDiv>
       </section>
 
@@ -710,12 +669,12 @@ export default function Home() {
               <FAQAccordionList items={homepageFaqItems} />
 
               <div className="mt-8 text-center">
-                <a
+                <Link
                   href="/faq"
                   className="inline-flex items-center justify-center text-base font-black text-Alabaster transition-colors hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
                 >
                   View all FAQ →
-                </a>
+                </Link>
               </div>
             </MotionDiv>
           </div>
@@ -727,6 +686,53 @@ export default function Home() {
         className="bg-[linear-gradient(180deg,#080808_0%,#050505_100%)] px-6 py-16 text-Alabaster sm:px-10 sm:py-20 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
+          <div className="border-b-[0.5px] border-ChampagneGold/20 pb-8 text-center">
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+              {commitmentPills.map((pill) => (
+                <span
+                  key={pill}
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-[0.5px] border-BrandGold/30 bg-BrandGold/10 px-5 text-xs font-black uppercase tracking-[0.14em] text-Alabaster/85 sm:w-auto"
+                >
+                  <StatusDot
+                    tone={pill === "24/7 Priority Support" ? "emerald" : "gold"}
+                  />
+                  {pill}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="https://wa.me/2348160908843"
+              className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
+            >
+              Contact Us
+            </a>
+          </div>
+
+          <div className="grid gap-8 border-b-[0.5px] border-ChampagneGold/20 pb-8 text-center lg:grid-cols-[1fr_1.4fr] lg:text-left">
+            <div>
+              <p className="font-mono text-xs font-medium uppercase tracking-[0.24em] text-ChampagneGold">
+                INTERNATIONAL PAGES
+              </p>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-MutedSlate lg:max-w-sm">
+                Explore regional pricing and local SEO positioning for the
+                markets we serve.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-end">
+              {internationalPages.map((page) => (
+                <Link
+                  key={page.href}
+                  href={page.href}
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/30 px-5 text-sm font-black text-Alabaster/85 transition-all hover:border-BrandGold hover:bg-BrandGold hover:text-black"
+                >
+                  {page.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <div className="flex flex-col items-center justify-between gap-6 border-b-[0.5px] border-ChampagneGold/20 py-8 text-center lg:flex-row">
             <p className="text-sm text-MutedSlate">
               © 2026 Empire Design &amp; Dev. All rights reserved.
@@ -778,28 +784,6 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="pt-8 text-center">
-            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
-              {commitmentPills.map((pill) => (
-                <span
-                  key={pill}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-[0.5px] border-BrandGold/30 bg-BrandGold/10 px-5 text-xs font-black uppercase tracking-[0.14em] text-Alabaster/85 sm:w-auto"
-                >
-                  <StatusDot
-                    tone={pill === "24/7 Priority Support" ? "emerald" : "gold"}
-                  />
-                  {pill}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href="https://wa.me/2348160908843"
-              className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-            >
-              Contact Us
-            </a>
-          </div>
         </div>
       </footer>
     </main>

@@ -1,29 +1,29 @@
 export const homepagePortfolioItems = [
   {
-    title: "Shopify Gift Store",
-    tag: "SHOPIFY WEBSITES",
-    description: "A high-end store built for international scalability.",
+    title: "Shipping and Delivery Company",
+    tag: "CORPORATE WEBSITE",
+    description: "Shipping and delivery brand with tracking, competitive pricing, and top-tier customer service.",
     image: "/image1.png",
     link: "https://imanigifts.co.uk/",
   },
   {
-    title: "E-commerce Marketplace",
-    tag: "ECOMMERCE SYSTEMS",
-    description: "A premium catalog experience optimized for product discovery.",
+    title: "Giftbox Website ",
+    tag: "ECOMMERCE WEBSITE",
+    description: "A Uk based gift brand, with the feature to curate your gift box.",
     image: "/image2.png",
     link: "https://empireexpressshipping.com/",
   },
   {
-    title: "Corporate Growth Dashboard",
-    tag: "CORPORATE WEBSITES",
-    description: "A digital system built to clarify metrics and speed up decisions.",
+    title: "Clothing Fashion Website ",
+    tag: "Ecommerce Website",
+    description: " modern streetwear brand inspired by the culture, creativity, and ambition of today’s youth",
     image: "/image3.png",
     link: "https://blizzoutfits.com.ng/",
   },
   {
-    title: "Service Business Funnel",
-    tag: "SERVICE WEBSITES",
-    description: "A conversion-led website designed to generate qualified inquiries.",
+    title: "Period Care Brand",
+    tag: "Custom Build Website",
+    description: "Custom Build a Box, Subcription and Discount page",
     image: "/image4.png",
     link: "https://bambybammies.com/en/pages/build-a-box",
   },
@@ -31,6 +31,7 @@ export const homepagePortfolioItems = [
 
 export const pricingPlans = [
   {
+    tier: "standard",
     title: "Corporate Business Website",
     price: "₦150,000",
     badge: "Limited Time Offer",
@@ -55,6 +56,7 @@ export const pricingPlans = [
       "bg-white text-Obsidian hover:bg-Alabaster hover:shadow-[0_0_34px_rgba(255,255,255,0.18)] focus:ring-white/25",
   },
   {
+    tier: "starter",
     title: "Ecommerce Starter",
     price: "₦280,000",
     badge: "Save 30%",
@@ -79,6 +81,7 @@ export const pricingPlans = [
       "bg-Obsidian text-Alabaster hover:bg-black hover:shadow-[0_0_34px_rgba(0,0,0,0.28)] focus:ring-black/25",
   },
   {
+    tier: "growth",
     title: "Ecommerce Growth",
     price: "₦450,000",
     badge: "Limited Time Offer",

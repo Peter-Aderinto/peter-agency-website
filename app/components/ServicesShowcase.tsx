@@ -136,7 +136,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         rotateY,
         transformPerspective: 900,
       }}
-      className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/35 bg-white/[0.04] p-7 shadow-[0_20px_70px_rgba(0,0,0,0.24)] backdrop-blur-md transition-colors duration-300 ease-out hover:border-BrandGold hover:bg-slate-950/80 sm:p-8"
+      className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/35 bg-black p-7 shadow-[0_20px_70px_rgba(0,0,0,0.24)] backdrop-blur-md transition-colors duration-300 ease-out hover:border-BrandGold hover:bg-black sm:p-8"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
