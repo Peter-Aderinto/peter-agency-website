@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowDownToLine, CheckCircle2 } from "lucide-react";
 import MotionDiv from "../components/motion-div";
 import QuoteButton from "../components/QuoteButton";
-import SiteHeader from "../components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "About Empire | Website & E-commerce Developer in Nigeria",
@@ -12,14 +11,33 @@ export const metadata: Metadata = {
     "Meet Empire, a Nigeria-based website and e-commerce development studio architecting scalable digital systems with research-led strategy, UI/UX, Next.js, Shopify, and SEO.",
 };
 
-const stackItems = [
-  "Next.js",
-  "Framer Motion",
-  "Tailwind CSS",
-  "Shopify",
-  "WordPress",
-  "Bubble io",
-  "JavaScript",
+type StackItem = {
+  name: string;
+  logo: string;
+  logoClassName?: string;
+};
+
+const stackItems: readonly StackItem[] = [
+  { name: "React", logo: "/stack/react.svg" },
+  {
+    name: "Bubble io",
+    logo: "/stack/bubble.svg",
+    logoClassName: "h-7 w-20 object-contain sm:h-8 sm:w-24 md:h-9 md:w-28",
+  },
+  { name: "JavaScript", logo: "/stack/javascript.svg" },
+  {
+    name: "Framer",
+    logo: "/stack/framer.svg",
+    logoClassName: "h-7 w-20 object-contain sm:h-8 sm:w-24 md:h-9 md:w-28",
+  },
+  { name: "HTML", logo: "/stack/html5.svg" },
+  { name: "CSS", logo: "/stack/css.svg" },
+  { name: "Figma", logo: "/stack/figma.svg" },
+  { name: "Shopify", logo: "/stack/shopify.svg" },
+  { name: "Github", logo: "/stack/github.svg" },
+  { name: "Wordpress", logo: "/stack/wordpress.svg" },
+  { name: "NextJs", logo: "/stack/nextjs.svg" },
+  { name: "Typescript", logo: "/stack/typescript.svg" },
 ] as const;
 
 function FramedImage({
@@ -52,10 +70,8 @@ function FramedImage({
 export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-Obsidian font-sans text-Alabaster">
-      <SiteHeader />
-
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-16">
+        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 border border-BrandGold/45 bg-black px-5 py-9 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Lead Website Developer in Nigeria
@@ -86,7 +102,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 bg-[rgb(68,68,68)] px-5 py-9 text-white sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
+        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 border border-BrandGold/45 bg-black px-5 py-9 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Who We Are
@@ -114,7 +130,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <MotionDiv className="mx-auto max-w-6xl bg-[rgb(68,68,68)] px-5 py-9 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-16">
+        <MotionDiv className="mx-auto max-w-6xl border border-BrandGold/45 bg-black px-5 py-9 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:px-10 sm:py-12 lg:px-14 lg:py-16">
           <div className="text-center">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
               Mission & Vision
@@ -147,19 +163,28 @@ export default function AboutPage() {
             </article>
           </div>
 
-          <div className="mt-12">
+          <div className="relative left-1/2 mt-12 w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_18%_8%,rgba(212,175,55,0.22),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(212,175,55,0.14),transparent_28%),radial-gradient(circle_at_50%_92%,rgba(212,175,55,0.11),transparent_34%),linear-gradient(135deg,#080808_0%,#0d0902_42%,#080808_68%,#141006_100%)] px-4 py-10 text-Obsidian shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:px-10 sm:py-12 lg:px-12">
             <h2 className="text-center text-2xl font-black text-BrandGold sm:text-3xl">
               Our Stack
             </h2>
-            <div className="mt-7 overflow-hidden">
-              <div className="about-stack-marquee flex w-max gap-3">
+            <div className="mx-auto mt-7 w-full overflow-hidden md:overflow-visible">
+              <div className="stack-mobile-marquee flex w-max gap-3 md:mx-auto md:grid md:w-auto md:max-w-5xl md:grid-cols-4 md:gap-5 lg:gap-6">
                 {[...stackItems, ...stackItems].map((item, index) => (
                   <div
-                    key={`${item}-${index}`}
-                    className="flex min-h-14 min-w-36 items-center justify-center rounded-full bg-BrandGold px-6 text-center text-sm font-black text-white shadow-[0_14px_35px_rgba(0,0,0,0.18)] sm:min-h-16 sm:min-w-44 sm:text-base"
+                    key={`${item.name}-${index}`}
+                    className={`flex h-24 w-28 shrink-0 flex-col items-center justify-center bg-white px-3 py-4 text-center shadow-[0_14px_30px_rgba(0,0,0,0.14)] ring-1 ring-black/5 sm:h-28 sm:w-36 md:h-32 md:w-auto md:px-4 md:py-5 ${index >= stackItems.length ? "md:hidden" : ""}`}
                     aria-hidden={index >= stackItems.length ? "true" : undefined}
                   >
-                    {item}
+                    <Image
+                      src={item.logo}
+                      alt={`${item.name} logo`}
+                      width={192}
+                      height={72}
+                      className={item.logoClassName ?? "h-9 w-9 object-contain sm:h-11 sm:w-11 md:h-12 md:w-12"}
+                    />
+                    <p className="mt-2 text-[11px] font-black leading-tight text-Obsidian sm:text-xs md:text-sm">
+                      {item.name}
+                    </p>
                   </div>
                 ))}
               </div>

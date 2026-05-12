@@ -42,20 +42,6 @@ body {
   background-size: 160% 160%;
 }
 
-@keyframes about-stack-marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.about-stack-marquee {
-  animation: about-stack-marquee 28s linear infinite;
-}
-
 @keyframes empire-trust-ticker {
   from {
     transform: translateX(0);
@@ -87,8 +73,23 @@ body {
   }
 }
 
+@keyframes stack-mobile-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .empire-trust-ticker {
   animation: empire-trust-ticker 34s linear infinite;
+}
+
+.stack-mobile-marquee {
+  animation: stack-mobile-scroll 18s linear infinite;
+  will-change: transform;
 }
 
 .empire-terminal-bracket {
@@ -99,8 +100,15 @@ body {
   animation: empire-mesh-drift 16s linear infinite;
 }
 
+@media (min-width: 768px) {
+  .stack-mobile-marquee {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .about-stack-marquee,
   .empire-trust-ticker,
   .empire-terminal-bracket,
   .empire-grid-mesh {

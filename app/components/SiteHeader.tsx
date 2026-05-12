@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
@@ -18,9 +19,18 @@ const whatsappHref = "https://wa.me/+2348126575582";
 
 export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   function closeDrawer() {
     setIsOpen(false);
+  }
+
+  function isActiveNavItem(href: string) {
+    if (href === "/#services") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
   }
 
   return (
@@ -42,15 +52,22 @@ export default function SiteHeader() {
         </Link>
 
         <div className="hidden items-center gap-10 text-base font-semibold text-white md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="transition-colors hover:text-BrandGold"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = isActiveNavItem(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`transition-colors hover:text-BrandGold ${
+                  isActive ? "text-BrandGold" : "text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         <a
@@ -81,16 +98,23 @@ export default function SiteHeader() {
         } border-t-[0.5px] border-ChampagneGold/25 bg-Obsidian/96 px-6 pb-6 pt-3`}
       >
         <div className="mx-auto flex max-w-7xl flex-col gap-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={closeDrawer}
-              className="rounded-full px-4 py-3 text-base font-bold text-white transition-colors hover:bg-white/10 hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = isActiveNavItem(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={closeDrawer}
+                aria-current={isActive ? "page" : undefined}
+                className={`rounded-full px-4 py-3 text-base font-bold transition-colors hover:bg-white/10 hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20 ${
+                  isActive ? "bg-white/10 text-BrandGold" : "text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <a
             href={whatsappHref}
             onClick={closeDrawer}

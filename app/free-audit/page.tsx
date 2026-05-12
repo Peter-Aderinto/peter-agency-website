@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
   Clock3,
   CreditCard,
@@ -68,23 +67,6 @@ const auditPillars = [
 export default function FreeAuditPage() {
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
-      <header className="border-b-[0.5px] border-ChampagneGold/25 bg-Obsidian/95">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-10 lg:px-12">
-          <Link
-            href="/"
-            className="text-lg font-black uppercase tracking-[0.2em] text-Alabaster transition-colors hover:text-BrandGold"
-          >
-            Empire
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex min-h-11 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/30 bg-transparent px-4 text-sm font-black text-Alabaster transition-colors hover:border-BrandGold hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
-          >
-            Back to Home
-          </Link>
-        </div>
-      </header>
-
       <section className="px-6 pb-16 pt-16 sm:px-10 sm:pb-20 sm:pt-20 lg:px-12">
         <MotionDiv className="mx-auto max-w-5xl text-center">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
@@ -103,7 +85,7 @@ export default function FreeAuditPage() {
             {trustItems.map(({ label, icon: Icon }) => (
               <div
                 key={label}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-SteelGrey/12 bg-white px-5 text-sm font-black text-SteelGrey shadow-sm"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-BrandGold/35 bg-black px-5 text-sm font-black text-white shadow-[0_14px_38px_rgba(0,0,0,0.24)]"
               >
                 <Icon className="size-4 text-BrandGold" aria-hidden="true" />
                 {label}
@@ -120,15 +102,15 @@ export default function FreeAuditPage() {
               <MotionDiv
                 key={title}
                 delay={index * 0.06}
-                className="min-h-64 rounded-lg border border-SteelGrey/20 bg-white p-7 shadow-[0_14px_38px_rgba(74,74,74,0.06)]"
+                className="min-h-64 rounded-lg border border-BrandGold/45 bg-black p-7 text-white shadow-[0_20px_60px_rgba(0,0,0,0.32)]"
               >
                 <div className="flex size-12 items-center justify-center rounded-md border border-BrandGold/25 bg-BrandGold/10 text-BrandGold">
                   <Icon className="size-6" aria-hidden="true" />
                 </div>
-                <h2 className="mt-7 text-2xl font-black leading-tight text-SteelGrey">
+                <h2 className="mt-7 text-2xl font-black leading-tight text-white">
                   {title}
                 </h2>
-                <p className="mt-4 text-base leading-8 text-SteelGrey/74">
+                <p className="mt-4 text-base leading-8 text-white/74">
                   {description}
                 </p>
               </MotionDiv>

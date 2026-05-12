@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import MotionDiv from "../components/motion-div";
 import PortfolioCard from "../components/PortfolioCard";
-import SiteHeader from "../components/SiteHeader";
 import { homepagePortfolioItems } from "../data/homepage-sections";
 
 export const metadata: Metadata = {
@@ -14,8 +13,6 @@ export const metadata: Metadata = {
 export default function PortfolioPage() {
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
-      <SiteHeader />
-
       <section
         id="portfolio"
         className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"

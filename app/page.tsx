@@ -9,7 +9,6 @@ import PortfolioCard from "./components/PortfolioCard";
 import PremiumPricing from "./components/PremiumPricing";
 import SectorPillCloud from "./components/SectorPillCloud";
 import ServicesShowcase from "./components/ServicesShowcase";
-import SiteHeader from "./components/SiteHeader";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
 import { homepagePortfolioItems } from "./data/homepage-sections";
@@ -46,38 +45,34 @@ function getServices(country: string) {
   ] as const;
 }
 
-const advantagePillars = [
-  {
-    icon: "chart",
-    title: "Strategic Market Intelligence",
-    description:
-      "We don't just build websites; we build revenue systems. We analyze Nigerian consumer psychology to ensure your platform converts visitors into loyal customers.",
-  },
-  {
-    icon: "bolt",
-    title: "Elite Performance Infrastructure",
-    description:
-      "Slow sites kill sales. Our systems are engineered for maximum speed on Nigerian networks (MTN, Airtel, Glo), ensuring a seamless experience even on low-bandwidth connections.",
-  },
-  {
-    icon: "shield",
-    title: "Local Pricing, Global Standards",
-    description:
-      'Secure world-class digital assets with the convenience of Naira payments. No "black market" rate fluctuations-just transparent, milestone-based pricing tailored for local scale.',
-  },
-  {
-    icon: "headset",
-    title: "Priority Direct Support",
-    description:
-      "Skip the ticket queues. Our Nigerian partners get direct access to our technical leads during local business hours for rapid troubleshooting and growth consulting.",
-  },
-];
+type StackItem = {
+  name: string;
+  logo: string;
+  logoClassName?: string;
+};
 
-const conversionItems = [
-  "Comprehensive Digital Audit (Free)",
-  "Competitor Gap Analysis",
-  "Custom Growth Roadmap",
-];
+const stackItems: readonly StackItem[] = [
+  { name: "React", logo: "/stack/react.svg" },
+  {
+    name: "Bubble io",
+    logo: "/stack/bubble.svg",
+    logoClassName: "h-7 w-20 object-contain sm:h-8 sm:w-24 md:h-9 md:w-28",
+  },
+  { name: "JavaScript", logo: "/stack/javascript.svg" },
+  {
+    name: "Framer",
+    logo: "/stack/framer.svg",
+    logoClassName: "h-7 w-20 object-contain sm:h-8 sm:w-24 md:h-9 md:w-28",
+  },
+  { name: "HTML", logo: "/stack/html5.svg" },
+  { name: "CSS", logo: "/stack/css.svg" },
+  { name: "Figma", logo: "/stack/figma.svg" },
+  { name: "Shopify", logo: "/stack/shopify.svg" },
+  { name: "Github", logo: "/stack/github.svg" },
+  { name: "Wordpress", logo: "/stack/wordpress.svg" },
+  { name: "NextJs", logo: "/stack/nextjs.svg" },
+  { name: "Typescript", logo: "/stack/typescript.svg" },
+] as const;
 
 const engineeringProcess = [
   {
@@ -267,8 +262,6 @@ export default function Home({ region }: HomeProps = {}) {
 
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
-      <SiteHeader />
-
       <section className="relative isolate overflow-hidden bg-Obsidian pb-20 text-Alabaster">
         <div
           className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(212,175,55,0.24),transparent_30%),radial-gradient(circle_at_84%_20%,rgba(212,175,55,0.12),transparent_26%),linear-gradient(135deg,#080808_0%,#0f0b05_46%,#080808_100%)]"
@@ -475,137 +468,65 @@ export default function Home({ region }: HomeProps = {}) {
         </MotionDiv>
       </section>
 
-      <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
-        <MotionDiv className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_0.92fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-BrandGold">
-              THE EMPIRE ADVANTAGE
+      <section className="bg-Obsidian px-4 py-10 text-Alabaster sm:px-10 sm:py-16 lg:px-12 lg:py-20">
+        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 border border-BrandGold/45 bg-black px-5 py-9 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
+          <div className="min-w-0">
+            <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
+              Who We Are
             </p>
-            <h2 className="mt-4 max-w-3xl text-4xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Why High-Growth {country} Brands Partner With Us
+            <h2 className="mt-3 text-2xl font-black leading-tight sm:text-5xl">
+              We build digital systems for brands ready to scale.
             </h2>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-MutedSlate">
-              As a Website Developer and Shopify Expert serving {country}, I
-              bridge the gap between human behavior and digital performance.
+            <p className="mt-5 text-sm font-semibold leading-7 text-white/76 sm:mt-6 sm:text-base sm:leading-8">
+              Empire is a website development agency in Nigeria built for
+              founders, Shopify brands, and organizations that need more than a
+              beautiful screen. Our work connects research, conversion strategy,
+              and resilient engineering into one operating system for growth.
             </p>
+            <p className="mt-6 text-xl font-black text-BrandGold">
+              100+ Completed Projects
+            </p>
+          </div>
 
-            <div className="mt-10 space-y-8">
-              {advantagePillars.map((pillar) => (
-                <article key={pillar.title} className="flex gap-5">
-                  <div className="flex size-14 shrink-0 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/35 bg-white/[0.03] text-BrandGold">
-                    {pillar.icon === "chart" ? (
-                      <svg
-                        className="size-7"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.25"
-                        aria-hidden="true"
-                      >
-                        <path d="M4 19V5" />
-                        <path d="M4 19h16" />
-                        <path d="m7 15 4-4 3 3 5-6" />
-                        <path d="M15 8h4v4" />
-                      </svg>
-                    ) : null}
+          <div className="relative aspect-[16/10] min-h-48 overflow-hidden rounded-lg border border-BrandGold/35 bg-white/5 shadow-[0_22px_60px_rgba(0,0,0,0.16)] sm:min-h-64">
+            <Image
+              src="/who-are-we.jpg"
+              alt="Team workspace representing who we are"
+              fill
+              sizes="(min-width: 1024px) 520px, (min-width: 640px) 70vw, 92vw"
+              className="object-cover"
+            />
+          </div>
+        </MotionDiv>
+      </section>
 
-                    {pillar.icon === "bolt" ? (
-                      <svg
-                        className="size-7"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M13.2 2.4 4.7 13.1a.8.8 0 0 0 .63 1.3h5.1l-1.02 6.42c-.13.8.9 1.24 1.4.6l8.5-10.7a.8.8 0 0 0-.63-1.3h-5.1l1.02-6.42c.13-.8-.9-1.24-1.4-.6Z" />
-                      </svg>
-                    ) : null}
-
-                    {pillar.icon === "shield" ? (
-                      <svg
-                        className="size-7"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 2.5 5 5.3v5.55c0 4.45 2.82 8.65 7 10.65 4.18-2 7-6.2 7-10.65V5.3l-7-2.8Zm2.8 8.55-3.35 3.35a.85.85 0 0 1-1.2 0L8.7 12.85a.85.85 0 1 1 1.2-1.2l.95.95 2.75-2.75a.85.85 0 0 1 1.2 1.2Z" />
-                      </svg>
-                    ) : null}
-
-                    {pillar.icon === "headset" ? (
-                      <svg
-                        className="size-7"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.25"
-                        aria-hidden="true"
-                      >
-                        <path d="M4 13v-1a8 8 0 0 1 16 0v1" />
-                        <path d="M5.5 13H4.8A1.8 1.8 0 0 0 3 14.8v2.4A1.8 1.8 0 0 0 4.8 19h.7A1.5 1.5 0 0 0 7 17.5v-3A1.5 1.5 0 0 0 5.5 13Z" />
-                        <path d="M18.5 13h.7a1.8 1.8 0 0 1 1.8 1.8v2.4a1.8 1.8 0 0 1-1.8 1.8h-.7a1.5 1.5 0 0 1-1.5-1.5v-3a1.5 1.5 0 0 1 1.5-1.5Z" />
-                        <path d="M16 20.5h-3.2a2 2 0 0 1-2-2" />
-                      </svg>
-                    ) : null}
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-medium text-Alabaster">
-                      {pillar.title}
-                    </h3>
-                    <p className="mt-2 max-w-2xl text-base leading-8 text-MutedSlate">
-                      {pillar.description}
-                    </p>
-                  </div>
-                </article>
+      <section className="overflow-hidden bg-[radial-gradient(circle_at_18%_8%,rgba(212,175,55,0.22),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(212,175,55,0.14),transparent_28%),radial-gradient(circle_at_50%_92%,rgba(212,175,55,0.11),transparent_34%),linear-gradient(135deg,#080808_0%,#0d0902_42%,#080808_68%,#141006_100%)] px-4 py-10 text-Obsidian shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:px-10 sm:py-12 lg:px-12">
+        <MotionDiv>
+          <h2 className="text-center text-2xl font-black text-BrandGold sm:text-3xl">
+            Our Stack
+          </h2>
+          <div className="mx-auto mt-7 w-full overflow-hidden md:overflow-visible">
+            <div className="stack-mobile-marquee flex w-max gap-3 md:mx-auto md:grid md:w-auto md:max-w-5xl md:grid-cols-4 md:gap-5 lg:gap-6">
+              {[...stackItems, ...stackItems].map((item, index) => (
+                <div
+                  key={`${item.name}-${index}`}
+                  className={`flex h-24 w-28 shrink-0 flex-col items-center justify-center bg-white px-3 py-4 text-center shadow-[0_14px_30px_rgba(0,0,0,0.14)] ring-1 ring-black/5 sm:h-28 sm:w-36 md:h-32 md:w-auto md:px-4 md:py-5 ${index >= stackItems.length ? "md:hidden" : ""}`}
+                  aria-hidden={index >= stackItems.length ? "true" : undefined}
+                >
+                  <Image
+                    src={item.logo}
+                    alt={`${item.name} logo`}
+                    width={192}
+                    height={72}
+                    className={item.logoClassName ?? "h-9 w-9 object-contain sm:h-11 sm:w-11 md:h-12 md:w-12"}
+                  />
+                  <p className="mt-2 text-[11px] font-black leading-tight text-Obsidian sm:text-xs md:text-sm">
+                    {item.name}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
-
-          <aside className="rounded-3xl border-[0.5px] border-ChampagneGold/35 bg-white/[0.03] p-7 text-center shadow-[0_30px_90px_rgba(0,0,0,0.34)] sm:p-10">
-            <div className="mx-auto flex size-20 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/35 bg-black/35 text-BrandGold">
-              <svg
-                className="size-10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M19.54 4.46c-2.2-.34-5.22.55-7.78 3.11L9.9 9.43 6.7 9.2a1.6 1.6 0 0 0-1.25.47l-2.98 2.98a.75.75 0 0 0 .42 1.27l3.65.62 2.92 2.92.62 3.65a.75.75 0 0 0 1.27.42l2.98-2.98c.34-.34.51-.8.47-1.25l-.23-3.2 1.86-1.86c2.56-2.56 3.45-5.58 3.11-7.78ZM15.5 9.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM5.8 16.77c.54.54.54 1.42 0 1.96-.78.78-3.22 1.27-3.22 1.27s.49-2.44 1.27-3.22c.54-.55 1.42-.55 1.95-.01Z" />
-              </svg>
-            </div>
-
-            <h3 className="mt-8 text-3xl font-medium leading-tight tracking-tight text-Alabaster">
-              Ready to Scale Your Empire?
-            </h3>
-            <p className="mt-4 text-base leading-8 text-MutedSlate">
-              Lock in a specialized 15-minute diagnostic call. We&apos;ll audit your
-              current digital presence and map out a 90-day growth plan.
-            </p>
-
-            <ul className="mt-8 space-y-4 text-left">
-              {conversionItems.map((item) => (
-                <li
-                  key={item}
-                  className="flex min-h-14 items-center justify-between gap-4 rounded-lg border-[0.5px] border-ChampagneGold/25 bg-black/35 px-4 text-base font-medium text-Alabaster"
-                >
-                  <span>{item}</span>
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-BrandGold text-xs font-black text-white">
-                    ✓
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <Link
-              href="/free-audit"
-              className="mt-8 inline-flex h-16 w-full items-center justify-center rounded-full bg-BrandGold text-lg font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
-            >
-              Book Your Strategy Session →
-            </Link>
-
-            <p className="mt-5 text-sm text-MutedSlate">
-              Limited slots available per month. No commitment required.
-            </p>
-          </aside>
         </MotionDiv>
       </section>
 

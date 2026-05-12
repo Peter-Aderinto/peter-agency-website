@@ -65,10 +65,10 @@ const formSections: Array<{
 ];
 
 const inputClassName =
-  "mt-2 h-13 min-h-13 w-full rounded-md border border-SteelGrey/20 bg-white px-4 text-base font-semibold text-SteelGrey outline-none transition-colors placeholder:text-SteelGrey/38 focus:border-BrandGold focus:ring-4 focus:ring-BrandGold/18";
+  "mt-2 h-13 min-h-13 w-full rounded-md border border-BrandGold/30 bg-black px-4 text-base font-semibold text-white outline-none transition-colors placeholder:text-white/38 focus:border-BrandGold focus:ring-4 focus:ring-BrandGold/18";
 
 const textareaClassName =
-  "mt-2 min-h-32 w-full resize-y rounded-md border border-SteelGrey/20 bg-white px-4 py-4 text-base font-semibold text-SteelGrey outline-none transition-colors placeholder:text-SteelGrey/38 focus:border-BrandGold focus:ring-4 focus:ring-BrandGold/18";
+  "mt-2 min-h-32 w-full resize-y rounded-md border border-BrandGold/30 bg-black px-4 py-4 text-base font-semibold text-white outline-none transition-colors placeholder:text-white/38 focus:border-BrandGold focus:ring-4 focus:ring-BrandGold/18";
 
 function FieldLabel({
   htmlFor,
@@ -80,7 +80,7 @@ function FieldLabel({
   return (
     <label
       htmlFor={htmlFor}
-      className="text-sm font-black uppercase tracking-[0.12em] text-SteelGrey/72"
+      className="text-sm font-black uppercase tracking-[0.12em] text-white/72"
     >
       {children}
     </label>
@@ -153,12 +153,12 @@ export default function AuditForm() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl rounded-xl border border-SteelGrey/12 bg-white p-6 shadow-[0_26px_80px_rgba(74,74,74,0.16)] sm:p-8 lg:p-10">
-      <div className="border-b border-SteelGrey/10 pb-7">
+    <div className="mx-auto max-w-4xl rounded-xl border border-BrandGold/45 bg-black p-6 text-white shadow-[0_26px_80px_rgba(0,0,0,0.35)] sm:p-8 lg:p-10">
+      <div className="border-b border-BrandGold/25 pb-7">
         <p className="text-xs font-black uppercase tracking-[0.22em] text-BrandGold">
           Audit Request Form
         </p>
-        <h2 className="mt-3 text-3xl font-black leading-tight text-SteelGrey sm:text-4xl">
+        <h2 className="mt-3 text-3xl font-black leading-tight text-white sm:text-4xl">
           Give us the right context to diagnose what matters.
         </h2>
       </div>
@@ -166,7 +166,7 @@ export default function AuditForm() {
       {isSuccess ? (
         <div
           role="status"
-          className="mt-8 rounded-lg border border-BrandGold/30 bg-BrandGold/10 p-5 text-base font-bold leading-8 text-SteelGrey"
+          className="mt-8 rounded-lg border border-BrandGold/30 bg-BrandGold/10 p-5 text-base font-bold leading-8 text-white"
         >
           Your Empire Audit is in the queue! Check your inbox—our technical lead
           will deliver your 5-step roadmap within 24 hours.
@@ -186,7 +186,7 @@ export default function AuditForm() {
               <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
                 {section.number}
               </span>
-              <h3 className="text-xl font-black text-SteelGrey">
+              <h3 className="text-xl font-black text-white">
                 {section.title}
               </h3>
             </div>
@@ -224,7 +224,7 @@ export default function AuditForm() {
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
               3
             </span>
-            <h3 className="text-xl font-black text-SteelGrey">Market Focus</h3>
+            <h3 className="text-xl font-black text-white">Market Focus</h3>
           </div>
           <div>
             <FieldLabel htmlFor="competitors">Top 3 Competitors</FieldLabel>
@@ -251,7 +251,7 @@ export default function AuditForm() {
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
               4
             </span>
-            <h3 className="text-xl font-black text-SteelGrey">Growth Goals</h3>
+            <h3 className="text-xl font-black text-white">Growth Goals</h3>
           </div>
           <div>
             <FieldLabel htmlFor="growth-goals">Primary Goal</FieldLabel>
@@ -278,7 +278,7 @@ export default function AuditForm() {
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-BrandGold text-sm font-black text-white">
               5
             </span>
-            <h3 className="text-xl font-black text-SteelGrey">
+            <h3 className="text-xl font-black text-white">
               Additional Context
             </h3>
           </div>
@@ -297,7 +297,7 @@ export default function AuditForm() {
         </motion.section>
 
         {status === "error" ? (
-          <p role="alert" className="text-sm font-bold text-red-700">
+          <p role="alert" className="text-sm font-bold text-red-300">
             {errorMessage}
           </p>
         ) : null}
@@ -315,7 +315,7 @@ export default function AuditForm() {
         </button>
       </form>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 border-t border-SteelGrey/10 pt-7 text-sm leading-7 text-SteelGrey/72 sm:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-4 border-t border-BrandGold/25 pt-7 text-sm leading-7 text-white/72 sm:grid-cols-3">
         <p className="flex gap-3">
           <BadgeCheck
             className="mt-1 size-5 shrink-0 text-BrandGold"

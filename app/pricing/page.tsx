@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PremiumPricing from "../components/PremiumPricing";
 import MotionDiv from "../components/motion-div";
-import SiteHeader from "../components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Pricing | Empire Website Development Packages",
@@ -12,8 +11,6 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
-      <SiteHeader />
-
       <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
         <MotionDiv className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
