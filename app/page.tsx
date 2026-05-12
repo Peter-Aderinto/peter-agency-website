@@ -379,18 +379,6 @@ export default function Home({ region }: HomeProps = {}) {
           </div>
         </MotionDiv>
 
-        <div className="mx-auto mt-16 max-w-7xl overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/30 bg-[#111111] px-6 py-10 text-center shadow-[0_30px_90px_rgba(0,0,0,0.38)] sm:px-10">
-          <p className="mx-auto max-w-3xl text-base font-medium leading-8 text-MutedSlate sm:text-lg">
-            View the full portfolio for ecommerce, Shopify, corporate, and
-            service-business website examples.
-          </p>
-          <Link
-            href="/portfolio"
-            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
-          >
-            View Full Portfolio →
-          </Link>
-        </div>
       </section>
 
       <section

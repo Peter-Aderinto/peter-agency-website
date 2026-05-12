@@ -3,6 +3,7 @@ import Link from "next/link";
 import MotionDiv from "../components/motion-div";
 import PortfolioCard from "../components/PortfolioCard";
 import { homepagePortfolioItems } from "../data/homepage-sections";
+import { regionalRoutes, type PricingRegion } from "../data/regional-pricing";
 
 export const metadata: Metadata = {
   title: "Portfolio | Empire",
@@ -10,7 +11,13 @@ export const metadata: Metadata = {
     "Website design portfolio for ecommerce, corporate, and service-business brands that want proof.",
 };
 
-export default function PortfolioPage() {
+type PortfolioPageProps = {
+  region?: PricingRegion;
+};
+
+export default function PortfolioPage({ region }: PortfolioPageProps = {}) {
+  const country = region ? regionalRoutes[region].country : "Nigeria";
+
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
       <section
@@ -34,16 +41,23 @@ export default function PortfolioPage() {
           </div>
         </MotionDiv>
 
-        <MotionDiv className="mx-auto mt-16 max-w-7xl overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/30 bg-[#111111] px-6 py-10 text-center shadow-[0_30px_90px_rgba(0,0,0,0.38)] sm:px-10">
-          <p className="mx-auto max-w-3xl text-base font-medium leading-8 text-MutedSlate sm:text-lg">
-            View the full portfolio for ecommerce, Shopify, corporate, and
-            service-business website examples.
+        <MotionDiv className="mx-auto mt-16 max-w-7xl overflow-hidden border-[0.5px] border-ChampagneGold/30 bg-[linear-gradient(135deg,#080808_0%,#0d0902_48%,#080808_100%)] px-6 py-14 text-center shadow-[0_30px_90px_rgba(0,0,0,0.38)] sm:px-10 sm:py-16">
+          <p className="text-xs font-black uppercase tracking-[0.28em] text-BrandGold sm:text-sm">
+            Build From A Clear Reference
+          </p>
+          <h2 className="mx-auto mt-5 max-w-5xl text-3xl font-black leading-tight text-Alabaster sm:text-5xl lg:text-6xl">
+            Want a website like one of these for {country}?
+          </h2>
+          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-8 text-Alabaster/78 sm:text-lg">
+            Tell us the project style you like, your business location, and what
+            customers should do on the website. We will recommend the right
+            structure for your {country} audience.
           </p>
           <Link
-            href="/portfolio"
-            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-[#2563eb] px-7 text-base font-black text-white transition-all hover:bg-blue-500 hover:shadow-[0_0_34px_rgba(37,99,235,0.38)] focus:outline-none focus:ring-4 focus:ring-blue-500/30"
+            href="/free-audit"
+            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-BrandGold px-8 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
           >
-            View Full Portfolio →
+            Let&apos;s Discuss
           </Link>
         </MotionDiv>
       </section>

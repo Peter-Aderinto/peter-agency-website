@@ -1,6 +1,6 @@
 export const regionalRoutes = {
   us: {
-    country: "USA",
+    country: "United States",
     countryLabel: "USA",
     regionName: "USA",
   },

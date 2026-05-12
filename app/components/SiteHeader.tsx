@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { isPricingRegion } from "../data/regional-pricing";
 
 const navItems = [
   { label: "About", href: "/about" },
@@ -20,14 +21,36 @@ const whatsappHref = "https://wa.me/+2348126575582";
 export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const activeRegion = pathname.split("/").filter(Boolean)[0];
+  const regionalPrefix = isPricingRegion(activeRegion) ? `/${activeRegion}` : "";
 
   function closeDrawer() {
     setIsOpen(false);
   }
 
+  function getNavHref(href: string) {
+    if (!regionalPrefix) {
+      return href;
+    }
+
+    if (href === "/#services") {
+      return `${regionalPrefix}#services`;
+    }
+
+    if (href === "/portfolio") {
+      return `${regionalPrefix}/portfolio`;
+    }
+
+    return href;
+  }
+
   function isActiveNavItem(href: string) {
     if (href === "/#services") {
-      return pathname === "/";
+      return pathname === "/" || Boolean(regionalPrefix && pathname === regionalPrefix);
+    }
+
+    if (href === "/portfolio") {
+      return pathname === "/portfolio" || Boolean(regionalPrefix && pathname === `${regionalPrefix}/portfolio`);
     }
 
     return pathname === href || pathname.startsWith(`${href}/`);
@@ -58,7 +81,7 @@ export default function SiteHeader() {
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                href={getNavHref(item.href)}
                 aria-current={isActive ? "page" : undefined}
                 className={`transition-colors hover:text-BrandGold ${
                   isActive ? "text-BrandGold" : "text-white"
@@ -104,7 +127,7 @@ export default function SiteHeader() {
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                href={getNavHref(item.href)}
                 onClick={closeDrawer}
                 aria-current={isActive ? "page" : undefined}
                 className={`rounded-full px-4 py-3 text-base font-bold transition-colors hover:bg-white/10 hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20 ${
