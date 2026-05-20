@@ -62,7 +62,7 @@ export const RegionalPricing: Record<
 };
 
 export const nigeriaPricing: Record<PricingTier, string> = {
-  standard: "₦150,000",
+  standard: "₦100,000",
   starter: "₦280,000",
   growth: "₦450,000",
 };

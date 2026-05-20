@@ -33,7 +33,7 @@ export const pricingPlans = [
   {
     tier: "standard",
     title: "Corporate Business Website",
-    price: "₦150,000",
+    price: "₦100,000",
     badge: "Limited Time Offer",
     tags: ["Website Development in Nigeria", "SEO Optimized"],
     description: "Best for companies, professionals, and service-based businesses.",

@@ -1,7 +1,7 @@
 export const packages = [
   {
     title: "Web Design Nigeria",
-    price: "From ₦150,000",
+    price: "From ₦100,000",
     popular: true,
     features: [
       "Mobile-Optimized",
