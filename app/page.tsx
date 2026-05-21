@@ -19,7 +19,6 @@ import {
   defaultRegion,
   getRegionConfig,
   isRegionKey,
-  regions,
   type RegionKey,
 } from "@/lib/regions";
 
@@ -290,11 +289,11 @@ export default async function Home({ region }: HomeProps = {}) {
   const country = regionConfig.countryName;
   const services = getServices(country, selectedRegion === "global");
   const heroEyebrow = selectedRegion !== "global"
-    ? `BEST WEBSITE DEVELOPER IN ${country.toUpperCase()}`
+    ? `WEBSITE DEVELOPER & SHOPIFY EXPERT IN ${country.toUpperCase()}`
     : "WEBSITE DEVELOPER & SHOPIFY EXPERT FOR GLOBAL BRANDS";
   const heroTitle = selectedRegion !== "global"
-    ? `Best Website Developer in ${country}`
-    : regions.global.heroKeyword;
+    ? `Website Design & E-commerce Development for ${regionConfig.audienceName}.`
+    : "Website Design & E-commerce Development for Growth-Focused Brands.";
   const heroDescription = selectedRegion !== "global"
     ? `Shopify Expert serving ${country} businesses with SEO-ready websites, high-converting stores, and scalable digital systems.`
     : "We build SEO-ready websites and high-converting Shopify stores that help growth-focused brands generate leads, sales, and long-term momentum.";
