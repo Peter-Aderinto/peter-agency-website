@@ -14,8 +14,14 @@ const geolocation = (request: NextRequest) => ({
 export function proxy(request: NextRequest) {
   const existingRegion = request.cookies.get('region')?.value
   const hasStoredRegion = isRegionKey(existingRegion)
+  const queryRegion = request.nextUrl.searchParams.get('region') ?? undefined
+  const hasQueryRegion = isRegionKey(queryRegion)
   const geo = geolocation(request)
-  const region = hasStoredRegion ? existingRegion : mapCountryToRegion(geo.country)
+  const region = hasQueryRegion
+    ? queryRegion
+    : hasStoredRegion
+      ? existingRegion
+      : mapCountryToRegion(geo.country)
   const requestHeaders = new Headers(request.headers)
 
   requestHeaders.set('x-empire-region', region)
@@ -31,7 +37,7 @@ export function proxy(request: NextRequest) {
     },
   })
 
-  if (!hasStoredRegion) {
+  if (hasQueryRegion || !hasStoredRegion) {
     response.cookies.set('region', region, {
       maxAge: 60 * 60 * 24 * 365,
       path: '/',
