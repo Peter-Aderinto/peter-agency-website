@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PortfolioPage from "../../portfolio/page";
 import {
+  getRouteRegion,
   isPricingRegion,
   regionalRoutes,
-  type PricingRegion,
 } from "../../data/regional-pricing";
 
 type RegionalPortfolioPageProps = {
@@ -43,5 +43,5 @@ export default async function RegionalPortfolioPage({
     notFound();
   }
 
-  return <PortfolioPage region={region as PricingRegion} />;
+  return <PortfolioPage region={getRouteRegion(region)} />;
 }

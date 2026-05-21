@@ -1,15 +1,37 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { cookies, headers } from "next/headers";
 import { ArrowDownToLine, CheckCircle2 } from "lucide-react";
 import MotionDiv from "../components/motion-div";
 import QuoteButton from "../components/QuoteButton";
+import { defaultRegion, getRegionConfig, isRegionKey, type RegionKey } from "@/lib/regions";
 
-export const metadata: Metadata = {
-  title: "About Empire | Website & E-commerce Developer in Nigeria",
-  description:
-    "Meet Empire, a Nigeria-based website and e-commerce development studio architecting scalable digital systems with research-led strategy, UI/UX, Next.js, Shopify, and SEO.",
-};
+async function getSelectedRegion(): Promise<RegionKey> {
+  const requestHeaders = await headers();
+  const headerRegion = requestHeaders.get("x-empire-region") ?? undefined;
+  if (isRegionKey(headerRegion)) {
+    return headerRegion;
+  }
+
+  const cookieStore = await cookies();
+  const cookieRegion = cookieStore.get("region")?.value;
+  if (isRegionKey(cookieRegion)) {
+    return cookieRegion;
+  }
+
+  return defaultRegion;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const selectedRegion = await getSelectedRegion();
+  const region = getRegionConfig(selectedRegion);
+
+  return {
+    title: `About Empire | Website & E-commerce Developer for ${region.countryName}`,
+    description: `Meet Empire, a website and e-commerce development studio architecting scalable digital systems for ${region.audienceName} with research-led strategy, UI/UX, Next.js, Shopify, and SEO.`,
+  };
+}
 
 type StackItem = {
   name: string;
@@ -67,14 +89,17 @@ function FramedImage({
   );
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const selectedRegion = await getSelectedRegion();
+  const region = getRegionConfig(selectedRegion);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-Obsidian font-sans text-Alabaster">
       <section className="px-4 py-10 sm:px-10 sm:py-16 lg:px-12 lg:py-20">
         <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 border border-BrandGold/45 bg-black px-5 py-9 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-16">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
-              Lead Website Developer in Nigeria
+              Lead Website Developer for {region.countryName}
             </p>
             <h1 className="mt-5 max-w-4xl text-3xl font-black leading-tight sm:text-5xl lg:text-6xl">
               Web projects can be messy. We make them simple.
@@ -82,18 +107,18 @@ export default function AboutPage() {
             <p className="mt-5 max-w-3xl text-sm font-semibold leading-7 text-white/78 sm:mt-6 sm:text-lg sm:leading-8">
               We help ambitious brands build scalable websites and systems that
               convert today and compound over time. Whether you are a local
-              business in Nigeria or a global brand, we tailor every line of
+              business in {region.countryName} or a global brand, we tailor every line of
               code to help you increase visibility and make more sales.
             </p>
             <div className="mt-7 flex max-w-xl items-start gap-3 border-l-2 border-BrandGold pl-4 text-xs font-black uppercase leading-6 tracking-[0.08em] text-BrandGold sm:mt-8 sm:items-center sm:text-sm sm:tracking-[0.12em]">
               <CheckCircle2 className="mt-0.5 size-5 shrink-0 sm:mt-0" aria-hidden="true" />
-              50+ Completed Projects Across Nigeria, UK, and USA.
+              50+ Completed Projects Across {region.countryName}, UK, and USA.
             </div>
           </div>
 
           <FramedImage
             src="/my-picture.jpeg"
-            alt="Empire, lead website developer in Nigeria"
+            alt={`Empire, lead website developer for ${region.countryName}`}
             priority
             className="aspect-[4/3] min-h-52 rounded-xl border-2 bg-SoftCream/5 sm:min-h-72"
             imageClassName="object-top"
@@ -111,7 +136,7 @@ export default function AboutPage() {
               We build digital systems for brands ready to scale.
             </h2>
             <p className="mt-5 text-sm font-semibold leading-7 text-white/76 sm:mt-6 sm:text-base sm:leading-8">
-              Empire is a website development agency in Nigeria built for
+              Empire is a website development agency for {region.audienceName} built for
               founders, Shopify brands, and organizations that need more than a
               beautiful screen. Our work connects research, conversion strategy,
               and resilient engineering into one operating system for growth.
@@ -156,9 +181,9 @@ export default function AboutPage() {
                 Our Vision
               </h3>
               <p className="mt-4 text-sm font-semibold leading-7 text-white/78 sm:text-base">
-                To become Nigeria&apos;s leading force in digital transformation
-                by redefining brand-audience connections through innovative
-                technology.
+                To become a leading force in digital transformation for
+                {` ${region.audienceName} `}by redefining brand-audience
+                connections through innovative technology.
               </p>
             </article>
           </div>

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
+import { cookies, headers } from "next/headers";
 import DualTickerMarquee from "./components/DualTickerMarquee";
 import EngineeringProcessCarousel from "./components/EngineeringProcessCarousel";
 import EngineeringProcessStep from "./components/EngineeringProcessStep";
@@ -7,28 +9,41 @@ import FAQAccordionList from "./components/FAQAccordionList";
 import MotionDiv from "./components/motion-div";
 import PortfolioCard from "./components/PortfolioCard";
 import PremiumPricing from "./components/PremiumPricing";
+import RegionSwitcher from "./components/RegionSwitcher";
 import SectorPillCloud from "./components/SectorPillCloud";
 import ServicesShowcase from "./components/ServicesShowcase";
 import StatusDot from "./components/StatusDot";
 import { homepageFaqItems } from "./data/faqs";
 import { homepagePortfolioItems } from "./data/homepage-sections";
-import { regionalRoutes, type PricingRegion } from "./data/regional-pricing";
+import {
+  defaultRegion,
+  getRegionConfig,
+  isRegionKey,
+  regions,
+  type RegionKey,
+} from "@/lib/regions";
 
-function getServices(country: string) {
+function getServices(country: string, isGlobal = false) {
+  const marketSuffix = isGlobal ? "for Global Brands" : `in ${country}`;
+  const businessAudience = isGlobal
+    ? "growth-focused brands"
+    : `${country} businesses`;
+  const searchMarket = isGlobal ? "worldwide" : `in ${country}`;
+
   return [
     {
-      title: `Website Development in ${country}`,
-      description: `Custom website development for businesses in ${country} looking to generate leads, build trust, and grow online with fast, SEO-optimized systems.`,
+      title: `Website Development ${marketSuffix}`,
+      description: `Custom website development for ${businessAudience} looking to generate leads, build trust, and grow online with fast, SEO-optimized systems.`,
       icon: "devices",
     },
     {
-      title: `Shopify Store Development in ${country}`,
-      description: `We design and develop high-converting Shopify stores for ${country} businesses with seamless checkout, optimized product pages, and scalable systems for long-term growth.`,
+      title: `Shopify Store Development ${marketSuffix}`,
+      description: `We design and develop high-converting Shopify stores for ${businessAudience} with seamless checkout, optimized product pages, and scalable systems for long-term growth.`,
       icon: "shopify",
     },
     {
       title: "E-commerce Website Development",
-      description: `End-to-end e-commerce development focused on conversions, user experience, and sales optimization for ${country} and global businesses.`,
+      description: `End-to-end e-commerce development focused on conversions, user experience, and sales optimization for ${businessAudience}.`,
       icon: "growth",
     },
     {
@@ -38,8 +53,8 @@ function getServices(country: string) {
       icon: "content",
     },
     {
-      title: `SEO Optimization for ${country} Websites`,
-      description: `Technical SEO, keyword optimization, and on-page strategies to help your website rank on Google and attract more customers in ${country}.`,
+      title: `SEO Optimization ${marketSuffix}`,
+      description: `Technical SEO, keyword optimization, and on-page strategies to help your website rank on Google and attract more customers ${searchMarket}.`,
       icon: "search",
     },
   ] as const;
@@ -113,14 +128,6 @@ const commitmentPills = [
   "24/7 Priority Support",
   "Conversion Focused Approach",
   "Data-Backed Scaling",
-] as const;
-
-const internationalPages = [
-  { label: "Canada", href: "/ca" },
-  { label: "UK", href: "/uk" },
-  { label: "USA", href: "/us" },
-  { label: "Australia", href: "/au" },
-  { label: "Europe", href: "/eu" },
 ] as const;
 
 const sectorIndustries = [
@@ -244,21 +251,80 @@ function FooterIcon({ icon }: { icon: string }) {
 }
 
 type HomeProps = {
-  region?: PricingRegion;
+  region?: RegionKey;
 };
 
-export default function Home({ region }: HomeProps = {}) {
-  const country = region ? regionalRoutes[region].country : "Nigeria";
-  const services = getServices(country);
-  const heroEyebrow = region
+async function getSelectedRegion(regionOverride?: RegionKey) {
+  if (regionOverride) {
+    return regionOverride;
+  }
+
+  const requestHeaders = await headers();
+  const headerRegion = requestHeaders.get("x-empire-region") ?? undefined;
+  if (isRegionKey(headerRegion)) {
+    return headerRegion;
+  }
+
+  const cookieStore = await cookies();
+  const cookieRegion = cookieStore.get("region")?.value;
+  if (isRegionKey(cookieRegion)) {
+    return cookieRegion;
+  }
+
+  return defaultRegion;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const selectedRegion = await getSelectedRegion();
+  const region = getRegionConfig(selectedRegion);
+
+  return {
+    title: region.seoTitle,
+    description: region.seoDescription,
+  };
+}
+
+export default async function Home({ region }: HomeProps = {}) {
+  const selectedRegion = await getSelectedRegion(region);
+  const regionConfig = getRegionConfig(selectedRegion);
+  const country = regionConfig.countryName;
+  const services = getServices(country, selectedRegion === "global");
+  const heroEyebrow = selectedRegion !== "global"
     ? `BEST WEBSITE DEVELOPER IN ${country.toUpperCase()}`
-    : "WEBSITE DEVELOPER & SHOPIFY EXPERT IN NIGERIA";
-  const heroTitle = region
+    : "WEBSITE DEVELOPER & SHOPIFY EXPERT FOR GLOBAL BRANDS";
+  const heroTitle = selectedRegion !== "global"
     ? `Best Website Developer in ${country}`
-    : "Website Design & E-commerce Development for Nigerian Businesses.";
-  const heroDescription = region
+    : regions.global.heroKeyword;
+  const heroDescription = selectedRegion !== "global"
     ? `Shopify Expert serving ${country} businesses with SEO-ready websites, high-converting stores, and scalable digital systems.`
-    : "We build SEO-ready websites and high-converting Shopify stores that help businesses generate leads, sales, and long-term growth.";
+    : "We build SEO-ready websites and high-converting Shopify stores that help growth-focused brands generate leads, sales, and long-term momentum.";
+  const marketIntelligence =
+    selectedRegion === "global"
+      ? "market intelligence for international growth."
+      : `market intelligence for ${regionConfig.audienceName}.`;
+  const servicesHeading =
+    selectedRegion === "global"
+      ? "Website Development & Shopify Services for Global Brands."
+      : `Website Development & Shopify Services in ${country}.`;
+  const servicesDescription =
+    selectedRegion === "global"
+      ? "Helping growth-focused brands build websites that rank, convert, and scale worldwide."
+      : `Helping businesses in ${country} build websites that rank, convert, and scale.`;
+  const marketsEyebrow =
+    selectedRegion === "global"
+      ? "SERVING AMBITIOUS BUSINESSES ACROSS GLOBAL MARKETS"
+      : `SERVING AMBITIOUS BUSINESSES IN ${country.toUpperCase()} AND GLOBAL MARKETS`;
+  const regionalFaqItems = homepageFaqItems.map((item) =>
+    item.question === "Will my site be mobile-friendly?"
+      ? {
+          ...item,
+          answer:
+            selectedRegion === "global"
+              ? 'Yes. Every Empire site is "Mobile-First," engineered to load quickly and convert across modern mobile networks worldwide.'
+              : `Yes. Every Empire site is "Mobile-First," engineered to load quickly and convert for customers browsing in ${country}.`,
+        }
+      : item,
+  );
 
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
@@ -346,11 +412,10 @@ export default function Home({ region }: HomeProps = {}) {
         <MotionDiv className="relative z-10 mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Website Development &amp; Shopify Services in {country}.
+              {servicesHeading}
             </h2>
             <p className="mt-4 text-base font-medium leading-8 text-MutedSlate">
-              Helping businesses in {country} build websites that rank, convert,
-              and scale.
+              {servicesDescription}
             </p>
           </div>
 
@@ -387,12 +452,12 @@ export default function Home({ region }: HomeProps = {}) {
       >
         <MotionDiv className="mx-auto max-w-7xl text-center">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-ChampagneGold/75 sm:text-xs">
-            SERVING AMBITIOUS BUSINESSES ACROSS NIGERIA AND GLOBAL MARKETS
+            {marketsEyebrow}
           </p>
           <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-MutedSlate">
             Strategy, interface architecture, and technical systems built with
             the discipline of a global studio and the market intelligence of a
-            Nigerian operator.
+            {marketIntelligence}
           </p>
         </MotionDiv>
       </section>
@@ -466,7 +531,7 @@ export default function Home({ region }: HomeProps = {}) {
               We build digital systems for brands ready to scale.
             </h2>
             <p className="mt-5 text-sm font-semibold leading-7 text-white/76 sm:mt-6 sm:text-base sm:leading-8">
-              Empire is a website development agency in Nigeria built for
+              Empire is a website development agency for {regionConfig.audienceName} built for
               founders, Shopify brands, and organizations that need more than a
               beautiful screen. Our work connects research, conversion strategy,
               and resilient engineering into one operating system for growth.
@@ -545,7 +610,7 @@ export default function Home({ region }: HomeProps = {}) {
             </p>
           </div>
 
-          <PremiumPricing region={region} />
+          <PremiumPricing region={selectedRegion} />
         </MotionDiv>
       </section>
 
@@ -575,7 +640,7 @@ export default function Home({ region }: HomeProps = {}) {
             </MotionDiv>
 
             <MotionDiv className="flex flex-col justify-center">
-              <FAQAccordionList items={homepageFaqItems} />
+              <FAQAccordionList items={regionalFaqItems} />
 
               <div className="mt-8 text-center">
                 <Link
@@ -629,17 +694,7 @@ export default function Home({ region }: HomeProps = {}) {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-end">
-              {internationalPages.map((page) => (
-                <Link
-                  key={page.href}
-                  href={page.href}
-                  className="inline-flex min-h-11 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/30 px-5 text-sm font-black text-Alabaster/85 transition-all hover:border-BrandGold hover:bg-BrandGold hover:text-black"
-                >
-                  {page.label}
-                </Link>
-              ))}
-            </div>
+            <RegionSwitcher activeRegion={selectedRegion} />
           </div>
 
           <div className="flex flex-col items-center justify-between gap-6 border-b-[0.5px] border-ChampagneGold/20 py-8 text-center lg:flex-row">

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Home from "../page";
 import {
+  getRouteRegion,
   isPricingRegion,
   regionalRoutes,
-  type PricingRegion,
 } from "../data/regional-pricing";
 
 type RegionalPageProps = {
@@ -41,5 +41,5 @@ export default async function RegionalPage({ params }: RegionalPageProps) {
     notFound();
   }
 
-  return <Home region={region as PricingRegion} />;
+  return <Home region={getRouteRegion(region)} />;
 }

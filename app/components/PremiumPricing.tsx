@@ -1,14 +1,11 @@
 import MotionDiv from "./motion-div";
 import QuoteButton from "./QuoteButton";
 import { pricingPlans } from "../data/homepage-sections";
-import {
-  nigeriaPricing,
-  RegionalPricing,
-  type PricingRegion,
-} from "../data/regional-pricing";
+import { RegionalPricing } from "../data/regional-pricing";
+import { getRegionConfig, type RegionKey } from "@/lib/regions";
 
 type PremiumPricingProps = {
-  region?: PricingRegion;
+  region?: RegionKey;
   headingLevel?: "h2" | "h3";
 };
 
@@ -16,7 +13,9 @@ export default function PremiumPricing({
   region,
   headingLevel = "h3",
 }: PremiumPricingProps) {
-  const prices = region ? RegionalPricing[region] : nigeriaPricing;
+  const selectedRegion = region ?? "global";
+  const prices = RegionalPricing[selectedRegion];
+  const country = getRegionConfig(selectedRegion).countryName;
   const Heading = headingLevel;
 
   return (
@@ -55,7 +54,7 @@ export default function PremiumPricing({
                 key={tag}
                 className={`inline-flex rounded-full border px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.08em] ${plan.tagClassName}`}
               >
-                {tag}
+                {tag.replace("Nigeria", country)}
               </span>
             ))}
           </div>
@@ -68,7 +67,7 @@ export default function PremiumPricing({
                 >
                   ✓
                 </span>
-                <span>{feature}</span>
+                <span>{feature.replace("Nigeria", country)}</span>
               </li>
             ))}
           </ul>

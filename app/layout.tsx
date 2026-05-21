@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Empire | Website Developer & Shopify Expert in Nigeria",
+  title: "Empire | Website Developer & Shopify Expert",
   description:
-    "SEO-ready website design and e-commerce development for Nigerian businesses that need leads and sales.",
+    "SEO-ready website design and e-commerce development for growth-focused businesses that need leads and sales.",
   icons: {
     icon: "/1-logo.png",
     shortcut: "/1-logo.png",

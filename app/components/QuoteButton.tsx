@@ -22,10 +22,10 @@ const serviceOptions = [
 ] as const;
 
 const budgetOptions = [
-  "Under ₦200k",
-  "₦200k - ₦500k",
-  "₦500k - ₦1M",
-  "₦1M+",
+  "Starter Budget",
+  "Growth Budget",
+  "Scale Budget",
+  "Enterprise Budget",
 ] as const;
 
 const timelineOptions = ["Urgent", "2-4 Weeks", "1-2 Months", "Not Sure"] as const;

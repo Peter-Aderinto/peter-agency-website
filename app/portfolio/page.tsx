@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies, headers } from "next/headers";
 import MotionDiv from "../components/motion-div";
 import PortfolioCard from "../components/PortfolioCard";
 import { homepagePortfolioItems } from "../data/homepage-sections";
-import { regionalRoutes, type PricingRegion } from "../data/regional-pricing";
+import { defaultRegion, getRegionConfig, isRegionKey, type RegionKey } from "@/lib/regions";
 
 export const metadata: Metadata = {
   title: "Portfolio | Empire",
@@ -12,11 +13,32 @@ export const metadata: Metadata = {
 };
 
 type PortfolioPageProps = {
-  region?: PricingRegion;
+  region?: RegionKey;
 };
 
-export default function PortfolioPage({ region }: PortfolioPageProps = {}) {
-  const country = region ? regionalRoutes[region].country : "Nigeria";
+async function getSelectedRegion(regionOverride?: RegionKey) {
+  if (regionOverride) {
+    return regionOverride;
+  }
+
+  const requestHeaders = await headers();
+  const headerRegion = requestHeaders.get("x-empire-region") ?? undefined;
+  if (isRegionKey(headerRegion)) {
+    return headerRegion;
+  }
+
+  const cookieStore = await cookies();
+  const cookieRegion = cookieStore.get("region")?.value;
+  if (isRegionKey(cookieRegion)) {
+    return cookieRegion;
+  }
+
+  return defaultRegion;
+}
+
+export default async function PortfolioPage({ region }: PortfolioPageProps = {}) {
+  const selectedRegion = await getSelectedRegion(region);
+  const country = getRegionConfig(selectedRegion).countryName;
 
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">

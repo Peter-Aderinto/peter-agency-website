@@ -1,14 +1,34 @@
 import type { Metadata } from "next";
+import { cookies, headers } from "next/headers";
 import PremiumPricing from "../components/PremiumPricing";
 import MotionDiv from "../components/motion-div";
+import { defaultRegion, isRegionKey, type RegionKey } from "@/lib/regions";
 
 export const metadata: Metadata = {
   title: "Pricing | Empire Website Development Packages",
   description:
-    "Transparent website development pricing for Nigerian brands, e-commerce stores, and scaling businesses.",
+    "Transparent website development pricing for growth-focused brands, e-commerce stores, and scaling businesses.",
 };
 
-export default function PricingPage() {
+async function getSelectedRegion(): Promise<RegionKey> {
+  const requestHeaders = await headers();
+  const headerRegion = requestHeaders.get("x-empire-region") ?? undefined;
+  if (isRegionKey(headerRegion)) {
+    return headerRegion;
+  }
+
+  const cookieStore = await cookies();
+  const cookieRegion = cookieStore.get("region")?.value;
+  if (isRegionKey(cookieRegion)) {
+    return cookieRegion;
+  }
+
+  return defaultRegion;
+}
+
+export default async function PricingPage() {
+  const selectedRegion = await getSelectedRegion();
+
   return (
     <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
       <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
@@ -22,7 +42,7 @@ export default function PricingPage() {
             </p>
           </div>
 
-          <PremiumPricing headingLevel="h2" />
+          <PremiumPricing headingLevel="h2" region={selectedRegion} />
         </MotionDiv>
       </section>
     </main>

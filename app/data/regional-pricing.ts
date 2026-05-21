@@ -1,72 +1,71 @@
+import { regions, routeSlugToRegion, type RegionKey } from "@/lib/regions";
+
 export const regionalRoutes = {
   us: {
-    country: "United States",
+    region: "usa",
+    country: regions.usa.countryName,
     countryLabel: "USA",
     regionName: "USA",
   },
   uk: {
-    country: "United Kingdom",
+    region: "uk",
+    country: regions.uk.countryName,
     countryLabel: "UK",
     regionName: "UK",
   },
   ca: {
-    country: "Canada",
+    region: "canada",
+    country: regions.canada.countryName,
     countryLabel: "Canada",
     regionName: "Canada",
   },
   au: {
-    country: "Australia",
+    region: "australia",
+    country: regions.australia.countryName,
     countryLabel: "Australia",
     regionName: "Australia",
   },
   eu: {
-    country: "Europe",
+    region: "europe",
+    country: regions.europe.countryName,
     countryLabel: "Europe",
     regionName: "Europe",
   },
-} as const;
+} as const satisfies Record<
+  keyof typeof routeSlugToRegion,
+  {
+    region: RegionKey;
+    country: string;
+    countryLabel: string;
+    regionName: string;
+  }
+>;
 
 export type PricingRegion = keyof typeof regionalRoutes;
 
 type PricingTier = "standard" | "starter" | "growth";
 
 export const RegionalPricing: Record<
-  PricingRegion,
+  RegionKey,
   Record<PricingTier, string>
 > = {
-  us: {
-    standard: "$120",
-    starter: "$220",
-    growth: "$350",
-  },
-  uk: {
-    standard: "£95",
-    starter: "£175",
-    growth: "£280",
-  },
-  ca: {
-    standard: "C$165",
-    starter: "C$305",
-    growth: "C$490",
-  },
-  au: {
-    standard: "A$185",
-    starter: "A$345",
-    growth: "A$555",
-  },
-  eu: {
-    standard: "€110",
-    starter: "€205",
-    growth: "€330",
-  },
+  nigeria: regions.nigeria.pricing,
+  canada: regions.canada.pricing,
+  usa: regions.usa.pricing,
+  uk: regions.uk.pricing,
+  australia: regions.australia.pricing,
+  europe: regions.europe.pricing,
+  global: regions.global.pricing,
 };
 
 export const nigeriaPricing: Record<PricingTier, string> = {
-  standard: "₦100,000",
-  starter: "₦280,000",
-  growth: "₦450,000",
+  ...regions.nigeria.pricing,
 };
 
 export function isPricingRegion(region: string): region is PricingRegion {
   return region in regionalRoutes;
+}
+
+export function getRouteRegion(region: PricingRegion): RegionKey {
+  return regionalRoutes[region].region;
 }
