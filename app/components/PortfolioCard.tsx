@@ -5,7 +5,7 @@ type PortfolioCardProps = {
   tag: string;
   description: string;
   image: string;
-  link: string;
+  link?: string;
 };
 
 export default function PortfolioCard({
@@ -15,14 +15,8 @@ export default function PortfolioCard({
   image,
   link,
 }: PortfolioCardProps) {
-  return (
-    <a
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`View ${title}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/30 bg-BrandGold text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-2 hover:border-ChampagneGold hover:shadow-[0_34px_90px_rgba(0,0,0,0.42)] focus:outline-none focus:ring-4 focus:ring-ChampagneGold/30"
-    >
+  const content = (
+    <>
       <div className="bg-slate-200 p-3">
         <div className="overflow-hidden rounded-xl border border-slate-300 bg-slate-100 shadow-inner">
           <div className="relative aspect-[16/10] overflow-hidden bg-white">
@@ -48,6 +42,25 @@ export default function PortfolioCard({
           {description}
         </p>
       </div>
+    </>
+  );
+
+  const className =
+    "group flex h-full flex-col overflow-hidden rounded-2xl border-[0.5px] border-ChampagneGold/30 bg-BrandGold text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-2 hover:border-ChampagneGold hover:shadow-[0_34px_90px_rgba(0,0,0,0.42)]";
+
+  if (!link) {
+    return <article className={className}>{content}</article>;
+  }
+
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`View ${title}`}
+      className={`${className} focus:outline-none focus:ring-4 focus:ring-ChampagneGold/30`}
+    >
+      {content}
     </a>
   );
 }

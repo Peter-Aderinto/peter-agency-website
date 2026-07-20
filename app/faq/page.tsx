@@ -1,52 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import FAQPageClient from "../components/FAQPageClient";
-import MotionDiv from "../components/motion-div";
-import { faqItems } from "../data/faqs";
+import { CroFaq, RevealObserver } from "../components/CroInteractions";
+import { getSelectedRegionConfig } from "@/lib/selected-region";
 
-export default function FAQPage() {
-  return (
-    <main className="min-h-screen bg-Obsidian px-6 py-16 text-Alabaster sm:px-10 sm:py-20 lg:px-12">
-      <section className="mx-auto max-w-5xl">
-        <MotionDiv>
-          <Link
-            href="/"
-            className="text-sm font-black uppercase tracking-[0.18em] text-BrandGold transition-colors hover:text-Alabaster"
-          >
-            ← Back to Home
-          </Link>
-        </MotionDiv>
+export const metadata: Metadata = { title: "FAQ", description: "Clear answers about EMPIRE strategy, timelines, platforms, measurement, and conversion work." };
 
-        <MotionDiv className="mt-12">
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
-            EMPIRE KNOWLEDGE BASE
-          </p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight text-Alabaster sm:text-6xl">
-            Clear answers for confident digital investment.
-          </h1>
-          <p className="mt-6 max-w-3xl text-base font-medium leading-8 text-MutedSlate sm:text-lg">
-            Browse our most common process, pricing, technical, and support
-            questions before starting your Empire build.
-          </p>
-        </MotionDiv>
-
-        <FAQPageClient items={faqItems} />
-
-        <MotionDiv className="mt-12 border-[0.5px] border-BrandGold/30 bg-white/[0.03] px-6 py-9 text-center sm:px-10">
-          <h2 className="text-2xl font-black text-Alabaster">
-            Still have questions?
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-base font-medium leading-8 text-MutedSlate">
-            Send us a message and we&apos;ll help you choose the right path for
-            your website, SEO, payment, or support needs.
-          </p>
-          <a
-            href="https://wa.me/+2348126575582"
-            className="mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_30px_rgba(212,175,55,0.28)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-          >
-            Message Us on WhatsApp
-          </a>
-        </MotionDiv>
-      </section>
-    </main>
-  );
+export default async function FAQPage() {
+  const region = await getSelectedRegionConfig();
+  return <main><RevealObserver /><section className="inner-hero"><div className="container inner-hero-grid"><div className="reveal"><p className="section-kicker">ANSWERS BEFORE WE BUILD · {region.countryName.toUpperCase()}</p><h1>Strategy first. Clarity always.</h1><p className="inner-hero-copy">Everything is scoped around the commercial problem, the evidence available, and the change we can responsibly influence.</p></div><aside className="inner-stat reveal delay-1"><span>HOW WE SCOPE</span><strong>Why → What</strong><p>We define the reason for a page before defining its size, components, or production effort.</p></aside></div></section><section className="section faq-section"><div className="container faq-grid"><div className="faq-intro reveal"><p className="section-kicker">THE KNOWLEDGE BASE</p><h2>Confident decisions begin with direct answers.</h2><p>Need an answer specific to your stack or market? Send the context with your audit request.</p></div><CroFaq /></div></section><section className="section inner-cta"><div className="container"><div className="inner-cta-panel reveal"><p className="section-kicker">STILL UNCERTAIN?</p><h2>Show us the page and the problem.</h2><p>We will give you a focused, commercially grounded point of view.</p><Link className="btn btn-accent btn-xl" href="/free-audit">Start the diagnostic</Link></div></div></section></main>;
 }

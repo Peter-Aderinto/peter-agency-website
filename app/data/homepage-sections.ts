@@ -29,6 +29,31 @@ export const homepagePortfolioItems = [
   },
 ] as const;
 
+export const portfolioPageItems = [
+  ...homepagePortfolioItems,
+  {
+    title: "Auxano Solar Energy Website",
+    tag: "SOLAR WEBSITE",
+    description:
+      "A conversion-focused renewable energy website for solar product discovery, quote requests, trust signals, and clear education around switching from generator costs to solar power.",
+    image: "/portfolio/auxano-solar.svg",
+  },
+  {
+    title: "Etech Online Learning Platform",
+    tag: "EDTECH LANDING PAGE",
+    description:
+      "A responsive learning platform concept with course search, benefit sections, course cards, instructor onboarding, and social proof arranged for mobile-first enrollment.",
+    image: "/portfolio/etech-learning.svg",
+  },
+  {
+    title: "Shimmer Luxury Jewelry Store",
+    tag: "LUXURY ECOMMERCE",
+    description:
+      "A premium jewelry storefront with editorial product storytelling, collection highlights, refined category navigation, and a polished luxury retail browsing experience.",
+    image: "/portfolio/shimmer-jewelry.svg",
+  },
+] as const;
+
 export const pricingPlans = [
   {
     tier: "standard",

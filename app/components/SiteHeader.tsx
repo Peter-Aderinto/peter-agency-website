@@ -3,150 +3,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { isPricingRegion } from "../data/regional-pricing";
 
 const navItems = [
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/#services" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Free Audit", href: "/free-audit" },
+  { label: "Work", href: "/portfolio" },
+  { label: "Method", href: "/method" },
+  { label: "Growth Plan", href: "/growth-plan" },
   { label: "FAQ", href: "/faq" },
 ] as const;
 
-const whatsappHref = "https://wa.me/+2348126575582";
-
 export default function SiteHeader() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const activeRegion = pathname.split("/").filter(Boolean)[0];
-  const regionalPrefix = isPricingRegion(activeRegion) ? `/${activeRegion}` : "";
-
-  function closeDrawer() {
-    setIsOpen(false);
-  }
-
-  function getNavHref(href: string) {
-    if (!regionalPrefix) {
-      return href;
-    }
-
-    if (href === "/#services") {
-      return `${regionalPrefix}#services`;
-    }
-
-    if (href === "/portfolio") {
-      return `${regionalPrefix}/portfolio`;
-    }
-
-    return href;
-  }
-
-  function isActiveNavItem(href: string) {
-    if (href === "/#services") {
-      return pathname === "/" || Boolean(regionalPrefix && pathname === regionalPrefix);
-    }
-
-    if (href === "/portfolio") {
-      return pathname === "/portfolio" || Boolean(regionalPrefix && pathname === `${regionalPrefix}/portfolio`);
-    }
-
-    return pathname === href || pathname.startsWith(`${href}/`);
-  }
 
   return (
-    <nav className="sticky top-0 z-50 border-b-[0.5px] border-ChampagneGold/25 bg-Obsidian/92 backdrop-blur-md">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-12">
-        <Link
-          href="/"
-          onClick={closeDrawer}
-          className="relative block h-16 w-16 md:h-16 md:w-48"
-        >
-          <Image
-            src="/1-logo.png"
-            alt="Empire logo"
-            fill
-            priority
-            sizes="(min-width: 768px) 192px, 160px"
-            className="object-contain object-left"
-          />
+    <header className="site-header">
+      <div className="container nav-wrap">
+        <Link className="brand brand-with-logo" href="/" aria-label="Empire Ecommerce Design and Development home" onClick={() => setOpen(false)}>
+          <Image className="site-logo site-logo-header" src="/empire-ecommerce-logo.png" alt="Empire Ecommerce Design and Development" width={64} height={64} priority />
         </Link>
-
-        <div className="hidden items-center gap-10 text-base font-semibold text-white md:flex">
-          {navItems.map((item) => {
-            const isActive = isActiveNavItem(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={getNavHref(item.href)}
-                aria-current={isActive ? "page" : undefined}
-                className={`transition-colors hover:text-BrandGold ${
-                  isActive ? "text-BrandGold" : "text-white"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-
-        <a
-          href={whatsappHref}
-          className="hidden h-12 items-center justify-center rounded-full bg-BrandGold px-7 text-base font-bold text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 md:inline-flex"
-        >
-          Contact Us
-        </a>
-
-        <button
-          type="button"
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={isOpen}
-          onClick={() => setIsOpen((current) => !current)}
-          className="inline-flex size-11 items-center justify-center rounded-full text-BrandGold transition-colors hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-BrandGold/25 md:hidden"
-        >
-          {isOpen ? (
-            <X className="size-6" aria-hidden="true" />
-          ) : (
-            <Menu className="size-6" aria-hidden="true" />
-          )}
+        <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="primary-nav" onClick={() => setOpen((value) => !value)}>
+          <span /><span /><span className="sr-only">Toggle navigation</span>
         </button>
+        <nav id="primary-nav" className={`primary-nav ${open ? "open" : ""}`} aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={() => setOpen(false)}>{item.label}</Link>
+          ))}
+        </nav>
+        <Link className="btn btn-accent nav-cta" href="/free-audit#audit-request-form">Get a Free Audit</Link>
       </div>
-
-      <div
-        className={`md:hidden ${
-          isOpen ? "block" : "hidden"
-        } border-t-[0.5px] border-ChampagneGold/25 bg-Obsidian/96 px-6 pb-6 pt-3`}
-      >
-        <div className="mx-auto flex max-w-7xl flex-col gap-2">
-          {navItems.map((item) => {
-            const isActive = isActiveNavItem(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={getNavHref(item.href)}
-                onClick={closeDrawer}
-                aria-current={isActive ? "page" : undefined}
-                className={`rounded-full px-4 py-3 text-base font-bold transition-colors hover:bg-white/10 hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20 ${
-                  isActive ? "bg-white/10 text-BrandGold" : "text-white"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          <a
-            href={whatsappHref}
-            onClick={closeDrawer}
-            className="mt-3 inline-flex min-h-12 items-center justify-center rounded-full bg-BrandGold px-6 text-sm font-black text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
-          >
-            Contact Us
-          </a>
-        </div>
-      </div>
-    </nav>
+    </header>
   );
 }

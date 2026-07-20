@@ -1,43 +1,27 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Mono, Manrope } from "next/font/google";
+import Script from "next/script";
+import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
+const dmMono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-dm-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Empire | Website Developer & Shopify Expert",
-  description:
-    "SEO-ready website design and e-commerce development for growth-focused businesses that need leads and sales.",
-  icons: {
-    icon: "/1-logo.png",
-    shortcut: "/1-logo.png",
-    apple: "/1-logo.png",
-  },
+  metadataBase: new URL("https://theempiregrowth.com"),
+  title: { default: "EMPIRE — Conversion-First Shopify Stores & Funnels", template: "%s | EMPIRE" },
+  description: "EMPIRE builds conversion-focused Shopify stores and funnels engineered to turn paid traffic into measurable revenue.",
+  icons: { icon: "/empire-ecommerce-logo.png", apple: "/empire-ecommerce-logo.png" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <SiteHeader />
-        {children}
-      </body>
+    <html lang="en" className={`${manrope.variable} ${dmMono.variable}`}>
+      <head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </head>
+      <body><div className="noise" aria-hidden="true" /><SiteHeader />{children}<SiteFooter /><Script src="https://assets.calendly.com/assets/external/widget.js" strategy="afterInteractive" /></body>
     </html>
   );
 }

@@ -1,0 +1,52 @@
+<svg width="1200" height="825" viewBox="0 0 1200 825" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="825" fill="#F8F3FB"/>
+  <rect x="140" y="72" width="860" height="690" rx="10" fill="#FFF7FF" stroke="#C66DF4" stroke-width="2"/>
+  <rect x="1008" y="72" width="150" height="690" rx="10" fill="#FFF7FF" stroke="#C66DF4" stroke-width="2"/>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#B95DF1">Responsive Landing Page</text>
+  <text x="190" y="128" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#2C2037">Etech.</text>
+  <rect x="280" y="116" width="52" height="10" rx="5" fill="#4C3B5F" fill-opacity=".55"/>
+  <rect x="350" y="116" width="58" height="10" rx="5" fill="#4C3B5F" fill-opacity=".55"/>
+  <rect x="430" y="116" width="48" height="10" rx="5" fill="#4C3B5F" fill-opacity=".55"/>
+  <rect x="740" y="104" width="74" height="28" rx="6" stroke="#C66DF4" stroke-width="1.5"/>
+  <rect x="830" y="104" width="86" height="28" rx="6" fill="#C66DF4"/>
+  <text x="190" y="245" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#2C2037">Develop your</text>
+  <text x="190" y="292" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#2C2037">skills in a new</text>
+  <text x="190" y="339" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#2C2037">and unique way</text>
+  <rect x="190" y="392" width="116" height="34" rx="6" fill="#C66DF4"/>
+  <rect x="334" y="402" width="110" height="12" rx="6" fill="#F472B6"/>
+  <circle cx="655" cy="248" r="116" fill="#C66DF4" fill-opacity=".26" stroke="#C66DF4" stroke-width="3" stroke-dasharray="8 8"/>
+  <circle cx="655" cy="212" r="44" fill="#FED7AA"/>
+  <path d="M606 360C612 294 636 250 655 250C684 250 716 296 728 360H606Z" fill="#A855F7"/>
+  <rect x="500" y="254" width="128" height="48" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <rect x="704" y="266" width="122" height="58" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <rect x="140" y="438" width="860" height="54" fill="#C66DF4"/>
+  <rect x="140" y="438" width="860" height="54" fill="url(#pinkfade)"/>
+  <text x="208" y="474" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF">duolingo</text>
+  <text x="340" y="474" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF">magic leap</text>
+  <text x="506" y="474" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF">Microsoft</text>
+  <text x="672" y="474" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF">Codecov</text>
+  <text x="600" y="562" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#2C2037">Search Courses</text>
+  <rect x="418" y="584" width="300" height="44" rx="8" fill="#FFFFFF"/>
+  <rect x="730" y="584" width="96" height="44" rx="8" fill="#C66DF4"/>
+  <circle cx="350" cy="674" r="74" fill="#F9A8D4"/>
+  <circle cx="430" cy="674" r="74" fill="#C084FC"/>
+  <rect x="524" y="660" width="290" height="18" rx="9" fill="#2C2037"/>
+  <rect x="524" y="696" width="220" height="14" rx="7" fill="#2C2037" fill-opacity=".28"/>
+  <rect x="1018" y="96" width="132" height="132" rx="8" fill="#F8F3FB"/>
+  <text x="1084" y="128" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#2C2037">Develop your</text>
+  <text x="1084" y="152" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#2C2037">skills</text>
+  <circle cx="1084" cy="204" r="28" fill="#C66DF4" fill-opacity=".4"/>
+  <rect x="1018" y="248" width="132" height="28" rx="4" fill="#C66DF4"/>
+  <rect x="1030" y="310" width="108" height="94" rx="8" fill="#F9A8D4"/>
+  <rect x="1030" y="430" width="108" height="94" rx="8" fill="#C084FC"/>
+  <rect x="1030" y="552" width="108" height="94" rx="8" fill="#FFFFFF" stroke="#E9D5FF"/>
+  <defs>
+    <linearGradient id="pinkfade" x1="140" y1="438" x2="1000" y2="492" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#F472B6"/>
+    </linearGradient>
+    <filter id="shadow" x="480" y="234" width="230" height="110" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#4C1D95" flood-opacity=".18"/>
+    </filter>
+  </defs>
+</svg>

@@ -1,754 +1,88 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
-import DualTickerMarquee from "./components/DualTickerMarquee";
-import EngineeringProcessCarousel from "./components/EngineeringProcessCarousel";
-import EngineeringProcessStep from "./components/EngineeringProcessStep";
-import FAQAccordionList from "./components/FAQAccordionList";
-import MotionDiv from "./components/motion-div";
-import PortfolioCard from "./components/PortfolioCard";
-import PremiumPricing from "./components/PremiumPricing";
-import RegionSwitcher from "./components/RegionSwitcher";
-import SectorPillCloud from "./components/SectorPillCloud";
-import ServicesShowcase from "./components/ServicesShowcase";
-import StatusDot from "./components/StatusDot";
-import { homepageFaqItems } from "./data/faqs";
-import { homepagePortfolioItems } from "./data/homepage-sections";
-import {
-  defaultRegion,
-  getRegionConfig,
-  isRegionKey,
-  type RegionKey,
-} from "@/lib/regions";
+import CalendlyButton from "./components/CalendlyButton";
+import ConversionProcess from "./components/ConversionProcess";
+import GrowthPlanOverview from "./components/GrowthPlanOverview";
+import { AuditPortal, CroFaq, RevealObserver } from "./components/CroInteractions";
+import { getSelectedRegion } from "@/lib/selected-region";
+import { getRegionConfig, type RegionKey } from "@/lib/regions";
 
-function getServices(country: string, isGlobal = false) {
-  const marketSuffix = isGlobal ? "for Global Brands" : `in ${country}`;
-  const businessAudience = isGlobal
-    ? "growth-focused brands"
-    : `${country} businesses`;
-  const searchMarket = isGlobal ? "worldwide" : `in ${country}`;
-
-  return [
-    {
-      title: `Website Development ${marketSuffix}`,
-      description: `Custom website development for ${businessAudience} looking to generate leads, build trust, and grow online with fast, SEO-optimized systems.`,
-      icon: "devices",
-    },
-    {
-      title: `Shopify Store Development ${marketSuffix}`,
-      description: `We design and develop high-converting Shopify stores for ${businessAudience} with seamless checkout, optimized product pages, and scalable systems for long-term growth.`,
-      icon: "shopify",
-    },
-    {
-      title: "E-commerce Website Development",
-      description: `End-to-end e-commerce development focused on conversions, user experience, and sales optimization for ${businessAudience}.`,
-      icon: "growth",
-    },
-    {
-      title: "Website Management & CMS Setup",
-      description:
-        "We build easy-to-manage websites using modern CMS systems, allowing you to update content, products, and pages without technical skills.",
-      icon: "content",
-    },
-    {
-      title: `SEO Optimization ${marketSuffix}`,
-      description: `Technical SEO, keyword optimization, and on-page strategies to help your website rank on Google and attract more customers ${searchMarket}.`,
-      icon: "search",
-    },
-  ] as const;
-}
-
-type StackItem = {
-  name: string;
-  logo: string;
-  logoClassName?: string;
-};
-
-const stackItems: readonly StackItem[] = [
-  { name: "React", logo: "/stack/react.svg" },
-  {
-    name: "Bubble io",
-    logo: "/stack/bubble.svg",
-    logoClassName: "h-7 w-20 object-contain sm:h-8 sm:w-24 md:h-9 md:w-28",
-  },
-  { name: "JavaScript", logo: "/stack/javascript.svg" },
-  {
-    name: "Framer",
-    logo: "/stack/framer.svg",
-    logoClassName: "h-7 w-20 object-contain sm:h-8 sm:w-24 md:h-9 md:w-28",
-  },
-  { name: "HTML", logo: "/stack/html5.svg" },
-  { name: "CSS", logo: "/stack/css.svg" },
-  { name: "Figma", logo: "/stack/figma.svg" },
-  { name: "Shopify", logo: "/stack/shopify.svg" },
-  { name: "Github", logo: "/stack/github.svg" },
-  { name: "Wordpress", logo: "/stack/wordpress.svg" },
-  { name: "NextJs", logo: "/stack/nextjs.svg" },
-  { name: "Typescript", logo: "/stack/typescript.svg" },
-] as const;
-
-const engineeringProcess = [
-  {
-    step: "STEP 01",
-    title: "Systems Discovery & Audit",
-    description:
-      "We start with a deep dive into your business metrics. We identify leaks in your current funnel and map out a bespoke architectural blueprint for your e-commerce empire.",
-    icon: "audit",
-    side: "left",
-  },
-  {
-    step: "STEP 02",
-    title: "Strategic UI/UX Architecture",
-    description:
-      "Design is about more than looks. We architect high-converting interfaces focused on speed and user psychology, ensuring a frictionless path from landing to checkout.",
-    icon: "ux",
-    side: "right",
-  },
-  {
-    step: "STEP 03",
-    title: "Precision Engineering & Dev",
-    description:
-      "Our developers build your system using cutting-edge stacks (Next.js/Shopify). We focus on clean code, lightning-fast load times, and robust mobile responsiveness.",
-    icon: "dev",
-    side: "left",
-  },
-  {
-    step: "STEP 04",
-    title: "Quality Assurance & Scaling",
-    description:
-      "Rigorous testing for performance and security. Once launched, we monitor the systems to ensure stability and provide the technical support needed for global scale.",
-    icon: "scale",
-    side: "right",
-  },
-] as const;
-
-const commitmentPills = [
-  "24/7 Priority Support",
-  "Conversion Focused Approach",
-  "Data-Backed Scaling",
-] as const;
-
-const sectorIndustries = [
-  "Real Estate & Property Brands",
-  "Fashion & Lifestyle Startups",
-  "Tech & SaaS Companies",
-  "NGOs & Educational Platforms",
-  "Modern Restaurants & Lounges",
-  "Personal Brands & Creatives",
-  "Healthcare & Medical Clinics",
-  "Legal & Professional Services",
-] as const;
-
-function FooterIcon({ icon }: { icon: string }) {
-  const className = "size-6";
-
-  if (icon === "phone") {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        aria-hidden="true"
-      >
-        <path d="M22 16.92v2.2a2.2 2.2 0 0 1-2.4 2.19 19.4 19.4 0 0 1-8.46-3.01 19.06 19.06 0 0 1-5.86-5.86A19.4 19.4 0 0 1 2.27 3.95 2.2 2.2 0 0 1 4.46 1.6h2.2a2.2 2.2 0 0 1 2.2 1.89c.14 1.06.39 2.1.74 3.1a2.2 2.2 0 0 1-.5 2.32l-.93.93a15.7 15.7 0 0 0 5.86 5.86l.93-.93a2.2 2.2 0 0 1 2.32-.5c1 .35 2.04.6 3.1.74A2.2 2.2 0 0 1 22 16.92Z" />
-      </svg>
-    );
-  }
-
-  if (icon === "email") {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        aria-hidden="true"
-      >
-        <path d="M4.5 6h15A2.5 2.5 0 0 1 22 8.5v7A2.5 2.5 0 0 1 19.5 18h-15A2.5 2.5 0 0 1 2 15.5v-7A2.5 2.5 0 0 1 4.5 6Z" />
-        <path d="m3 8 9 6 9-6" />
-      </svg>
-    );
-  }
-
-  if (icon === "location") {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        aria-hidden="true"
-      >
-        <path d="M12 21s7-5.7 7-12A7 7 0 1 0 5 9c0 6.3 7 12 7 12Z" />
-        <path d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-      </svg>
-    );
-  }
-
-  if (icon === "linkedin") {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M5.4 8.75H2.2V21h3.2V8.75ZM3.8 3A1.85 1.85 0 1 0 3.78 6.7 1.85 1.85 0 0 0 3.8 3ZM21.8 14.05c0-3.55-1.9-5.2-4.42-5.2a3.8 3.8 0 0 0-3.43 1.88h-.05V8.75h-3.07V21h3.2v-6.06c0-1.6.3-3.15 2.29-3.15 1.95 0 1.98 1.83 1.98 3.25V21h3.2l.3-6.95Z" />
-      </svg>
-    );
-  }
-
-  if (icon === "instagram") {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.1"
-        aria-hidden="true"
-      >
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <path d="M16.5 7.5h.01" />
-        <path d="M15.5 12a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" />
-      </svg>
-    );
-  }
-
-  if (icon === "behance") {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M3 5.5h6.68c1.3 0 2.31.3 3.03.92.72.61 1.08 1.45 1.08 2.53 0 .65-.15 1.21-.46 1.68-.31.47-.76.83-1.35 1.09.8.23 1.41.65 1.81 1.26.4.61.6 1.35.6 2.22 0 1.16-.4 2.08-1.21 2.76-.8.69-1.9 1.04-3.29 1.04H3V5.5Zm3.03 5.46h3.16c.5 0 .9-.12 1.18-.36.28-.24.42-.59.42-1.05 0-.48-.14-.83-.43-1.05-.29-.23-.7-.34-1.24-.34H6.03v2.8Zm0 5.38h3.43c.57 0 1.02-.14 1.34-.42.32-.29.48-.7.48-1.24 0-.52-.16-.93-.48-1.2-.32-.28-.77-.42-1.35-.42H6.03v3.28ZM16.1 8.2h5.9v1.75h-5.9V8.2Zm2.93 2.46c1.36 0 2.45.43 3.28 1.28.82.85 1.22 2.05 1.19 3.58v.54h-6.25c.04.69.22 1.22.54 1.58.33.37.8.55 1.42.55.43 0 .8-.1 1.09-.3.3-.21.51-.47.65-.8h2.38a4.07 4.07 0 0 1-1.49 2.2c-.72.51-1.58.76-2.59.76-1.45 0-2.58-.44-3.38-1.33-.81-.89-1.22-2.03-1.22-3.43 0-1.36.42-2.47 1.26-3.33.84-.87 1.88-1.3 3.12-1.3Zm1.82 3.7c-.08-.6-.28-1.05-.59-1.34-.31-.3-.73-.45-1.24-.45-.53 0-.94.16-1.23.49-.3.32-.47.76-.52 1.3h3.58Z" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      aria-hidden="true"
-    >
-      <path d="M4 4 20 20" />
-      <path d="m20 4-6.9 7.9" />
-      <path d="M4 20 10.9 12.1" />
-    </svg>
-  );
-}
-
-type HomeProps = {
-  region?: RegionKey;
-};
-
-async function getSelectedRegion(regionOverride?: RegionKey) {
-  if (regionOverride) {
-    return regionOverride;
-  }
-
-  const requestHeaders = await headers();
-  const headerRegion = requestHeaders.get("x-empire-region") ?? undefined;
-  if (isRegionKey(headerRegion)) {
-    return headerRegion;
-  }
-
-  const cookieStore = await cookies();
-  const cookieRegion = cookieStore.get("region")?.value;
-  if (isRegionKey(cookieRegion)) {
-    return cookieRegion;
-  }
-
-  return defaultRegion;
-}
+type HomeProps = { region?: RegionKey };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const selectedRegion = await getSelectedRegion();
-  const region = getRegionConfig(selectedRegion);
-
-  return {
-    title: region.seoTitle,
-    description: region.seoDescription,
-  };
+  const region = getRegionConfig(await getSelectedRegion());
+  return { title: region.seoTitle, description: `Conversion-focused Shopify stores, funnels, and websites engineered for ${region.audienceName}.` };
 }
 
 export default async function Home({ region }: HomeProps = {}) {
   const selectedRegion = await getSelectedRegion(region);
-  const regionConfig = getRegionConfig(selectedRegion);
-  const country = regionConfig.countryName;
-  const services = getServices(country, selectedRegion === "global");
-  const heroEyebrow = selectedRegion !== "global"
-    ? `WEBSITE DEVELOPER & SHOPIFY EXPERT IN ${country.toUpperCase()}`
-    : "WEBSITE DEVELOPER & SHOPIFY EXPERT FOR GLOBAL BRANDS";
-  const heroTitle = selectedRegion !== "global"
-    ? `Website Design & E-commerce Development for ${regionConfig.audienceName}.`
-    : "Website Design & E-commerce Development for Growth-Focused Brands.";
-  const heroDescription = selectedRegion !== "global"
-    ? `Shopify Expert serving ${country} businesses with SEO-ready websites, high-converting stores, and scalable digital systems.`
-    : "We build SEO-ready websites and high-converting Shopify stores that help growth-focused brands generate leads, sales, and long-term momentum.";
-  const marketIntelligence =
-    selectedRegion === "global"
-      ? "market intelligence for international growth."
-      : `market intelligence for ${regionConfig.audienceName}.`;
-  const servicesHeading =
-    selectedRegion === "global"
-      ? "Website Development & Shopify Services for Global Brands."
-      : `Website Development & Shopify Services in ${country}.`;
-  const servicesDescription =
-    selectedRegion === "global"
-      ? "Helping growth-focused brands build websites that rank, convert, and scale worldwide."
-      : `Helping businesses in ${country} build websites that rank, convert, and scale.`;
-  const marketsEyebrow =
-    selectedRegion === "global"
-      ? "SERVING AMBITIOUS BUSINESSES ACROSS GLOBAL MARKETS"
-      : `SERVING AMBITIOUS BUSINESSES IN ${country.toUpperCase()} AND GLOBAL MARKETS`;
-  const regionalFaqItems = homepageFaqItems.map((item) =>
-    item.question === "Will my site be mobile-friendly?"
-      ? {
-          ...item,
-          answer:
-            selectedRegion === "global"
-              ? 'Yes. Every Empire site is "Mobile-First," engineered to load quickly and convert across modern mobile networks worldwide.'
-              : `Yes. Every Empire site is "Mobile-First," engineered to load quickly and convert for customers browsing in ${country}.`,
-        }
-      : item,
-  );
+  const market = getRegionConfig(selectedRegion);
+  const local = selectedRegion !== "global";
 
   return (
-    <main className="min-h-screen bg-Obsidian font-sans text-Alabaster">
-      <section className="relative isolate overflow-hidden bg-Obsidian pb-20 text-Alabaster">
-        <div
-          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(212,175,55,0.24),transparent_30%),radial-gradient(circle_at_84%_20%,rgba(212,175,55,0.12),transparent_26%),linear-gradient(135deg,#080808_0%,#0f0b05_46%,#080808_100%)]"
-          aria-hidden="true"
-        />
-
-        <MotionDiv className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-20 pt-20 md:grid-cols-2 lg:px-12 lg:pt-24">
-          <div className="text-left">
-            <p className="mb-6 inline-flex max-w-full items-center rounded-full border-[0.5px] border-ChampagneGold/55 bg-black/45 px-4 py-2 text-[10px] font-black uppercase leading-5 tracking-[0.2em] text-BrandGold shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-md sm:text-xs">
-              {heroEyebrow}
-            </p>
-
-            <h1 className="max-w-3xl text-[2.1rem] font-black leading-[1.12] tracking-normal text-Alabaster md:text-[3.5rem] md:leading-[1.08]">
-              {heroTitle}
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-MutedSlate">
-              {heroDescription}
-            </p>
-
-            <div className="mt-10 flex w-full flex-col gap-4 sm:flex-row sm:items-center">
-              <Link
-                href="/free-audit"
-                className="inline-flex items-center justify-center rounded-full bg-BrandGold px-8 py-4 text-base font-bold text-white transition-colors hover:bg-BrandGold/90 focus:outline-none focus:ring-4 focus:ring-BrandGold/25"
-              >
-                Get a Free Business Audit →
-              </Link>
-
-              <a
-                href="#services"
-                className="inline-flex items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/45 bg-transparent px-8 py-4 text-base font-bold text-Alabaster transition-colors hover:border-ChampagneGold hover:text-ChampagneGold focus:outline-none focus:ring-4 focus:ring-ChampagneGold/15"
-              >
-                View Services
-              </a>
-            </div>
-
+    <main id="top">
+      <RevealObserver />
+      <section className="hero section">
+        <div className="orb orb-one" aria-hidden="true" />
+        <div className="container hero-grid">
+          <div className="hero-copy reveal">
+            <p className="eyebrow"><span className="eyebrow-dot" /> E-COMMERCE GROWTH ARCHITECTURE</p>
+            <h1>We Build Shopify Stores &amp; Funnels Engineered to Convert {local ? `${market.countryName} Traffic` : "Traffic"} into Revenue.</h1>
+            <p className="hero-lede">Every page is built around user psychology, speed, trust, and the exact decision path that moves a visitor from “just browsing” to checkout—localized for {market.audienceName}.</p>
+            <div className="hero-actions"><CalendlyButton className="btn-large" /><Link className="btn btn-ghost btn-large" href="/portfolio">See Conversion Work</Link></div>
+            <div className="hero-proof"><div><strong>100+</strong><span>Projects shipped</span></div><div><strong>4.9/5</strong><span>Client satisfaction</span></div><div><strong>{market.countryName}</strong><span>Market-aware delivery</span></div></div>
           </div>
 
-          <div className="relative w-full">
-            <div
-              className="empire-grid-mesh pointer-events-none absolute -inset-8 bg-[linear-gradient(rgba(212,175,55,0.16)_0.5px,transparent_0.5px),linear-gradient(90deg,rgba(212,175,55,0.16)_0.5px,transparent_0.5px)] bg-[size:42px_42px] opacity-45 [mask-image:radial-gradient(circle_at_center,black_0%,transparent_72%)]"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute -inset-10 bg-[radial-gradient(circle_at_50%_42%,rgba(212,175,55,0.2),transparent_34%)]"
-              aria-hidden="true"
-            />
-            <div className="relative aspect-[4/5] w-full overflow-visible">
-              <div className="absolute left-0 top-0 z-10 flex min-h-12 items-center gap-3 rounded-xl border-[0.5px] border-ChampagneGold/45 bg-black/45 px-4 text-sm font-black text-Alabaster backdrop-blur-md sm:min-h-14 sm:px-5 sm:text-base lg:left-0 lg:top-0 lg:min-h-14 lg:px-5 lg:text-base">
-                <span className="size-3 rounded-full bg-green-500" />
-                100+ Clients Worldwide
-              </div>
-
+          <div className="device-stage hero-image-stage reveal delay-1">
+            <div className="hero-replacement-image">
               <Image
-                src="/my-picture.jpeg"
-                alt="Empire founder portrait"
-                width={760}
-                height={800}
+                src="/hero-fashion-phones.png"
+                alt="Two mobile phones displaying a fashion shopping homepage and a light brown jacket product page"
+                width={1254}
+                height={1254}
                 priority
-                className="h-full w-full rounded-2xl border-[0.5px] border-ChampagneGold/45 object-cover object-center shadow-[0_34px_90px_rgba(0,0,0,0.62)]"
+                sizes="(min-width: 1050px) 48vw, 94vw"
               />
-
-              <div className="absolute bottom-0 right-0 z-10 flex min-h-12 items-center gap-3 rounded-xl border-[0.5px] border-ChampagneGold/45 bg-black/45 px-4 text-sm font-black text-Alabaster backdrop-blur-md sm:min-h-14 sm:px-5 sm:text-base lg:bottom-0 lg:right-0 lg:min-h-14 lg:px-5 lg:text-base">
-                <span className="tracking-[0.08em] text-yellow-400">★★★★★</span>
-                <span>4.9/5 Rating</span>
-              </div>
             </div>
-          </div>
-        </MotionDiv>
-      </section>
-
-      <DualTickerMarquee />
-
-      <section
-        id="services"
-        className="relative isolate overflow-hidden bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
-      >
-        <div
-          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_22%_0%,rgba(212,175,55,0.08),transparent_28%)]"
-          aria-hidden="true"
-        />
-        <MotionDiv className="relative z-10 mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              {servicesHeading}
-            </h2>
-            <p className="mt-4 text-base font-medium leading-8 text-MutedSlate">
-              {servicesDescription}
-            </p>
-          </div>
-
-          <ServicesShowcase services={services} />
-        </MotionDiv>
-      </section>
-
-      <section
-        id="portfolio"
-        className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
-      >
-        <MotionDiv className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.24em] text-ChampagneGold">
-              SELECTED WORKS
-            </p>
-            <h2 className="mt-4 text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Website Design Portfolio for Brands that Want Proof.
-            </h2>
-          </div>
-
-          <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-4">
-            {homepagePortfolioItems.map((item) => (
-              <PortfolioCard key={item.title} {...item} />
-            ))}
-          </div>
-        </MotionDiv>
-
-      </section>
-
-      <section
-        id="global"
-        className="border-y-[0.5px] border-ChampagneGold/20 bg-Obsidian px-6 py-16 sm:px-10 lg:px-12"
-      >
-        <MotionDiv className="mx-auto max-w-7xl text-center">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-ChampagneGold/75 sm:text-xs">
-            {marketsEyebrow}
-          </p>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-MutedSlate">
-            Strategy, interface architecture, and technical systems built with
-            the discipline of a global studio and the market intelligence of a
-            {marketIntelligence}
-          </p>
-        </MotionDiv>
-      </section>
-
-      <section
-        id="process"
-        className="relative overflow-hidden bg-[url('/website-developer-nigeria.jpg')] bg-cover bg-center px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
-      >
-        <div
-          className="absolute inset-0 bg-Obsidian/90"
-          aria-hidden="true"
-        />
-        <MotionDiv className="relative z-10 mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
-              OUR ENGINEERING PROCESS
-            </p>
-            <h2 className="mt-4 text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Your Website as your Brand&apos;s Digital Space
-            </h2>
-            <p className="mt-5 text-base leading-8 text-MutedSlate">
-              A disciplined build system for brands that need strategy,
-              technical precision, and launch confidence in one clear path.
-            </p>
-          </div>
-
-          <EngineeringProcessCarousel items={engineeringProcess} />
-
-          <div className="relative mx-auto mt-16 hidden max-w-6xl space-y-16 md:block">
-            <div
-              className="absolute bottom-8 left-1/2 top-8 hidden -translate-x-1/2 border-l border-dashed border-BrandGold/45 md:block"
-              aria-hidden="true"
-            />
-            <svg
-              className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-24 -translate-x-1/2 text-BrandGold/15 md:block"
-              viewBox="0 0 96 760"
-              preserveAspectRatio="none"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M48 0C48 86 18 112 18 190C18 282 78 292 78 382C78 470 18 486 18 572C18 650 48 680 48 760"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeDasharray="10 12"
-              />
-            </svg>
-
-            {engineeringProcess.map((item) => (
-              <EngineeringProcessStep
-                key={item.step}
-                step={item.step}
-                title={item.title}
-                description={item.description}
-                icon={item.icon}
-                side={item.side}
-                isActive={item.step === "STEP 01"}
-              />
-            ))}
-          </div>
-        </MotionDiv>
-      </section>
-
-      <section className="bg-Obsidian px-4 py-10 text-Alabaster sm:px-10 sm:py-16 lg:px-12 lg:py-20">
-        <MotionDiv className="mx-auto grid max-w-6xl items-center gap-8 border border-BrandGold/45 bg-black px-5 py-9 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:gap-12 sm:px-10 sm:py-12 lg:grid-cols-[0.9fr_1fr] lg:px-14 lg:py-16">
-          <div className="min-w-0">
-            <p className="text-[11px] font-black uppercase tracking-[0.16em] text-BrandGold sm:text-xs sm:tracking-[0.22em]">
-              Who We Are
-            </p>
-            <h2 className="mt-3 text-2xl font-black leading-tight sm:text-5xl">
-              We build digital systems for brands ready to scale.
-            </h2>
-            <p className="mt-5 text-sm font-semibold leading-7 text-white/76 sm:mt-6 sm:text-base sm:leading-8">
-              Empire is a website development agency for {regionConfig.audienceName} built for
-              founders, Shopify brands, and organizations that need more than a
-              beautiful screen. Our work connects research, conversion strategy,
-              and resilient engineering into one operating system for growth.
-            </p>
-            <p className="mt-6 text-xl font-black text-BrandGold">
-              100+ Completed Projects
-            </p>
-          </div>
-
-          <div className="relative aspect-[16/10] min-h-48 overflow-hidden rounded-lg border border-BrandGold/35 bg-white/5 shadow-[0_22px_60px_rgba(0,0,0,0.16)] sm:min-h-64">
-            <Image
-              src="/who-are-we.jpg"
-              alt="Team workspace representing who we are"
-              fill
-              sizes="(min-width: 1024px) 520px, (min-width: 640px) 70vw, 92vw"
-              className="object-cover"
-            />
-          </div>
-        </MotionDiv>
-      </section>
-
-      <section className="overflow-hidden bg-[radial-gradient(circle_at_18%_8%,rgba(212,175,55,0.22),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(212,175,55,0.14),transparent_28%),radial-gradient(circle_at_50%_92%,rgba(212,175,55,0.11),transparent_34%),linear-gradient(135deg,#080808_0%,#0d0902_42%,#080808_68%,#141006_100%)] px-4 py-10 text-Obsidian shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:px-10 sm:py-12 lg:px-12">
-        <MotionDiv>
-          <h2 className="text-center text-2xl font-black text-BrandGold sm:text-3xl">
-            Our Stack
-          </h2>
-          <div className="mx-auto mt-7 w-full overflow-hidden md:overflow-visible">
-            <div className="stack-mobile-marquee flex w-max gap-3 md:mx-auto md:grid md:w-auto md:max-w-5xl md:grid-cols-4 md:gap-5 lg:gap-6">
-              {[...stackItems, ...stackItems].map((item, index) => (
-                <div
-                  key={`${item.name}-${index}`}
-                  className={`flex h-24 w-28 shrink-0 flex-col items-center justify-center bg-white px-3 py-4 text-center shadow-[0_14px_30px_rgba(0,0,0,0.14)] ring-1 ring-black/5 sm:h-28 sm:w-36 md:h-32 md:w-auto md:px-4 md:py-5 ${index >= stackItems.length ? "md:hidden" : ""}`}
-                  aria-hidden={index >= stackItems.length ? "true" : undefined}
-                >
-                  <Image
-                    src={item.logo}
-                    alt={`${item.name} logo`}
-                    width={192}
-                    height={72}
-                    className={item.logoClassName ?? "h-9 w-9 object-contain sm:h-11 sm:w-11 md:h-12 md:w-12"}
-                  />
-                  <p className="mt-2 text-[11px] font-black leading-tight text-Obsidian sm:text-xs md:text-sm">
-                    {item.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </MotionDiv>
-      </section>
-
-      <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
-        <MotionDiv className="mx-auto max-w-7xl text-center">
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
-            SECTOR EXPERTISE
-          </p>
-          <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-            Industries We Work With
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-7 text-MutedSlate">
-            Tailored digital solutions for high-growth sectors.
-          </p>
-        </MotionDiv>
-
-        <SectorPillCloud industries={sectorIndustries} />
-      </section>
-
-      <section className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12">
-        <MotionDiv className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Transparent Pricing for Scaling Brands.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-8 text-MutedSlate">
-              Choose the package that fits your current empire-building stage.
-            </p>
-          </div>
-
-          <PremiumPricing region={selectedRegion} />
-        </MotionDiv>
-      </section>
-
-      <section
-        id="faq"
-        className="bg-Obsidian px-6 py-24 text-Alabaster sm:px-10 lg:px-12"
-      >
-        <div className="mx-auto max-w-7xl">
-          <MotionDiv className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-BrandGold">
-              QUICK FAQ
-            </p>
-            <h2 className="mt-4 text-3xl font-medium leading-tight tracking-tight text-Alabaster sm:text-5xl">
-              Answers Before We Build
-            </h2>
-          </MotionDiv>
-
-          <div className="mt-10 grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 md:gap-12">
-            <MotionDiv className="relative min-h-72 overflow-hidden rounded-3xl shadow-[0_24px_70px_rgba(74,74,74,0.14)] sm:min-h-96 md:min-h-full">
-              <Image
-                src="/faq.jpeg"
-                alt="Website strategy discussion"
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </MotionDiv>
-
-            <MotionDiv className="flex flex-col justify-center">
-              <FAQAccordionList items={regionalFaqItems} />
-
-              <div className="mt-8 text-center">
-                <Link
-                  href="/faq"
-                  className="inline-flex items-center justify-center text-base font-black text-Alabaster transition-colors hover:text-BrandGold focus:outline-none focus:ring-4 focus:ring-BrandGold/20"
-                >
-                  View all FAQ →
-                </Link>
-              </div>
-            </MotionDiv>
           </div>
         </div>
       </section>
 
-      <footer
-        id="contact"
-        className="bg-[linear-gradient(180deg,#080808_0%,#050505_100%)] px-6 py-16 text-Alabaster sm:px-10 sm:py-20 lg:px-12"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="border-b-[0.5px] border-ChampagneGold/20 pb-8 text-center">
-            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
-              {commitmentPills.map((pill) => (
-                <span
-                  key={pill}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-[0.5px] border-BrandGold/30 bg-BrandGold/10 px-5 text-xs font-black uppercase tracking-[0.14em] text-Alabaster/85 sm:w-auto"
-                >
-                  <StatusDot
-                    tone={pill === "24/7 Priority Support" ? "emerald" : "gold"}
-                  />
-                  {pill}
-                </span>
-              ))}
+      <section className="trust-strip ecosystem-strip" aria-label="Technology ecosystem">
+        <p>Built across the modern commerce ecosystem</p>
+        <div className="ecosystem-marquee">
+          <div className="ecosystem-track">
+            <div className="ecosystem-brands">
+              <span>Shopify</span><span>Wix</span><span>Square Space</span><span>Ecwid</span><span>WooCommerce</span><span>GoDaddy</span><span>and more…</span>
             </div>
-
-            <a
-              href="https://wa.me/2348160908843"
-              className="mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-BrandGold px-7 text-base font-black text-white transition-all hover:bg-BrandGold/90 hover:shadow-[0_0_34px_rgba(212,175,55,0.36)] focus:outline-none focus:ring-4 focus:ring-BrandGold/25 sm:w-auto"
-            >
-              Contact Us
-            </a>
-          </div>
-
-          <div className="grid gap-8 border-b-[0.5px] border-ChampagneGold/20 pb-8 text-center lg:grid-cols-[1fr_1.4fr] lg:text-left">
-            <div>
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.24em] text-ChampagneGold">
-                INTERNATIONAL PAGES
-              </p>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-MutedSlate lg:max-w-sm">
-                Explore regional pricing and local SEO positioning for the
-                markets we serve.
-              </p>
-            </div>
-
-            <RegionSwitcher activeRegion={selectedRegion} />
-          </div>
-
-          <div className="flex flex-col items-center justify-between gap-6 border-b-[0.5px] border-ChampagneGold/20 py-8 text-center lg:flex-row">
-            <p className="text-sm text-MutedSlate">
-              © 2026 Empire Design &amp; Dev. All rights reserved.
-            </p>
-
-            <div className="flex items-center justify-center gap-3">
-              {[
-                { label: "Email", href: "mailto:petay081@gmail.com", icon: "email" },
-                { label: "X", href: "https://x.com/Empire_WebDev", icon: "x" },
-                {
-                  label: "LinkedIn",
-                  href: "https://www.linkedin.com/in/peteraderinto01/",
-                  icon: "linkedin",
-                },
-                {
-                  label: "Instagram",
-                  href: "https://www.instagram.com/digital_empire_dev?igsh=MWgxYnFpemh4Mm9sMg%3D%3D&utm_source=qr",
-                  icon: "instagram",
-                },
-                {
-                  label: "Behance",
-                  href: "https://www.behance.net/peteraderinto01",
-                  icon: "behance",
-                },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  target={social.href.startsWith("http") ? "_blank" : undefined}
-                  rel={social.href.startsWith("http") ? "noreferrer" : undefined}
-                  className="flex size-11 items-center justify-center rounded-full border-[0.5px] border-ChampagneGold/25 text-Alabaster/75 transition-all hover:border-BrandGold hover:bg-BrandGold hover:text-black"
-                >
-                  <FooterIcon icon={social.icon} />
-                </a>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm font-bold">
-              <a href="#contact" className="text-MutedSlate transition-colors hover:text-BrandGold">
-                Get Quote
-              </a>
-              <a href="#" className="text-MutedSlate transition-colors hover:text-BrandGold">
-                Privacy
-              </a>
-              <a href="#" className="text-MutedSlate transition-colors hover:text-BrandGold">
-                Terms
-              </a>
+            <div className="ecosystem-brands" aria-hidden="true">
+              <span>Shopify</span><span>Wix</span><span>Square Space</span><span>Ecwid</span><span>WooCommerce</span><span>GoDaddy</span><span>and more…</span>
             </div>
           </div>
-
         </div>
-      </footer>
+      </section>
+
+      <section className="section pain-section" id="method"><div className="container pain-grid"><div className="section-kicker reveal">THE COST OF A LEAKY STORE · {market.countryName.toUpperCase()}</div><div className="pain-copy reveal"><h2>You’re spending a fortune on traffic. <em>For what?</em></h2><div className="pain-columns"><p>More ad spend can create more sessions. But sessions are not revenue. When product discovery is confusing, trust signals arrive too late, and checkout creates friction, every paid click becomes more expensive than it needs to be.</p><p>Scaling traffic before fixing conversion mechanics is not growth. It is simply increasing the speed at which cash leaves your account.</p></div><div className="math-callout"><span className="math-label">THE COMPOUNDING GAP</span><div className="math-line"><strong>1%</strong><span>less checkout friction can preserve a disproportionate amount of revenue as traffic, AOV, and repeat purchases scale.</span></div><p>The smallest interface decisions become financial decisions at volume: where the CTA sits, how bundles are explained, whether mobile customers can reach checkout with one hand, and how quickly the page earns trust.</p></div></div></div></section>
+
+      <ConversionProcess />
+
+      <GrowthPlanOverview />
+
+      <section className="section work-section" id="work"><div className="container"><div className="section-heading split-heading reveal"><div><p className="section-kicker">SELECTED CONVERSION SYSTEMS</p><h2>Work framed by revenue logic.</h2></div><p>Each build starts with a commercial hypothesis: where customers hesitate, what they need next, and how the interface can remove the gap.</p></div><div className="case-grid">
+        <article className="case case-wide reveal"><div className="case-copy"><p>E-COMMERCE PREVIEW</p><h3>Engineered with a sticky mobile cart layout to maximize AOV.</h3><Link href="/portfolio">Explore the work <span>↗</span></Link></div><div className="case-visual case-sales-visual"><Image src="/case-study-sales-growth.png" alt="Shopify sales dashboard displayed on a mobile phone with revenue and conversion analytics" fill sizes="(min-width: 1050px) 58vw, 100vw" className="case-sales-image" /></div></article>
+        <article className="case reveal"><div className="case-copy"><p>FUNNEL BUILD</p><h3>Custom bundle-box layout built for seamless multi-currency user retention.</h3><Link href="/portfolio">Explore the work <span>↗</span></Link></div><div className="case-visual case-project-shot"><Image src="/case-bam-bundle-builder.png" alt="Bam ecommerce bundle builder with product selection and subscription controls" fill sizes="(min-width: 1050px) 48vw, 100vw" className="case-project-image" /></div></article>
+        <article className="case reveal delay-1"><div className="case-copy"><p>PRODUCT DISCOVERY</p><h3>Category navigation rebuilt to reduce choice overload and speed up purchase decisions.</h3><Link href="/portfolio">Explore the work <span>↗</span></Link></div><div className="case-visual case-project-shot"><Image src="/case-bammies-product-page.png" alt="Bammies open diapers monthly subscription product page" fill sizes="(min-width: 1050px) 48vw, 100vw" className="case-project-image" /></div></article>
+        <article className="case case-wide reveal"><div className="case-copy"><p>CHECKOUT OPTIMIZATION</p><h3>Rebuilt reassurance hierarchy to reduce abandonment at the highest-intent moment.</h3><Link href="/portfolio">Explore the work <span>↗</span></Link></div><div className="case-visual checkout-sales-visual"><Image src="/checkout-sales-notifications.png" alt="Shopify order notifications over a mobile ecommerce storefront held in hand" fill sizes="(min-width: 1050px) 58vw, 100vw" className="checkout-sales-image" /></div></article>
+      </div><div className="work-more reveal"><Link className="btn btn-ghost btn-large" href="/portfolio">View the full portfolio</Link></div></div></section>
+
+      <section className="section proof-section"><div className="container"><div className="section-heading split-heading reveal"><div><p className="section-kicker">INTERNATIONAL DELIVERY PROOF</p><h2>Validated Operational Performance.</h2></div><p>Trust is built through disciplined scope control, technical precision, and dependable communication across markets and time zones.</p></div><div className="review-grid">
+        {[["FR", "Filippa R.", "Brand Director · United Kingdom", "The scope was managed with complete clarity from discovery through handoff. Every revision connected back to the commercial objective."], ["AM", "Adrien M.", "E-commerce Manager · France", "Their engineering precision stood out immediately. The mobile experience became faster, cleaner, and much easier to navigate."], ["KO", "Kene O.", "Growth Lead · Canada", "The timeline was respected, communication stayed proactive, and the final build felt considered at every breakpoint."]].map(([mark, name, role, quote], index) => <article className={`review-card reveal delay-${Math.min(index, 2)}`} key={name}><div className="review-top"><div className="stars" aria-label="5 out of 5 stars">★★★★★</div><span className="review-index">0{index + 1}</span></div><blockquote>“{quote}”</blockquote><div className="review-profile"><div className="profile-mark">{mark}</div><div><strong>{name}</strong><span>{role}</span></div></div><div className="retention-badge"><i /> Verified Client Retention</div></article>)}
+      </div><p className="review-disclaimer">Review names and roles are presentation placeholders from the supplied concept. Replace them with authenticated client reviews before publishing.</p></div></section>
+
+      <section className="section free-redesign audit-cta-section" id="free-redesign"><div className="container"><div className="audit-cta reveal"><div className="audit-copy"><p className="section-kicker">PROOF BEFORE COMMITMENT · {market.countryName.toUpperCase()}</p><h2>Before you hire EMPIRE, let us prove the architecture.</h2><p>Give us one underperforming section or product layout. We will re-engineer it around conversion efficiency and explain the commercial rationale—free, with no contract.</p><div className="audit-assurances"><span><i>01</i> One focused layout</span><span><i>02</i> Commercial rationale included</span><span><i>03</i> No contract required</span></div></div><AuditPortal market={market.countryName} /></div></div></section>
+
+      <section className="section faq-section" id="faq"><div className="container faq-grid"><div className="faq-intro reveal"><p className="section-kicker">ANSWERS BEFORE WE BUILD</p><h2>Strategy first.<br />Clarity always.</h2><p>Everything is scoped around the commercial problem—not a generic page count.</p><Link className="text-link" href="/faq">Browse every answer ↗</Link></div><CroFaq compact /></div></section>
     </main>
   );
 }

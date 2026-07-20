@@ -1,5 +1,6 @@
 type AuditRequestPayload = {
   name?: unknown;
+  businessName?: unknown;
   email?: unknown;
   websiteUrl?: unknown;
   industry?: unknown;
@@ -10,6 +11,7 @@ type AuditRequestPayload = {
 
 type AuditRequest = {
   name: string;
+  businessName: string;
   email: string;
   websiteUrl: string;
   industry: string;
@@ -18,7 +20,8 @@ type AuditRequest = {
   context: string;
 };
 
-const adminEmail = process.env.AUDIT_ADMIN_EMAIL || "petay081@gmail.com";
+const adminEmail =
+  process.env.AUDIT_ADMIN_EMAIL || "peter@theempiregrowth.com";
 const fromEmail =
   process.env.RESEND_FROM_EMAIL || "Empire Audit <onboarding@resend.dev>";
 
@@ -51,6 +54,7 @@ function escapeHtml(value: string) {
 function parseAuditRequest(payload: AuditRequestPayload): AuditRequest {
   const auditRequest = {
     name: clean(payload.name),
+    businessName: clean(payload.businessName),
     email: clean(payload.email),
     websiteUrl: clean(payload.websiteUrl),
     industry: clean(payload.industry),
@@ -59,8 +63,15 @@ function parseAuditRequest(payload: AuditRequestPayload): AuditRequest {
     context: clean(payload.context),
   };
 
-  if (!auditRequest.name || !auditRequest.email || !auditRequest.websiteUrl) {
-    throw new Error("Name, email, and website URL are required.");
+  if (
+    !auditRequest.name ||
+    !auditRequest.businessName ||
+    !auditRequest.email ||
+    !auditRequest.websiteUrl
+  ) {
+    throw new Error(
+      "Name, business name, email, and website URL are required.",
+    );
   }
 
   if (!isValidEmail(auditRequest.email)) {
@@ -81,6 +92,7 @@ function parseAuditRequest(payload: AuditRequestPayload): AuditRequest {
 function buildAdminEmail(auditRequest: AuditRequest) {
   const safe = {
     name: escapeHtml(auditRequest.name),
+    businessName: escapeHtml(auditRequest.businessName),
     email: escapeHtml(auditRequest.email),
     websiteUrl: escapeHtml(auditRequest.websiteUrl),
     industry: escapeHtml(auditRequest.industry),
@@ -93,6 +105,7 @@ function buildAdminEmail(auditRequest: AuditRequest) {
 
 Lead Information
 - Name: ${auditRequest.name}
+- Business: ${auditRequest.businessName}
 - Email: ${auditRequest.email}
 - Industry: ${auditRequest.industry}
 
@@ -115,6 +128,7 @@ ${auditRequest.context || "Not provided"}
       <h2 style="margin:24px 0 8px;color:#D4AF37">Lead Information</h2>
       <ul>
         <li><strong>Name:</strong> ${safe.name}</li>
+        <li><strong>Business:</strong> ${safe.businessName}</li>
         <li><strong>Email:</strong> ${safe.email}</li>
         <li><strong>Industry:</strong> ${safe.industry}</li>
       </ul>
@@ -168,7 +182,7 @@ export async function POST(request: Request) {
       from: fromEmail,
       to: adminEmail,
       reply_to: auditRequest.email,
-      subject: `NEW AUDIT REQUEST - ${auditRequest.name}`,
+      subject: `NEW AUDIT REQUEST - ${auditRequest.businessName}`,
       text: email.text,
       html: email.html,
     }),

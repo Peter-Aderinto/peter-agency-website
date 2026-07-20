@@ -15,7 +15,7 @@ const footerRegions: RegionKey[] = [
 ];
 
 const buttonLabels: Record<RegionKey, string> = {
-  nigeria: "Nigeria",
+  nigeria: "Africa",
   canada: "Canada",
   usa: "USA",
   uk: "UK",

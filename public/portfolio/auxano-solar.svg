@@ -1,0 +1,42 @@
+<svg width="1200" height="825" viewBox="0 0 1200 825" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="825" fill="#24D6D2"/>
+  <rect x="596" width="604" height="825" fill="#F65D62"/>
+  <rect x="220" y="82" width="760" height="660" rx="34" fill="#F9FAFB"/>
+  <rect x="248" y="108" width="704" height="24" fill="#111827"/>
+  <rect x="248" y="108" width="250" height="24" fill="#F59E0B"/>
+  <circle cx="267" cy="120" r="5" fill="#FFE7B3"/>
+  <rect x="286" y="116" width="70" height="7" rx="3.5" fill="#FFE7B3"/>
+  <rect x="390" y="116" width="92" height="7" rx="3.5" fill="#FFE7B3"/>
+  <rect x="280" y="170" width="92" height="42" rx="8" fill="#FFFFFF"/>
+  <path d="M295 204L316 176L338 204H295Z" fill="#F59E0B"/>
+  <path d="M317 204L333 185L352 204H317Z" fill="#1E7E3F"/>
+  <rect x="452" y="184" width="44" height="8" rx="4" fill="#F97316"/>
+  <rect x="528" y="184" width="54" height="8" rx="4" fill="#15243A"/>
+  <rect x="614" y="184" width="50" height="8" rx="4" fill="#15243A"/>
+  <rect x="696" y="184" width="48" height="8" rx="4" fill="#15243A"/>
+  <rect x="776" y="184" width="84" height="8" rx="4" fill="#15243A"/>
+  <circle cx="902" cy="188" r="14" stroke="#15243A" stroke-width="2"/>
+  <rect x="280" y="272" width="672" height="288" fill="#D1D5DB"/>
+  <rect x="292" y="306" width="648" height="210" fill="#363636"/>
+  <rect x="292" y="306" width="648" height="210" fill="#111827" fill-opacity=".45"/>
+  <rect x="512" y="326" width="160" height="24" rx="12" fill="#F97316" fill-opacity=".25"/>
+  <text x="600" y="344" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#F97316">NIGERIA'S FIRST 100MW SOLAR PLANT</text>
+  <text x="600" y="391" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="37" font-weight="800" fill="#FFFFFF">Stop Paying for</text>
+  <text x="600" y="435" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="37" font-weight="800" fill="#FFFFFF">Generator Fuel.</text>
+  <text x="600" y="466" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="600" fill="#E5E7EB">Switch to Solar Today.</text>
+  <rect x="502" y="492" width="112" height="40" rx="8" fill="#F97316"/>
+  <rect x="625" y="492" width="112" height="40" rx="8" stroke="#FFFFFF" stroke-width="1.5"/>
+  <path d="M331 430C350 396 378 391 400 418C422 444 404 486 365 507C322 483 312 464 331 430Z" fill="#111827" fill-opacity=".56"/>
+  <rect x="842" y="412" width="58" height="86" rx="6" fill="#111827"/>
+  <path d="M852 422H890M852 442H890M852 462H890M852 482H890M871 422V498" stroke="#334155" stroke-width="2"/>
+  <rect x="280" y="560" width="672" height="86" fill="#15243A"/>
+  <text x="352" y="606" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#F97316">100MW</text>
+  <text x="496" y="606" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#F97316">500+</text>
+  <text x="627" y="606" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#F97316">IEC</text>
+  <text x="748" y="606" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#F97316">25yr</text>
+  <text x="860" y="606" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#F97316">24/7</text>
+  <rect x="280" y="660" width="672" height="62" fill="#F8FAFC"/>
+  <rect x="342" y="684" width="124" height="16" rx="8" fill="#F97316" fill-opacity=".18"/>
+  <rect x="500" y="684" width="148" height="16" rx="8" fill="#15243A" fill-opacity=".14"/>
+  <rect x="684" y="684" width="166" height="16" rx="8" fill="#15243A" fill-opacity=".14"/>
+</svg>
