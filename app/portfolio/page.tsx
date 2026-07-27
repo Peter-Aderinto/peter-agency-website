@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import CtaArrow from "../components/CtaArrow";
 import { RevealObserver } from "../components/CroInteractions";
 import { getSelectedRegionConfig } from "@/lib/selected-region";
 import type { RegionKey } from "@/lib/regions";
@@ -103,7 +104,7 @@ export default async function PortfolioPage({ region }: { region?: RegionKey } =
             <p className="section-kicker">YOUR STORE, NEXT</p>
             <h2>Let&apos;s uncover the clearest opportunity in your buying journey.</h2>
             <p>Share your store and we will show you what to improve first, why it matters, and the most practical next step.</p>
-            <Link className="btn btn-accent btn-xl" href="/free-audit">Get my free growth plan</Link>
+            <Link className="btn btn-accent btn-xl" href="/free-audit">Get my free growth plan<CtaArrow /></Link>
           </div>
         </div>
       </section>

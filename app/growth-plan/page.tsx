@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import CtaArrow from "../components/CtaArrow";
 import { RevealObserver } from "../components/CroInteractions";
 import GrowthPlanOverview from "../components/GrowthPlanOverview";
 import { getSelectedRegionConfig } from "@/lib/selected-region";
@@ -32,7 +33,7 @@ export default async function GrowthPlanPage() {
             <p className="section-kicker">FREE STORE GROWTH PLAN · {region.countryName.toUpperCase()}</p>
             <h1>A clear plan to turn more store visitors into customers.</h1>
             <p>Send us your store. We will review the moments that matter most on mobile and show you what to improve first—without jargon, guesswork, or pressure.</p>
-            <div className="growth-plan-actions"><Link className="btn btn-accent btn-xl" href="/free-audit#audit-request-form">Get My Free Growth Plan</Link><Link className="btn btn-ghost btn-xl" href="/portfolio">See Our Work</Link></div>
+            <div className="growth-plan-actions"><Link className="btn btn-accent btn-xl" href="/free-audit#audit-request-form">Get My Free Growth Plan<CtaArrow /></Link><Link className="btn btn-ghost btn-xl" href="/portfolio">See Our Work<CtaArrow /></Link></div>
             <div className="growth-plan-assurances"><span>✓ Mobile-first review</span><span>✓ Plain-English priorities</span><span>✓ No obligation</span></div>
           </div>
 
@@ -73,7 +74,7 @@ export default async function GrowthPlanPage() {
         </div>
       </section>
 
-      <section className="section growth-plan-cta"><div className="container"><div className="inner-cta-panel reveal"><p className="section-kicker">YOUR CLEAREST NEXT STEP</p><h2>Let&apos;s find the first change your store needs.</h2><p>Send us your store and receive a focused, practical review with no contract required.</p><Link className="btn btn-accent btn-xl" href="/free-audit#audit-request-form">Get My Free Growth Plan</Link></div></div></section>
+      <section className="section growth-plan-cta"><div className="container"><div className="inner-cta-panel reveal"><p className="section-kicker">YOUR CLEAREST NEXT STEP</p><h2>Let&apos;s find the first change your store needs.</h2><p>Send us your store and receive a focused, practical review with no contract required.</p><Link className="btn btn-accent btn-xl" href="/free-audit#audit-request-form">Get My Free Growth Plan<CtaArrow /></Link></div></div></section>
     </main>
   );
 }

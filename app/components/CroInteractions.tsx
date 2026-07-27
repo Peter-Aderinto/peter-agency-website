@@ -2,6 +2,7 @@
 
 import type { FormEvent } from "react";
 import { useEffect, useId, useState } from "react";
+import CtaArrow from "./CtaArrow";
 
 const leakData = [
   {
@@ -213,7 +214,7 @@ export function AuditPortal({ market }: { market: string }) {
         <label htmlFor={`${prefix}-industry`}>Industry<input id={`${prefix}-industry`} name="industry" placeholder="Fashion, wellness, SaaS…" required /></label>
         <label htmlFor={`${prefix}-url`}>Store or product URL<input id={`${prefix}-url`} type="url" name="websiteUrl" placeholder="https://yourstore.com/product" pattern="https://.*" required /></label>
         <label htmlFor={`${prefix}-problem`}>What is underperforming?<textarea id={`${prefix}-problem`} name="problem" rows={4} placeholder="Product page, cart, hero section, bundle flow..." required /></label>
-        <button className="btn btn-accent btn-xl" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : "Request a Free Layout Audit"}</button>
+        <button className="btn btn-accent btn-xl" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : "Request a Free Layout Audit"}<CtaArrow /></button>
         <p className={`form-note ${status}`}>{message}</p>
       </form>
       <div className="portal-footer"><span>Typical response window</span><strong>Within 2 business days</strong></div>

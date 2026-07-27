@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import CtaArrow from "./CtaArrow";
 
 const navItems = [
   { label: "Work", href: "/portfolio" },
   { label: "Method", href: "/method" },
+  { label: "Growth Systems", href: "/ecommerce-growth" },
   { label: "Growth Plan", href: "/growth-plan" },
   { label: "FAQ", href: "/faq" },
 ] as const;
@@ -30,7 +32,7 @@ export default function SiteHeader() {
             <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={() => setOpen(false)}>{item.label}</Link>
           ))}
         </nav>
-        <Link className="btn btn-accent nav-cta" href="/free-audit#audit-request-form">Get a Free Audit</Link>
+        <Link className="btn btn-accent nav-cta" href="/free-audit#audit-request-form">Get a Free Audit<CtaArrow /></Link>
       </div>
     </header>
   );

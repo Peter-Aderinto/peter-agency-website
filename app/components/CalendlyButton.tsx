@@ -1,5 +1,7 @@
 "use client";
 
+import CtaArrow from "./CtaArrow";
+
 const calendlyUrl = "https://calendly.com/petay081/30min";
 
 declare global {
@@ -34,6 +36,7 @@ export default function CalendlyButton({
       aria-label={`${label} — schedule a 30-minute call with Empire`}
     >
       {label}
+      <CtaArrow />
     </button>
   );
 }
